@@ -1,0 +1,11 @@
+escape           ^Rr
+vbell            off
+startup_message  off
+
+defscrollback    2000
+
+multiuser        on
+#acladd           gv
+
+hardstatus       off
+caption always "%{= gk} %?%-Lw%?%{= kd} %n*%f %t %{= gk}%?%+Lw%?%{= gk} %=[%{W} %Y-%d-%m %c %{g}]"

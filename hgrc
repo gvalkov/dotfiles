@@ -1,0 +1,6 @@
+[ui]
+username = "Georgi Valkov <gvalkov@cisco.com>"
+verbose = True
+
+#[extensions]
+#[hooks]

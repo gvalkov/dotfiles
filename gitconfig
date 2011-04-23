@@ -1,0 +1,45 @@
+[user]
+    name  = Georgi Valkov
+    email = georgi.t.valkov@gmail.com
+
+[apply]
+    whitespace = fix
+
+[color]
+    pager = true
+    ui = true
+    status = auto
+    branch = auto
+    diff = false
+
+#[commit]
+#    template = /
+
+#[diff]
+#    renames = copy
+
+#[core]
+#    excludesfile = ~/.gitignore
+
+
+[alias]
+    co = checkout
+    ci = commit
+    st = status
+    ba = branch -a
+    nb = checkout -b
+    wc = whatchanged
+    tags = log -l -n1
+    staged = diff --cached
+    summary = log --oneline
+
+    # list new commits after merge
+    lc = log ORIG_HEAD.. --stat --no-merges
+
+    edit-last-commit = !vim `git diff-tree -r --name-only HEAD HEAD~1`
+    edit-unmerged    = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; editor `f`"
+    add-unmerged     = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+
+    lg = !git --no-pager log --graph --oneline --decorate
+
+    svnup = !git config --get-regexp 'svn-remote.*url' | cut -d . -f 2 | xargs -n1 git svn fetch

@@ -1,0 +1,11 @@
+word-2000: yes
+clean: yes
+doctype: strict
+bare: yes
+drop-font-tags: yes
+drop-proprietary-attributes: yes
+enclose-block-text: yes
+escape-cdata: yes
+logical-emphasis: yes
+output-xhtml: yes
+indent: yes

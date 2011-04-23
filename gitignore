@@ -1,0 +1,72 @@
+### https://github.com/github/gitignore ###
+
+# --- Python ---
+*.py[co]
+*.egg
+*.egg-info/
+develop-eggs/
+dist/
+build/
+dropin.cache
+pip-log.txt
+.installed.cfg
+.coverage
+
+
+# --- Swap ---
+*.sw[po]
+~.*
+
+
+# --- Java/Jython/Maven ---
+*.class
+target/
+
+
+# --- Autoconf & Cmake ---
+Makefile.in
+/autom4te.cache
+/aclocal.m4
+/compile
+/configure
+/depcomp
+/install-sh
+/missing
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
+install_manifest.txt
+
+
+# --- C/C++ ---
+*.slo
+*.lo
+*.o
+*.so
+*.lai
+*.la
+*.a
+
+
+# --- Eclipse ---
+*.pydevproject
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+.cproject
+
+
+# -- Win --
+Thumbs.db
+Desktop.ini
