@@ -1,0 +1,93 @@
+#set -x
+
+prompt_mine_help () {
+    echo 'none'
+}
+
+prompt_mine_setup () {
+    local -A pc
+  
+    pc['user']=${1:-'red'}
+    pc['host']=${2:-'yellow'}
+    pc['vc']=${3:-'vc:0'}
+
+    if [[ "$TERM" != "dumb" ]]; then
+        BASE_PROMPT="%{$fg_bold[$pc['user']]%}%n%{$reset_color%}.%{$fg_bold[$pc['host']]%}%m %{$fg_bold[white]%}%~ %{$reset_color%}$ "
+    else
+        :
+    fi
+
+    export vcs_repo_prompt_enabled=0
+    export PROMPT=$BASE_PROMPT
+
+    if [[ $pc['vc'] =~ ":1$" ]]; then
+        vcs_repo_prompt_enabled=1
+        prompt_mine_refresh
+    fi
+}
+
+function prompt_mine_refresh () {
+    [[ $vcs_repo_prompt_enabled -eq 0 ]] && return 0
+
+    if vcs_repo_info; then
+        yellow=${fg_bold[yellow]}
+        red=${fg_bold[red]}
+        white=${fg_bold[white]}
+        reset=${reset_color}
+
+        if [[ -n $repo_tracked_branch ]]; then
+            prompt_add_tracked="tracking \
+${yellow}${repo_tracked_branch}${reset}\
+${white}(${repo_tracked_rev})${reset}"
+        fi
+
+        PROMPT="\
+
+${white}::${reset} \
+${yellow}${repo_branch}${reset}\
+${white}(${repo_rev})${reset} \
+${prompt_add_tracked} \
+${white}${repo_staged_count}${reset}:\
+${white}${repo_untracked_count}${reset}:\
+${white}${repo_modified_count}${reset} 
+${BASE_PROMPT}"
+    else
+        PROMPT=$BASE_PROMPT
+    fi
+}
+
+function vcs_repo_info () {
+    vc_cmd=$(vcprompt -u 'unknown' --format="%s:%b:%tb:%tr:%r:%ac:%uc:%mc")
+    [[ $? -ne 0 ]] && return 1
+
+    echo $vc_cmd | IFS=':' read \
+        repo_type \
+        repo_branch \
+        repo_tracked_branch \
+        repo_tracked_rev \
+        repo_rev \
+        repo_staged_count \
+        repo_untracked_count \
+        repo_modified_count
+}
+
+function vcs_repo_preexec_hook () {
+    if [[ $2 =~ git ]] ; then
+        __vcs_repo_git_executed=1
+    fi
+}
+
+function vcs_repo_precmd_hook () {
+    if [[ $__vcs_repo_git_executed -eq 1 ]]; then
+        prompt_mine_refresh
+        unset __vcs_repo_git_executed
+    fi
+}
+
+function vcs_repo_chpwd_hook () {
+    prompt_mine_refresh
+}
+
+prompt_mine_setup "$@"
+
+# vim: ft=zsh:

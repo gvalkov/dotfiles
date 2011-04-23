@@ -1,0 +1,109 @@
+# aliases
+alias ls="ls --color=auto -F --group-directories-first"
+alias ll="ls -lsh"
+alias lla="ll -ld *(-/DN)"
+
+alias h='history'
+alias f='find | grep'
+
+alias c="clear"
+
+alias   ..='cd ..'
+alias cd..='cd ..'
+alias cd...='cd ../../'
+alias cd....='cd ../../../'
+alias gcd='cd $(git rev-parse --show-toplevel)'
+
+alias d='dirs -v'
+alias g='git'
+alias v='vim'
+alias g='gvim'
+alias gt='gvim --remote-tab'
+alias _='sudo'
+
+alias gvimt='gvim --remote-tab'
+alias cdiff='colordiff'
+alias agi='sudo apt-get install'
+alias ayi='sudo yum install'
+alias jobs='jobs -l'
+
+alias nautilus="nautilus --no-desktop"
+alias pyclean='rm **/*.(pyc|pyo)'
+
+
+# global/suffix aliases
+alias -s zip='zipinfo'
+alias -g EG='| egrep'
+
+
+
+# history
+HISTFILE=~/.histfile
+HISTSIZE=5000
+SAVEHIST=5000
+
+setopt share_history
+setopt histignoredups
+
+setopt hist_verify
+setopt inc_append_history
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_space
+
+
+# directories
+DIRSTACKSIZE=10
+#setopt auto_name_dirs
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt autocd
+
+
+# misc
+bindkey -e
+WORDCHARS='*?_[]~&;!#$%^(){}<>'
+
+unsetopt beep
+#setopt printexitvalue
+setopt interactivecomments
+setopt notify
+setopt long_list_jobs
+setopt zle
+
+
+# completion
+zstyle :compinstall filename '/home/gv/.zshrc'
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+autoload -Uz compinit
+compinit
+
+
+# limits
+limit stack        8192
+limit descriptors  1024
+limit coredumpsize 0
+limit -s
+
+
+# prompt
+autoload -Uz colors
+autoload -Uz promptinit
+setopt promptsubst
+colors
+promptinit
+prompt mine red yellow vc:1
+
+
+## need to figure out a way to set these from within prompt setup ...
+typeset -ga preexec_functions
+typeset -ga precmd_functions
+typeset -ga chpwd_functions
+
+precmd_functions+='vcs_repo_precmd_hook'
+preexec_functions+='vcs_repo_preexec_hook'
+chpwd_functions+='vcs_repo_chpwd_hook'
+
+
+for s (~/.zfunc/*.zsh(x)) source $s
+[[ -f $HOME/.zshrc.local ]] && . $HOME/.zshrc.local

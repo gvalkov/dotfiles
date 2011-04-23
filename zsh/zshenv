@@ -1,0 +1,22 @@
+# .zshenv
+
+export PATH="$HOME/bin:$PATH"
+
+# preferred tools
+export EDITOR="vim"
+export PAGER="vimpager"
+
+
+# tool options
+export GREP_OPTIONS="--color=auto"
+export GREP_COLOR="1;32" #green
+
+eval `dircolors -b`
+
+fpath=(~/.zfunc $fpath)
+typeset -U fpath
+
+path=($HOME/bin $path)
+typeset -U path
+
+[[ -f $HOME/.zshenv.local ]] && . $HOME/.zshenv.local
