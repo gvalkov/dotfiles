@@ -1,9 +1,9 @@
 [user]
-    name  = Georgi Valkov
+	name = Georgi Valkov
     email = georgi.t.valkov@gmail.com
 
 [apply]
-    whitespace = fix
+    #whitespace = fix
 
 [color]
     pager = true
@@ -26,9 +26,10 @@
     co = checkout
     ci = commit
     st = status
-    ba = branch -a
+    br = branch -a
     nb = checkout -b
     wc = whatchanged
+    ch = cherry-pick
     tags = log -l -n1
     staged = diff --cached
     summary = log --oneline
@@ -43,3 +44,12 @@
     lg = !git --no-pager log --graph --oneline --decorate
 
     svnup = !git config --get-regexp 'svn-remote.*url' | cut -d . -f 2 | xargs -n1 git svn fetch
+[core]
+	warnambiguousrefs = false
+[giggle]
+	main-window-maximized = false
+	main-window-geometry = 798x884+0+14
+	main-window-view = HistoryView
+	file-view-vpane-position = 361
+	history-view-vpane-position = 538
+	show-graph = true

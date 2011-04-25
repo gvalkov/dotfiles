@@ -25,15 +25,23 @@ alias gvimt='gvim --remote-tab'
 alias cdiff='colordiff'
 alias agi='sudo apt-get install'
 alias ayi='sudo yum install'
+alias ays='sudo yum search'
 alias jobs='jobs -l'
+alias tree='tree -F -C'
+#alias ack='ack-grep'
 
 alias nautilus="nautilus --no-desktop"
 alias pyclean='rm **/*.(pyc|pyo)'
-
+alias ctags="ctags --fields=+l --c-kinds=+p --c++-kinds=+p"
 
 # global/suffix aliases
 alias -s zip='zipinfo'
-alias -g EG='| egrep'
+alias -g G='|& egrep -i'
+alias -g EG='|& egrep '
+alias -g EH='|& head '
+alias -g ET='|& tail -15 '
+alias -g WC='| wc -l'
+alias -g DN='/dev/null'
 
 
 
@@ -92,7 +100,7 @@ autoload -Uz promptinit
 setopt promptsubst
 colors
 promptinit
-prompt mine red yellow vc:1
+prompt mine red yellow vc:0
 
 
 ## need to figure out a way to set these from within prompt setup ...

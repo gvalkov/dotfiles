@@ -1,6 +1,6 @@
 # .zshenv
 
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # preferred tools
 export EDITOR="vim"
@@ -11,12 +11,16 @@ export PAGER="vimpager"
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="1;32" #green
 
+
+# program options
+export DOTREMINDERS="$HOME/org/reminders"
+
 eval `dircolors -b`
 
 fpath=(~/.zfunc $fpath)
 typeset -U fpath
 
-path=($HOME/bin $path)
+path=($HOME/.local/bin $HOME/bin $HOME/source/android-sdk-linux/tools/ $HOME/source/android-sdk-linux/platform-tools/ $path)
 typeset -U path
 
 [[ -f $HOME/.zshenv.local ]] && . $HOME/.zshenv.local

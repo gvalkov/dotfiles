@@ -1,0 +1,3 @@
+! xmodmap ~/.Xmodmap
+
+! keysym Alt_R = Menu 

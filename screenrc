@@ -1,4 +1,4 @@
-escape           ^Rr
+escape           ^Tt
 vbell            off
 startup_message  off
 

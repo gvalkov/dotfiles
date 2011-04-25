@@ -1,0 +1,12 @@
+transparent
+window_layer bottom
+grow_gravity E
+icon_gravity E
+sticky
+icon_size 16
+#--max-width 48 
+skip_taskbar
+geometry 48x16-0+0 
+window_strut none
+window_type dock
+background "#3F3F3F"
