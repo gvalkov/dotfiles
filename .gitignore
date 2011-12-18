@@ -1,0 +1,6 @@
+# --- Python ---
+*.py[co]
+dropin.cache
+pip-log.txt
+.installed.cfg
+.coverage
