@@ -7,3 +7,6 @@
 [submodule "util-co/pydzen"]
 	path = util-co/pydzen
 	url = https://github.com/xfire/pydzen
+[submodule "vim"]
+	path = vim
+	url = git@github.com:gvalkov/dotfiles-vim.git
