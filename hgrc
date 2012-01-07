@@ -1,5 +1,6 @@
 [ui]
-username = "Georgi Valkov <gvalkov@cisco.com>"
+#username = "Georgi Valkov <georgi.t.valkov@gmail.com>""
+username = "Georgi Valkov"
 verbose = True
 
 #[extensions]
