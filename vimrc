@@ -16,9 +16,11 @@ set encoding=utf8
 set clipboard+=unnamed "yank to clipboard
 
 set timeoutlen=500  " map sequence timeout 
+set ttimeoutlen=50  " make esc work faster
 set updatetime=4000 " fire CursorHold after this many ms
 
-set wildmode=longest,list
+set wildmenu
+set wildmode=list:longest,full
 set wildignore=*.swp,*.bak,*.pyc,*.pyo,*.class
 
 "set autoread
@@ -26,6 +28,9 @@ set wildignore=*.swp,*.bak,*.pyc,*.pyo,*.class
 "set autochdir
 "set cursorline
 "set scrolloff=2
+"set undofile
+
+set virtualedit=block
 
 set splitbelow
 set splitright
@@ -36,7 +41,7 @@ set spellfile=~/.vim/dict.add
 " load bundle plugins
 source ~/.vim/bundle/pathogen.git/autoload/pathogen.vim
 
-let g:pathogen_disabled = ['pyflakes.git', 'easytags']
+let g:pathogen_disabled = ['pyflakes.git', 'easytags.git']
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 call pathogen#infect()
@@ -72,6 +77,8 @@ set foldopen=block,hor,mark,percent,quickfix,tag
 
 " [wip] 
 autocmd!
+"https://github.com/tpope/tpope/blob/master/.vim/plugin/ztemplate.vim
+"flatfoot
 
 " Prettiness ---
 syntax on
@@ -95,6 +102,8 @@ if has('gui_running')
     "colorscheme solarized
     "colorscheme blackboard
     set background=dark
+
+    set ballooneval
 else
     set t_Co=256
     colorscheme wombat
@@ -127,7 +136,7 @@ set mouse=a
 set selectmode+=mouse
 set mousehide
 set mousefocus
-"set mousemodel=popup "todo: preserve search word
+set mousemodel=popup "todo: preserve search word
 
 
 " Wrapping ---
@@ -248,7 +257,8 @@ map <leader>tm :tabmove
 
 
 " Commands ---
-comm! W exec 'w !sudo tee % > /dev/null' | e!
+" Better use SudoWrite from vim-eunuch
+"comm! W exec 'w !sudo tee % > /dev/null' | e!  
 
 
 " Status line ---
@@ -265,7 +275,7 @@ set statusline=%!StatusLine01()
 "  n... :  where to save the viminfo files
 set viminfo='30,\"100,:40,%,n~/.viminfo
 
-autocmd BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | execute 'silent !chmod u+x <afile>' | endif | end
+autocmd BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/bash" | execute 'silent !chmod u+x <afile>' | endif | end
 
 " Auto commands ---
 augroup resCur
@@ -285,6 +295,9 @@ autocmd BufNewFile **/Makefile  silent! 0r ~/.vim/templates/Makefile
 
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType python set listchars=tab:>.,trail:.,extends:#,nbsp:.
+
+autocmd BufReadPre  *.pdf setlocal binary
+autocmd FileReadCmd *.doc execute "read! antiword \"<afile>\""
 
 autocmd BufRead  *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\" 
 autocmd BufRead  *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m 

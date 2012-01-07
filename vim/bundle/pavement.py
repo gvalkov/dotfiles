@@ -33,6 +33,7 @@ bundles = {
 'notes.git'            : 'https://github.com/xolox/vim-notes.git',
 'ropevim.hg'           : 'https://bitbucket.org/agr/ropevim',
 'ropemode.hg'          : 'https://bitbucket.org/agr/ropemode',
+'eunuch.git'           : 'https://github.com/tpope/vim-eunuch.git',
 }
 
 

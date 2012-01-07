@@ -1,5 +1,6 @@
-" nerdtree
-let NERDTreeMapActivateNode=''
+" nerdstuff
+let NERDSpaceDelims = 1
+let NERDTreeMapActivateNode = ''
 
 " fuf
 let g:fuf_modesDisable = []
