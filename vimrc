@@ -5,7 +5,7 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.i
 set ttyfast
 set modeline
 set noshortname
-set shortmess=aI
+set shortmess=aI "t
 
 set history=512
 set undolevels=512
@@ -13,7 +13,7 @@ set undolevels=512
 set cmdheight=1
 set shell=/usr/bin/zsh
 set encoding=utf8
-set clipboard+=unnamed "yank to clipboard
+set clipboard+=unnamedplus "yank to clipboard
 
 set timeoutlen=500  " map sequence timeout 
 set ttimeoutlen=50  " make esc work faster
@@ -144,6 +144,7 @@ set nowrap
 "set textwidth=80
 "set linebreak
 "set showbreak='+++ '
+"let &showbreak = '↳ '
 
 
 " Tabs and Spaces ---
@@ -195,6 +196,10 @@ map <F12> :set invlist<CR>
 " switch to the cwd of the open buffer
 map <leader>cd :cd %:p:h<cr>
 
+" tab indent/dedent (though I'm already pretty used to ><)
+vmap <tab> >gv
+vmap <S-tab> <gv
+
 " quickly reload/edit vimrc
 nnoremap <leader>rs :source ~/.vimrc<CR>
 nnoremap <leader>rt :tabnew ~/.vimrc<CR>
@@ -222,6 +227,10 @@ nnoremap <silent> <F4> :TagbarToggle<CR>
 
 " yankring
 nnoremap <silent> <F11> :YRShow<CR>
+
+" lustyjuggler
+nmap <silent> <Leader>j :LustyJuggler<CR>
+
 
 " fuzzy-finder
 nnoremap <silent> sb     :FufBuffer<CR>

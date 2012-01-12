@@ -1,6 +1,9 @@
 " nerdstuff
 let NERDSpaceDelims = 1
 let NERDTreeMapActivateNode = ''
+let NERDTreeChDirMode = 2
+let NERDTreeIgnore = ['\.pyc$', '\.pyo$', '\.swp$', '\~$',]
+let NERDTreeSortOrder = ['\.py$', '*']
 
 " fuf
 let g:fuf_modesDisable = []
@@ -12,6 +15,9 @@ let g:thesaurus_file = "/usr/share/mythes/th_en_US_v2"
 
 " yankring
 let g:yankring_history_file = '.yankring_history'
+
+" lustyjuggler 
+let g:LustyJugglerShowKeys = 'a'
 
 " remove fugitive buffers
 autocmd BufReadPost fugitive://* set bufhidden=delete

@@ -34,6 +34,7 @@ bundles = {
 'ropevim.hg'           : 'https://bitbucket.org/agr/ropevim',
 'ropemode.hg'          : 'https://bitbucket.org/agr/ropemode',
 'eunuch.git'           : 'https://github.com/tpope/vim-eunuch.git',
+'syntastic.git'        : 'https://github.com/scrooloose/syntastic',
 }
 
 
@@ -55,8 +56,8 @@ def export_hg(prefix, url):
 def status(options, info):
     'show bundle status'
 
-    dirs = path('./').dirs()
-    missing = [i for i in bundles if i not in [j.name for j in dirs]]
+    #dirs = path('./').dirs()
+    #missing = [i for i in bundles if i not in [j.name for j in dirs]]
 
     for name, remote in bundles.iteritems():
         out = [name]
