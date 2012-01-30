@@ -5,6 +5,7 @@ export PATH="$HOME/.local/bin:$PATH"
 # preferred tools
 export EDITOR="vim"
 export PAGER="vimpager"
+export BROWSER="firefox"
 
 
 # tool options
