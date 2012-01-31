@@ -11,6 +11,7 @@ export BROWSER="firefox"
 # tool options
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="1;32" #green
+export WORKON_HOME=~/.virtualenvs
 
 
 # program options

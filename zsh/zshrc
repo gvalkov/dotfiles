@@ -136,5 +136,10 @@ preexec_functions+='vcs_repo_preexec_hook'
 chpwd_functions+='vcs_repo_chpwd_hook'
 
 
+# virtualenvwrapper
+venvw=`which virtualenvwrapper.sh` 
+[[ ($? -eq 0) && (-n $WORKON_HOME) ]] && source $venvw
+
+
 for s (~/.zfunc/*.zsh(x)) source $s
 [[ -f $HOME/.zshrc.local ]] && . $HOME/.zshrc.local
