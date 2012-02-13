@@ -56,8 +56,8 @@ source ~/.vim/plugins.vim
 source ~/.vim/menu.vim
 
 " load roapvim
-let $PYTHONPATH .= expand('$HOME/.vim/bundle/ropevim.hg:$HOME/.vim/bundle/ropemode.hg:')
-source ~/.vim/bundle/ropevim.hg/ropevim.vim
+"let $PYTHONPATH .= expand('$HOME/.vim/bundle/ropevim.hg:$HOME/.vim/bundle/ropemode.hg:')
+"source ~/.vim/bundle/ropevim.hg/ropevim.vim
 
 
 " Searching & highlighting ---
@@ -284,7 +284,7 @@ set statusline=%!StatusLine01()
 "  n... :  where to save the viminfo files
 set viminfo='30,\"100,:40,%,n~/.viminfo
 
-autocmd BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/bash" | execute 'silent !chmod u+x <afile>' | endif | end
+" autocmd BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/bash" | execute 'silent !chmod u+x <afile>' | endif | end
 
 " Auto commands ---
 augroup resCur
