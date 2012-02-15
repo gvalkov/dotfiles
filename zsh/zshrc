@@ -22,8 +22,9 @@ alias gt='gvim --remote-tab'
 alias _='sudo'
 
 alias gvimt='gvim --remote-tab'
-alias cdiff='colordiff'
+alias diff='colordiff'
 alias agi='sudo apt-get install'
+alias acs='apt-cache search'
 alias ayi='sudo yum install'
 alias ays='sudo yum search'
 alias jobs='jobs -l'
@@ -41,13 +42,15 @@ alias -g EG='|& egrep '
 alias -g EH='|& head '
 alias -g ET='|& tail -15 '
 alias -g WC='| wc -l'
+alias -g XC='| xclip -i -selection clipboard'
+alias -g XCP='| xclip -i -selection primary'
 alias -g DN='/dev/null'
 
 
 # history
 HISTFILE=~/.histfile
-HISTSIZE=5000
-SAVEHIST=5000
+HISTSIZE=10000
+SAVEHIST=10000
 
 setopt share_history
 setopt histignoredups
@@ -106,6 +109,7 @@ setopt zle
 # completion
 zstyle :compinstall filename '/home/gv/.zshrc'
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+setopt nonomatch
 autoload -Uz compinit
 compinit
 
