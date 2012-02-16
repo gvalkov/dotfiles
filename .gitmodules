@@ -4,9 +4,9 @@
 [submodule "util-co/youtube-dl"]
 	path = util-co/youtube-dl
 	url = https://github.com/rg3/youtube-dl.git
-[submodule "util-co/pydzen"]
-	path = util-co/pydzen
-	url = https://github.com/xfire/pydzen
 [submodule "vim"]
 	path = vim
 	url = git@github.com:gvalkov/dotfiles-vim.git
+[submodule "bin"]
+	path = vim
+	url = git@github.com:gvalkov/dotfiles-bin.git

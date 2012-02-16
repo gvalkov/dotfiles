@@ -22,7 +22,7 @@ eval `dircolors -b`
 fpath=(~/.zfunc $fpath)
 typeset -U fpath
 
-path=($HOME/.local/bin $HOME/bin $HOME/source/android-sdk-linux/tools/ $HOME/source/android-sdk-linux/platform-tools/ $path)
+path=($HOME/.local/bin $HOME/bin $HOME/.dotfiles-bin $HOME/source/android-sdk-linux/tools/ $HOME/source/android-sdk-linux/platform-tools/ $path)
 typeset -U path
 
 [[ -f $HOME/.zshenv.local ]] && . $HOME/.zshenv.local
