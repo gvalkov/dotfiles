@@ -161,6 +161,7 @@ set backspace=start,indent,eol
 " Abbreviations ---
 iabbrev pdb import pdb ; pdb.set_trace()
 iabbrev ipdb import ipdb ; ipdb.set_trace()
+iabbrev ppp import pprint; pprint.pprint(
 iabbrev tpdb import trace ; tracer = trace.Trace(ignoredirs=[sys.prefix, sys.exec_prefix,], trace=0, count=1)
 iabbrev isodate <c-r>=strftime("%Y-%m-%d %H:%M:%S")<cr>
 
@@ -234,8 +235,8 @@ nmap <silent> <Leader>j :LustyJuggler<CR>
 
 " fuzzy-finder
 nnoremap <silent> sb     :FufBuffer<CR>
-nnoremap <silent> sf     :FufFileWithCurrentBufferDir<CR>
-nnoremap <silent> sF     :FufFileWithFullCwd<CR>
+nnoremap <silent> sF     :FufFileWithCurrentBufferDir<CR>
+nnoremap <silent> sf     :FufFileWithFullCwd<CR>
 nnoremap <silent> sc     :FufCoverageFile<CR>
 nnoremap <silent> sC     :FufCoverageFileChange<CR>
 nnoremap <silent> s<C-c> :FufCoverageFileRegister<CR>
