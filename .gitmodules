@@ -8,5 +8,5 @@
 	path = vim
 	url = git@github.com:gvalkov/dotfiles-vim.git
 [submodule "bin"]
-	path = vim
+	path = bin
 	url = git@github.com:gvalkov/dotfiles-bin.git
