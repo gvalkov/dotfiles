@@ -186,10 +186,13 @@ map <C-Space> <C-x><C-o>
 nnoremap <C-e> 5<C-e>
 nnoremap <C-y> 5<C-y>
 
+nnoremap ; :
+
 nnoremap <space>     5<c-e>10j
 nnoremap <backspace> 5<c-y>10k
 
 set pastetoggle=<F10>
+
 
 " toggle hidden characters
 map <F12> :set invlist<CR>
@@ -208,6 +211,8 @@ nnoremap <leader>rt :tabnew ~/.vimrc<CR>
 " quickly clear the current search
 nmap <silent> <leader>/ :nohlsearch<CR>
 
+nnoremap <silent> ,cf :let @* = expand("%:p")<CR>
+
 " buffer to html
 map <silent> <leader>2h :runtime! syntax/2html.vim<CR>
 
@@ -219,6 +224,9 @@ nnoremap <silent> <F8> :TlistToggle<CR>
 
 " nerdtree
 map <F3> <Esc>:NERDTreeToggle<cr>
+
+" gundo
+nmap ,u :GundoToggle<CR>
 
 " lusty juggler 
 nmap <silent> <Leader>l :LustyJuggler<CR>
@@ -232,7 +240,6 @@ nnoremap <silent> <F11> :YRShow<CR>
 " lustyjuggler
 nmap <silent> <Leader>j :LustyJuggler<CR>
 
-
 " fuzzy-finder
 nnoremap <silent> sb     :FufBuffer<CR>
 nnoremap <silent> sF     :FufFileWithCurrentBufferDir<CR>
@@ -243,7 +250,7 @@ nnoremap <silent> s<C-c> :FufCoverageFileRegister<CR>
 nnoremap <silent> sd     :FufDirWithCurrentBufferDir<CR>
 nnoremap <silent> sD     :FufDirWithFullCwd<CR>
 nnoremap <silent> s<C-d> :FufDir<CR>
-nnoremap <silent> smc    :FufMruCmd<CR>
+nnoremap <silent> sr     :FufMruCmd<CR>
 nnoremap <silent> sm     :FufMruFile<CR>
 cnoremap <silent> sM     :FufMruFileInCwd<CR>
 nnoremap <silent> su     :FufBookmarkFile<CR>
@@ -265,10 +272,21 @@ map <leader>te :tabedit<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 
+map <silent> <m-1> :tabn 1<cr>
+map <silent> <m-2> :tabn 2<cr>
+map <silent> <m-3> :tabn 3<cr>
+map <silent> <m-4> :tabn 4<cr>
+map <silent> <m-5> :tabn 5<cr>
+map <silent> <m-6> :tabn 6<cr>
+map <silent> <m-7> :tabn 7<cr>
+map <silent> <m-8> :tabn 8<cr>
+map <silent> <m-9> :tabn 9<cr>
+
 
 " Commands ---
 " Better use SudoWrite from vim-eunuch
 "comm! W exec 'w !sudo tee % > /dev/null' | e!  
+comm! W SudoWrite
 
 
 " Status line ---

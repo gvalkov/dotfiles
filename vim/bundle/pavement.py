@@ -35,6 +35,13 @@ bundles = {
 'ropemode.hg'          : 'https://bitbucket.org/agr/ropemode',
 'eunuch.git'           : 'https://github.com/tpope/vim-eunuch.git',
 'syntastic.git'        : 'https://github.com/scrooloose/syntastic',
+'indent-guides.git'    : 'https://github.com/nathanaelkane/vim-indent-guides.git',
+'indent-object.git'    : 'https://github.com/michaeljsmith/vim-indent-object.git',
+'easymotion.git'       : 'https://github.com/Lokaltog/vim-easymotion.git',
+'gundo.git'            : 'https://github.com/sjl/gundo.vim.git',
+'zoomwin.git'          : 'https://github.com/vim-scripts/ZoomWin.git',
+'ack.git'              : 'https://github.com/mileszs/ack.vim.git',
+'coffee-script.git'    : 'https://github.com/kchmck/vim-coffee-script.git',
 }
 
 
