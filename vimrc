@@ -11,6 +11,7 @@ set history=512
 set undolevels=512
 
 set cmdheight=1
+set nrformats-=octal
 set shell=/usr/bin/zsh
 set encoding=utf8
 set clipboard+=unnamedplus "yank to clipboard
