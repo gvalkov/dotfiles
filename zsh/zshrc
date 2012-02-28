@@ -6,7 +6,7 @@ alias lla="ll -ld *(-/DN)"
 alias h='history'
 alias f='find | grep'
 
-alias c="clear"
+alias c="cd"
 
 alias   ..='cd ..'
 alias cd..='cd ..'
@@ -65,7 +65,7 @@ setopt hist_ignore_space
 # directories
 DIRSTACKSIZE=10
 #setopt auto_name_dirs
-setopt auto_pushd
+setopt autopushd
 setopt pushd_ignore_dups
 setopt autocd
 

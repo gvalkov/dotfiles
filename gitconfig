@@ -1,9 +1,13 @@
 [user]
 	name = Georgi Valkov
-    email = georgi.t.valkov@gmail.com
+    email = gvalkov@cisco.com
 
 [apply]
     #whitespace = fix
+    #whitespace = nowarn
+
+[push]
+    default = tracking
 
 [color]
     pager = true
@@ -14,10 +18,13 @@
 
 [core]
 	warnambiguousrefs = false
+    editor = vim
+    autocrlf = false
     #excludesfile = ~/.gitignore
     
 [diff]
 	tool = meld
+    mnemonicprefix = true
 
 [merge]
 	tool = meld
@@ -26,15 +33,34 @@
     browser = firefox
 
 [alias]
+    a = add
+    b = "!git branch --verbose | cut -c -$(tput cols)"
+    d = diff
+    l = log --decorate --graph --date=short --name-status
+    p = push
+    s = status
+    r = remote --verbose
+    t = "!git tag -n | cut -c -$(tput cols)"
+
+
     co = checkout
-    ci = commit
+    ci = commit -m
+    ca = commit -a -m
+
+    amend = commit --amend
+    difflast = diff HEAD~
+    changelog = log --pretty=format:\" * %s\"
+    staged = diff --cached
+    unstage = reset HEAD
+    filelog = log -u
+
     st = status
+    mt = mergetool
     br = branch -a
     nb = checkout -b
     wc = whatchanged
-    ch = cherry-pick
+    cp = cherry-pick
     tags = log -l -n1
-    staged = diff --cached
     summary = log --oneline
 
     # list new commits after merge
