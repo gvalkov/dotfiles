@@ -180,10 +180,10 @@ class RopeMode(object):
     @decorators.local_command('a d', 'P', 'C-c d')
     def show_doc(self, prefix):
         self._check_project()
-        self._base_show_doc(prefix, codeassist.get_doc)
+        self._base_show_doc(prefix, self._base_get_doc(codeassist.get_doc))
 
-    @decorators.local_command('a c', 'P')
-    def show_calltip(self, prefix):
+    @decorators.local_command()
+    def get_calltip(self):
         self._check_project()
         def _get_doc(project, text, offset, *args, **kwds):
             try:
@@ -191,10 +191,13 @@ class RopeMode(object):
             except ValueError:
                 return None
             return codeassist.get_calltip(project, text, offset, *args, **kwds)
-        self._base_show_doc(prefix, _get_doc)
+        return self._base_get_doc(_get_doc)
 
-    def _base_show_doc(self, prefix, get_doc):
-        docs = self._base_get_doc(get_doc)
+    @decorators.local_command('a c', 'P')
+    def show_calltip(self, prefix):
+        self._base_show_doc(prefix, self.get_calltip())
+
+    def _base_show_doc(self, prefix, docs):
         if docs:
             self.env.show_doc(docs, prefix)
         else:
@@ -454,6 +457,13 @@ class RopeMode(object):
         resource = self._get_resource()
         if resource and resource.exists():
             return resource
+
+    @decorators.global_command()
+    def get_project_root(self):
+        if self.project is not None:
+            return self.project.root.real_path
+        else:
+            return None
 
     def _check_project(self):
         if self.project is None:

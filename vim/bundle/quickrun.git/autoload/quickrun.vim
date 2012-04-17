@@ -8,7 +8,6 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 let s:V = vital#of('quickrun').load('Data.List')
-call s:V.import('Data.String', s:V)
 unlet! g:quickrun#V
 let g:quickrun#V = s:V
 lockvar! g:quickrun#V
@@ -67,11 +66,17 @@ let g:quickrun#default_config = {
 \ 'cpp': {
 \   'type':
 \     s:is_win && executable('cl') ? 'cpp/vc'  :
+\     executable('clang++')        ? 'cpp/clang++'  :
 \     executable('g++')            ? 'cpp/g++' : '',
 \ },
 \ 'cpp/C': {
 \   'command': 'C',
 \   'exec': '%c %o -p %s',
+\ },
+\ 'cpp/clang++': {
+\   'command': 'clang++',
+\   'exec': ['%c %o %s -o %s:p:r', '%s:p:r %a', 'rm -f %s:p:r'],
+\   'tempfile': '%{tempname()}.cpp',
 \ },
 \ 'cpp/g++': {
 \   'command': 'g++',
@@ -122,6 +127,20 @@ let g:quickrun#default_config = {
 \   'exec': 'call %s %a',
 \   'tempfile': '%{tempname()}.bat',
 \ },
+\ 'dart': {
+\   'type':
+\     executable('dart') ? 'dart/dart/checked':
+\   '',
+\ },
+\ 'dart/dart/checked': {
+\   'command': 'dart',
+\   'cmdopt': '--enable-type-checks',
+\   'tempfile': '%{tempname()}.dart',
+\ },
+\ 'dart/dart/production': {
+\   'command': 'dart',
+\   'tempfile': '%{tempname()}.dart',
+\ },
 \ 'erlang': {
 \   'command': 'escript',
 \ },
@@ -129,11 +148,18 @@ let g:quickrun#default_config = {
 \   'command': 'erb',
 \   'exec': '%c %o -T - %s %a',
 \ },
+\ 'rust': {
+\   'command': 'rustc',
+\   'exec': ['%c %o %s -o %s:p:r', '%s:p:r %a', 'rm -f %s:p:r'],
+\   'tempfile': '%{tempname()}.rs',
+\ },
 \ 'go': {
 \   'type':
+\     executable('8g') || executable('6g') || executable('5g') ?
 \     $GOARCH ==# '386'   ? (s:is_win ? 'go/386/win' : 'go/386'):
 \     $GOARCH ==# 'amd64' ? 'go/amd64':
-\     $GOARCH ==# 'arm'   ? 'go/arm': '',
+\     $GOARCH ==# 'arm'   ? 'go/arm': '' :
+\     executable('go') ? (s:is_win ? 'go/go/win' : 'go/go'): '',
 \ },
 \ 'go/386': {
 \   'exec': ['8g %o -o %s:p:r.8 %s', '8l -o %s:p:r %s:p:r.8',
@@ -156,6 +182,16 @@ let g:quickrun#default_config = {
 \ 'go/arm': {
 \   'exec': ['5g %o -o %s:p:r.5 %s', '5l -o %s:p:r %s:p:r.5',
 \            '%s:p:r %a', 'rm -f %s:p:r'],
+\   'tempfile': '%{tempname()}.go',
+\   'output_encode': 'utf-8',
+\ },
+\ 'go/go': {
+\   'exec': ['cd %s:p:h \&\& go run %s:p:t'],
+\   'tempfile': '%{tempname()}.go',
+\   'output_encode': 'utf-8',
+\ },
+\ 'go/go/win': {
+\   'exec': ['cmd /c (cd %s:p:h ^\& go run %s:p:t)'],
 \   'tempfile': '%{tempname()}.go',
 \   'output_encode': 'utf-8',
 \ },
