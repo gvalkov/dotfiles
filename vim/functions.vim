@@ -9,21 +9,21 @@ func! StatusLine01 ()
     endif
 
     if exists('g:loaded_fugitive') 
-        "let fugitive_branch = substitute(fugitive#statusline(), '.*(\(.*\)).*', '\1', 'g')
-        let status_line .= ' (%{fugitive#branchname()})'
+        let fugitive_branch = substitute(fugitive#statusline(), '.*(\(.*\)).*', '\1', 'g')
+        " let status_line .= "\ branch:\ %{fugitive#head(7)}\ "
     endif
 
-    let status_line .= '%=%04l %04L %3c %3p%%  '
+    let status_line .= '%=%04l %04L %3c %3p%%'
     return status_line
 endfunc
 
 
-function! ResCur()
+func! ResCur()
   if line("'\"") <= line("$")
     normal! g`"
     return 1
   endif
-endfunction
+endfunc
 
 " 
 if !exists(":DiffOrig")
@@ -43,7 +43,7 @@ func! CmdLine(str)
     exe "menu Foo.Bar :" . a:str
     emenu Foo.Bar
     unmenu Foo
-endfunction
+endfunc
 
 
 func! VisualSearch(direction) range
@@ -68,7 +68,7 @@ endfunc
 
 " From github.com/majutsushi's vimrc
 " Automatically create dir to write file to if it doesn't exist
-function! AutoMkDir()
+func! AutoMkDir()
     let required_dir = expand("<afile>:p:h")
     if !isdirectory(required_dir)
         if confirm("Directory '" . required_dir . "' doesn't exist.", "&Abort\n&Create it") != 2
@@ -85,4 +85,21 @@ function! AutoMkDir()
             endif
         endtry
     endif
-endfunction
+endfunc
+
+
+python << EOF
+import vim
+def PySortRemindDates():
+    lines = vim.current.range[:]
+
+    m = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
+
+    def sortkey(line):
+        if not line: return
+        w = line.split()
+        return (m.index(w[2]), int(w[1]))
+
+    vim.current.range[:] = sorted(lines, key=sortkey)
+EOF

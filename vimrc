@@ -14,7 +14,7 @@ set cmdheight=1
 set nrformats-=octal
 set shell=/usr/bin/zsh
 set encoding=utf8
-set clipboard+=unnamedplus "yank to clipboard
+set clipboard=unnamedplus "yank to clipboard
 
 set timeoutlen=500  " map sequence timeout 
 set ttimeoutlen=50  " make esc work faster
@@ -31,7 +31,8 @@ set wildignore=*.swp,*.bak,*.pyc,*.pyo,*.class
 "set scrolloff=2
 "set undofile
 
-set virtualedit=block
+" set virtualedit=block
+set virtualedit=all
 
 set splitbelow
 set splitright
@@ -49,9 +50,6 @@ call pathogen#infect()
 
 " load user functions
 source ~/.vim/functions.vim
-
-" load plugin config
-source ~/.vim/plugins.vim
 
 " load menus
 source ~/.vim/menu.vim
@@ -81,6 +79,7 @@ autocmd!
 "https://github.com/tpope/tpope/blob/master/.vim/plugin/ztemplate.vim
 "flatfoot
 
+
 " Prettiness ---
 syntax on
 
@@ -91,11 +90,11 @@ filetype indent on
 set number nuw=3
 if has('gui_running')
     set guioptions=aic
-    set guifont=Monospace\ Bold\ 10
+    " set guifont=Monospace\ Bold\ 10
     "set guifont=DejaVu\ Sans\ Mono\ 10
     "set guifont=Mensch\ 9
     "set guifont=Droid\ Sans\ Mono\ 10
-    "set guifont=Inconsolata\ 9
+    set guifont=Inconsolata\ 10
     "set guifont=Monaco\ Bold\ 9
 
     "colorscheme wombat
@@ -165,6 +164,7 @@ iabbrev ipdb import ipdb ; ipdb.set_trace()
 iabbrev ppp import pprint; pprint.pprint(
 iabbrev tpdb import trace ; tracer = trace.Trace(ignoredirs=[sys.prefix, sys.exec_prefix,], trace=0, count=1)
 iabbrev isodate <c-r>=strftime("%Y-%m-%d %H:%M:%S")<cr>
+cabbr <expr> %% expand ('%:p:h')
 
 
 " Global map leader
@@ -191,6 +191,9 @@ nnoremap ; :
 
 nnoremap <space>     5<c-e>10j
 nnoremap <backspace> 5<c-y>10k
+
+cmap <C-V> <C-R>*
+vnoremap <C-C> "*y
 
 set pastetoggle=<F10>
 
@@ -220,28 +223,49 @@ map <silent> <leader>2h :runtime! syntax/2html.vim<CR>
 " join line (opposite of S-j)
 nnoremap <silent> <C-J> gEa<CR><ESC>ew 
 
-" taglist
+" Taglist & Tagbar
 nnoremap <silent> <F8> :TlistToggle<CR>
-
-" nerdtree
-map <F3> <Esc>:NERDTreeToggle<cr>
-
-" gundo
-nmap ,u :GundoToggle<CR>
-
-" lusty juggler 
-nmap <silent> <Leader>l :LustyJuggler<CR>
-
-" tagbar
 nnoremap <silent> <F4> :TagbarToggle<CR>
 
-" yankring
-nnoremap <silent> <F11> :YRShow<CR>
+" Search for current visual selection
+vnoremap <silent> * :call VisualSearch('f')<CR>
+vnoremap <silent> # :call VisualSearch('b')<CR>
 
-" lustyjuggler
-nmap <silent> <Leader>j :LustyJuggler<CR>
+" Tabs ---
+map <leader>tn :tabnew<cr>
+map <leader>te :tabedit<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
 
-" fuzzy-finder
+map <silent> <m-1> :tabn 1<cr>
+map <silent> <m-2> :tabn 2<cr>
+map <silent> <m-3> :tabn 3<cr>
+map <silent> <m-4> :tabn 4<cr>
+map <silent> <m-5> :tabn 5<cr>
+map <silent> <m-6> :tabn 6<cr>
+map <silent> <m-7> :tabn 7<cr>
+map <silent> <m-8> :tabn 8<cr>
+map <silent> <m-9> :tabn 9<cr>
+
+
+" Plugin config ---
+
+" nerdstuff
+let NERDTreeDirArrows = 1
+let NERDTreeMinimalUI = 1
+let NERDSpaceDelims = 1
+let NERDTreeShowBookmarks = 1
+let NERDTreeMapActivateNode = ''
+let NERDTreeChDirMode = 2
+let NERDTreeIgnore = ['\.pyc$', '\.pyo$', '\.swp$', '\~$',]
+let NERDTreeSortOrder = ['\.py$', '*']
+map <F3> <Esc>:NERDTreeToggle<cr>
+
+" fuf
+let g:fuf_modesDisable = []
+let g:fuf_mrufile_maxItem = 400
+let g:fuf_mrucmd_maxItem = 400
+
 nnoremap <silent> sb     :FufBuffer<CR>
 nnoremap <silent> sF     :FufFileWithCurrentBufferDir<CR>
 nnoremap <silent> sf     :FufFileWithFullCwd<CR>
@@ -262,26 +286,59 @@ nnoremap <silent> s<C-i> :FufBookmarkDirAdd<CR>
 nnoremap <silent> st     :FufTag<CR>
 nnoremap <silent> sT     :FufTag!<CR>
 
-" Search for current visual selection
-vnoremap <silent> * :call VisualSearch('f')<CR>
-vnoremap <silent> # :call VisualSearch('b')<CR>
+" conqueterm
+let g:ConqueTerm_CWInsert = 1
+let g:ConqueTerm_ReadUnfocused = 1
 
+" thesaurus
+let g:thesaurus_file = "/usr/share/mythes/th_en_US_v2"
 
-" Tabs ---
-map <leader>tn :tabnew<cr>
-map <leader>te :tabedit<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
+" easymotion (not sure if I like this yet)
+let g:EasyMotion_keys = 'fjdkslewio' 
 
-map <silent> <m-1> :tabn 1<cr>
-map <silent> <m-2> :tabn 2<cr>
-map <silent> <m-3> :tabn 3<cr>
-map <silent> <m-4> :tabn 4<cr>
-map <silent> <m-5> :tabn 5<cr>
-map <silent> <m-6> :tabn 6<cr>
-map <silent> <m-7> :tabn 7<cr>
-map <silent> <m-8> :tabn 8<cr>
-map <silent> <m-9> :tabn 9<cr>
+" yankring
+let g:yankring_history_file = '.yankring_history'
+nnoremap <silent> <F11> :YRShow<CR>
+
+" gundo
+let g:gundo_right = 1
+let g:gundo_width = 60
+nmap ,u :GundoToggle<CR>
+
+" lustyjuggler 
+let g:LustyJugglerShowKeys = 'a'
+nmap <silent> <Leader>j :LustyJuggler<CR>
+
+" syntastic
+let g:syntastic_enable_signs = 1
+let g:syntastic_quiet_warnings = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_auto_jump = 0 
+
+" remove fugitive buffers
+autocmd BufReadPost fugitive://* set bufhidden=delete
+
+" haskellmode
+let g:haddock_browser = '/usr/bin/firefox'
+au BufEnter *.hs compiler ghc
+
+" notes
+let g:notes_directory = "~/dropbox/notes"
+let g:notes_suffix = '.note'
+let g:notes_smart_quotes = 1
+
+" python syntax
+let python_highlight_all = 0
+
+" pydiction
+"let g:pydiction_location = "~/.vim/bundle/pydiction/complete-dict"
+
+" rope
+let ropevim_vim_completion = 1
+let ropevim_extended_complete = 1
+
+" delimit mate
+let delimitMate_smart_quotes = 0
 
 
 " Commands ---
@@ -295,7 +352,7 @@ set laststatus=2
 set statusline=%!StatusLine01()
 
 
-" Viminfo --
+" Viminfo ---
 " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
 "  '10  :  marks will be remembered for up to 10 previously edited files
 "  "100 :  will save up to 100 lines for each register
@@ -306,34 +363,38 @@ set viminfo='30,\"100,:40,%,n~/.viminfo
 
 " autocmd BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/bash" | execute 'silent !chmod u+x <afile>' | endif | end
 
+
 " Auto commands ---
 augroup resCur
   autocmd!
   autocmd BufWinEnter * call ResCur()
 augroup END
 
-autocmd InsertLeave * set nocul
-autocmd InsertEnter * set cul
+au InsertLeave * set nocul
+au InsertEnter * set cul
 
-autocmd BufNewFile,BufWritePre * call AutoMkDir()
+au BufNewFile,BufWritePre * call AutoMkDir()
+
 
 " File templates ---
-autocmd BufNewFile **/setup.py  silent! 0r ~/.vim/templates/setup.py
-autocmd BufNewFile **/build.xml silent! 0r ~/.vim/templates/build.xml
-autocmd BufNewFile **/Makefile  silent! 0r ~/.vim/templates/Makefile
+au BufNewFile **/setup.py  silent! 0r ~/.vim/templates/setup.py
+au BufNewFile **/build.xml silent! 0r ~/.vim/templates/build.xml
+au BufNewFile **/Makefile  silent! 0r ~/.vim/templates/Makefile
 
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType python set listchars=tab:>.,trail:.,extends:#,nbsp:.
+au FileType python set omnifunc=pythoncomplete#Complete
+au FileType python set listchars=tab:>.,trail:.,extends:#,nbsp:.
 
-autocmd BufReadPre  *.pdf setlocal binary
-autocmd FileReadCmd *.doc execute "read! antiword \"<afile>\""
 
-autocmd BufRead  *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\" 
-autocmd BufRead  *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m 
-autocmd BufWrite *.py :call DeleteTrailingWS()
+" File type overrides ---
+au BufReadPre  *.pdf setlocal binary
+au FileReadCmd *.doc execute "read! antiword \"<afile>\""
 
-autocmd BufNewFile,BufRead *.jinja set syntax=htmljinja
-autocmd BufNewFile,BufRead *.jinja2 set syntax=htmljinja
-autocmd BufNewFile,BufRead *.mako set ft=mako
+au BufRead  *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\" 
+au BufRead  *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m 
+au BufWrite *.py :call DeleteTrailingWS()
+au FileType notes let b:delimitMate_autoclose = 0
+
+au BufNewFile,BufRead *.jinja set syntax=htmljinja
+au BufNewFile,BufRead *.jinja2 set syntax=htmljinja
+au BufNewFile,BufRead *.mako set ft=mako
 autocmd BufNewFile,BufRead *.jelly set ft=xml
-
