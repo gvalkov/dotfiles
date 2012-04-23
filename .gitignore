@@ -3,3 +3,8 @@
 *.egg-info/
 
 vim/vim/haskellmode.config
+xmonad/xmonad.errors
+xmonad/xmonad.hi
+xmonad/xmonad.o
+xmonad/xmonad-*-linux
+

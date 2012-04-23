@@ -3,5 +3,10 @@
 username = "Georgi Valkov"
 verbose = True
 
-#[extensions]
+[extensions]
+hgext.bookmarks = 
+hgext.git =
+hgext.color = 
+hgext.pager = 
+
 #[hooks]

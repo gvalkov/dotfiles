@@ -11,6 +11,7 @@ ln -svnf `c gitignore`      ~/.gitignore
 ln -svnf `c hgrc`           ~/.hgrc
 
 ln -svnf `c tidyrc`         ~/.tidyrc
-#ln -svnf `c xinitrc`        ~/.xinitrc
 ln -svnf `c screenrc`       ~/.screenrc
+ln -snvf `c xmonad`         ~/.xmonad
+#ln -svnf `c xinitrc`        ~/.xinitrc
 #ln -svnf `c stalonetrayrc`  ~/.stalonetrayrc
