@@ -59,6 +59,7 @@ import XMonad.Layout.Grid
 import XMonad.Util.EZConfig (mkKeymap)
 
 
+
 -- Utility functions
 join :: [a] -> [[a]] -> [a]
 join delim l = concat $ intersperse delim l
@@ -314,18 +315,7 @@ manage_hook = namedScratchpadManageHook scratchpads <+> composeAll
     ]
 
  
-------------------------------------------------------------------------
--- Event handling
- 
--- Defines a custom handler function for X Events. The function should
--- return (All True) if the default handler is to be run afterwards. To
--- combine event hooks use mappend or mconcat from Data.Monoid.
---
--- * NOTE: EwmhDesktops users should use the 'ewmh' function from
--- XMonad.Hooks.EwmhDesktops to modify their defaultConfig as a whole.
--- It will add EWMH event handling to your custom event hooks by
--- combining them with ewmhDesktopsEventHook.
---
+-- Event config
 event_hook = mempty
 
 log_hook = do ewmhDesktopsLogHook
