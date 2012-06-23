@@ -31,8 +31,8 @@ set wildignore=*.swp,*.bak,*.pyc,*.pyo,*.class
 "set scrolloff=2
 "set undofile
 
-" set virtualedit=block
-set virtualedit=all
+set virtualedit=block
+" set virtualedit=all
 
 set splitbelow
 set splitright
@@ -90,15 +90,16 @@ filetype indent on
 set number nuw=3
 if has('gui_running')
     set guioptions=aic
-    " set guifont=Monospace\ Bold\ 10
-    "set guifont=DejaVu\ Sans\ Mono\ 10
-    "set guifont=Mensch\ 9
-    "set guifont=Droid\ Sans\ Mono\ 10
+    " set guifont=Monospace\ 10
+    " set guifont=DejaVu\ Sans\ Mono\ 9
+    " set guifont=Mensch\ 9
+    " set guifont=Droid\ Sans\ Mono\ 10
     set guifont=Inconsolata\ 10
-    "set guifont=Monaco\ Bold\ 9
+    " set guifont=Monaco\ Bold\ 9
 
     "colorscheme wombat
-    colorscheme ir_black
+    " colorscheme ir_black
+    colorscheme zenburn
     "colorscheme solarized
     "colorscheme blackboard
     set background=dark
@@ -164,6 +165,7 @@ iabbrev ipdb import ipdb ; ipdb.set_trace()
 iabbrev ppp import pprint; pprint.pprint(
 iabbrev tpdb import trace ; tracer = trace.Trace(ignoredirs=[sys.prefix, sys.exec_prefix,], trace=0, count=1)
 iabbrev isodate <c-r>=strftime("%Y-%m-%d %H:%M:%S")<cr>
+"iabbrev vlcnow <C-R>=system('vlc-get-current-position.sh')<CR>
 cabbr <expr> %% expand ('%:p:h')
 
 
@@ -230,6 +232,12 @@ nnoremap <silent> <F4> :TagbarToggle<CR>
 " Search for current visual selection
 vnoremap <silent> * :call VisualSearch('f')<CR>
 vnoremap <silent> # :call VisualSearch('b')<CR>
+
+" Emacs compatibility ---
+inoremap <C-g> <Esc>
+vnoremap <C-g> <Esc>
+onoremap <C-g> <Esc>
+nnoremap <C-g> <Esc>
 
 " Tabs ---
 map <leader>tn :tabnew<cr>
@@ -315,12 +323,22 @@ let g:syntastic_quiet_warnings = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_auto_jump = 0 
 
+" clojure
+let g:vimclojure#HighlightBuiltins = 1
+let g:vimclojure#ParenRainbow = 1
+
+" zenburn
+let g:zenburn_high_Contrast = 1
+let g:zenburn_color_also_Ignore = 1
+" let g:zenburn_alternate_Error = 1
+" let g:zenburn_unified_CursorColumn = 1
+
 " remove fugitive buffers
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
 " haskellmode
 let g:haddock_browser = '/usr/bin/firefox'
-au BufEnter *.hs compiler ghc
+" au BufEnter *.hs compiler ghc
 
 " notes
 let g:notes_directory = "~/dropbox/notes"
@@ -337,9 +355,13 @@ let python_highlight_all = 0
 let ropevim_vim_completion = 1
 let ropevim_extended_complete = 1
 
+" utl
+:nmap <F5> :Utl ol<cr>
+:nmap <2-LeftMouse> :Utl ol<cr>
+
 " delimit mate
 let delimitMate_smart_quotes = 0
-
+" let delimitMate_autoclose = 0
 
 " Commands ---
 " Better use SudoWrite from vim-eunuch
@@ -392,7 +414,9 @@ au FileReadCmd *.doc execute "read! antiword \"<afile>\""
 au BufRead  *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\" 
 au BufRead  *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m 
 au BufWrite *.py :call DeleteTrailingWS()
+
 au FileType notes let b:delimitMate_autoclose = 0
+" au FileType notes nmap <buffer>  <leader><Space> :NoteToggleCheckbox<CR>
 
 au BufNewFile,BufRead *.jinja set syntax=htmljinja
 au BufNewFile,BufRead *.jinja2 set syntax=htmljinja

@@ -32,3 +32,6 @@ gundo.git               https://github.com/sjl/gundo.vim.git
 zoomwin.git             https://github.com/vim-scripts/ZoomWin.git
 ack.git                 https://github.com/mileszs/ack.vim.git
 coffee-script.git       https://github.com/kchmck/vim-coffee-script.git
+utl.git                 https://github.com/vim-scripts/utl.vim.git
+clojure.git             https://github.com/vim-scripts/VimClojure
+slime.git               https://github.com/jpalardy/vim-slime.git
