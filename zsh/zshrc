@@ -6,7 +6,7 @@ alias lla="ll -ld *(-/DN)"
 alias h='history'
 alias f='find | grep'
 
-alias c="cd"
+alias c="cats"
 
 alias   ..='cd ..'
 alias cd..='cd ..'
@@ -145,6 +145,8 @@ chpwd_functions+='vcs_repo_chpwd_hook'
 venvw=`which virtualenvwrapper.sh` 
 [[ ($? -eq 0) && (-n $WORKON_HOME) ]] && source $venvw
 
+# autojump
+[[ -f /usr/share/autojump/autojump.zsh ]] && source /usr/share/autojump/autojump.zsh
 
 for s (~/.zfunc/*.zsh(x)) source $s
 [[ -f $HOME/.zshrc.local ]] && . $HOME/.zshrc.local

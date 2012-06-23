@@ -152,6 +152,7 @@ keymap = \conf -> mkKeymap conf $
     ,( "M-r" ,    spawn $ join " " dmenu_run_cmd)
     ,( "M-f" ,    spawn "firefox")
     ,( "M-g" ,    spawn "gvim")
+    ,( "M-S-e" ,  spawn "emacs")
     ,( "M-e" ,    spawn "dolphin")
     ,( "C-A-l" ,  spawn "firefox")
 
@@ -159,7 +160,7 @@ keymap = \conf -> mkKeymap conf $
     ,( "M-c" ,    kill                             ) 
     ,( "M-n" ,    refresh                          ) 
     ,( "M-z" ,    warpToWindow (1/2) (1/2)         ) 
-    ,( "M-x" ,    currentTopicAction myTopicConfig ) 
+    {- ,( "M-x" ,    currentTopicAction myTopicConfig )  -}
     ,( "M-S-g" ,  gotoMenu ) 
 
     -- focus ops
@@ -294,8 +295,8 @@ layout_hook = smartBorders $
     delta   = 3/100
 
     standard_layouts = smartBorders (tiled ||| Mirror tiled ||| Full)
-    skypeRoster = (ClassName "Skype") `And` (Not (Title "Options")) `And` (Not (Role "Chats")) `And` (Not (Role "CallWindowForm"))
- 
+    skypeRoster = (ClassName "Skype") `And` (Not (Title "Options")) `And` (Not (Title "File Transfers")) `And` (Not (Role "Chats")) `And` (Not (Role "CallWindowForm"))
+
 
 -- Window rules:
 manage_hook = namedScratchpadManageHook scratchpads <+> composeAll

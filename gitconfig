@@ -62,6 +62,7 @@
     nb = checkout -b
     wc = whatchanged
     cp = cherry-pick
+    cf = cat-file
     tags = log -l -n1
     summary = log --oneline
 
@@ -82,6 +83,8 @@
 
     lost = "!git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Creset %C(white)%ai%Creset %f' --stdin | awk '/^SHA1/ {sub(\"SHA1: \", \"\"); print}'"
     heads = !"git log origin/master.. --format='%Cred%h%Creset;%C(yellow)%an%Creset;%H;%C(white)%f%Creset' | git name-rev --stdin --always --name-only | column -t -s';'"
+
+    rm-merged = "!git branch --merged | grep -v '^*' | grep -v 'master' | xargs git branch -d"
 
 [gui]
     fontdiff = -family terminus -size 9 -weight normal -slant roman -underline 0 -overstrike 0
