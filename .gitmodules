@@ -10,3 +10,6 @@
 [submodule "bin"]
 	path = bin
 	url = git@github.com:gvalkov/dotfiles-bin.git
+[submodule "emacs"]
+	path = emacs
+	url = git@github.com:gvalkov/dotfiles-emacs.git
