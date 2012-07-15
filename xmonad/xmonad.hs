@@ -1,4 +1,5 @@
 -- Imports
+{-# LANGUAGE NoMonomorphismRestriction #-}
 
 import XMonad
 import System.IO
@@ -26,6 +27,7 @@ import XMonad.Actions.WindowBringer
 import XMonad.Actions.Submap
 import XMonad.Actions.FindEmptyWorkspace
 import XMonad.Actions.MouseGestures
+import XMonad.Actions.GridSelect
 
 -- Prompts
 import XMonad.Prompt                
@@ -81,7 +83,6 @@ scratchpads = [
        "konsole -p tabtitle=ipython-konsole -e ipython"
        (title =? "ipython-konsole")
        (customFloating $ W.RationalRect (1/4) 0 (1/2) 1)
-
     , NS "notes"
         "gvim --role vimnotes -c ':Note index'"
         (role =? "vimnotes")
@@ -146,6 +147,8 @@ xpconfig =
         , showCompletionOnTab = False
         }
 
+gsconfig1 = defaultGSConfig { gs_cellheight = 30, gs_cellwidth = 100 }
+
 
 keymap = \conf -> mkKeymap conf $
     [( "M-a" ,    spawn $ XMonad.terminal conf)
@@ -190,6 +193,9 @@ keymap = \conf -> mkKeymap conf $
     ,( "M-S-n", namedScratchpadAction scratchpads "notes")
     ,( "M-S-i", namedScratchpadAction scratchpads "ipython")
     ,( "M-S-a", namedScratchpadAction scratchpads "konsole")
+
+    {- ,( "M-y",  defaultGSConfig) -}
+    ,( "M-y",  goToSelected gsconfig1)
 
     -- prompts
     ,( "M-p",   xmonadPrompt xpconfig     ) 
@@ -265,8 +271,13 @@ mouse_keymap (XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
                                        >> windows W.shiftMaster))
 
+    -- backward/forward in dolphin and other file managers
     , ((0, button9),          (\w -> Paste.sendKey altMask xK_Right))
     , ((0, button8),          (\w -> Paste.sendKey altMask xK_Left))
+
+    -- next tab/previous firefox tab
+    , ((controlMask, button8),  (\w -> Paste.sendKey controlMask xK_Page_Up))
+    , ((controlMask, button9),  (\w -> Paste.sendKey controlMask xK_Page_Down))
     , ((altMask, button9),    (\w -> Paste.sendKey altMask xK_Up))
     ] 
     where
