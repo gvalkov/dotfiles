@@ -41,12 +41,12 @@ set hidden
 set spellfile=~/.vim/dict.add
 
 " load bundle plugins
-source ~/.vim/bundle/pathogen.git/autoload/pathogen.vim
+" source ~/.vim/bundle/pathogen.git/autoload/pathogen.vim
 
-let g:pathogen_disabled = ['pyflakes.git', 'easytags.git', 'ropevim.hg', 'ropemode.hg']
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
-call pathogen#infect()
+" let g:pathogen_disabled = ['pyflakes.git', 'easytags.git', 'ropevim.hg', 'ropemode.hg']
+" call pathogen#runtime_append_all_bundles()
+" call pathogen#helptags()
+" call pathogen#infect()
 
 " load user functions
 source ~/.vim/functions.vim
@@ -189,8 +189,6 @@ map <C-Space> <C-x><C-o>
 nnoremap <C-e> 5<C-e>
 nnoremap <C-y> 5<C-y>
 
-nnoremap ; :
-
 nnoremap <space>     5<c-e>10j
 nnoremap <backspace> 5<c-y>10k
 
@@ -238,6 +236,12 @@ inoremap <C-g> <Esc>
 vnoremap <C-g> <Esc>
 onoremap <C-g> <Esc>
 nnoremap <C-g> <Esc>
+nnoremap <M-g> n :cnext<CR>
+nnoremap <M-;> ,c<space>
+vnoremap <M-;> ,c<space>
+onoremap <M-;> ,c<space>
+inoremap <M-;> ,c<space>
+
 
 " Tabs ---
 map <leader>tn :tabnew<cr>
@@ -274,18 +278,18 @@ let g:fuf_modesDisable = []
 let g:fuf_mrufile_maxItem = 400
 let g:fuf_mrucmd_maxItem = 400
 
-nnoremap <silent> sb     :FufBuffer<CR>
+nnoremap <silent> ,l     :FufBuffer<CR>
 nnoremap <silent> sF     :FufFileWithCurrentBufferDir<CR>
-nnoremap <silent> sf     :FufFileWithFullCwd<CR>
-nnoremap <silent> sc     :FufCoverageFile<CR>
+nnoremap <silent> ,f     :FufFileWithFullCwd<CR>
+nnoremap <silent> ,c     :FufCoverageFile<CR>
 nnoremap <silent> sC     :FufCoverageFileChange<CR>
 nnoremap <silent> s<C-c> :FufCoverageFileRegister<CR>
 nnoremap <silent> sd     :FufDirWithCurrentBufferDir<CR>
 nnoremap <silent> sD     :FufDirWithFullCwd<CR>
 nnoremap <silent> s<C-d> :FufDir<CR>
 nnoremap <silent> sr     :FufMruCmd<CR>
-nnoremap <silent> sm     :FufMruFile<CR>
-cnoremap <silent> sM     :FufMruFileInCwd<CR>
+nnoremap <silent> ,m     :FufMruFile<CR>
+cnoremap <silent> ,M     :FufMruFileInCwd<CR>
 nnoremap <silent> su     :FufBookmarkFile<CR>
 nnoremap <silent> s<C-u> :FufBookmarkFileAdd<CR>
 vnoremap <silent> s<C-u> :FufBookmarkFileCddAsSelectedText<CR>
