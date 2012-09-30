@@ -2,6 +2,21 @@ function mcd () {
     mkdir -p "$1" && cd "$1";
 }
 
+function vw () {
+    vim `which $1`
+}
+
+function cd () {
+    case "$*" in
+        "...")
+            cd ../../ ;;
+        "....")
+            cd ../../../ ;;
+        *)
+            builtin cd "$@";;
+    esac
+}
+
 function _cmd_on_last () {
     _tmp=$(mktemp)
     trap "rm $_tmp" SIGINT SIGTERM EXIT
@@ -18,6 +33,6 @@ function gl () {
     _cmd_on_last gvim
 }
 
-insert_sudo () { zle beginning-of-line; zle -U "sudo "; }
+function insert_sudo () {zle beginning-of-line; zle -U "sudo ";}
 zle -N insert-sudo insert_sudo
 bindkey "^[s" insert-sudo

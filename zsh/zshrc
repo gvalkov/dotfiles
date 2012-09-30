@@ -12,12 +12,15 @@ alias   ..='cd ..'
 alias cd..='cd ..'
 alias cd...='cd ../../'
 alias cd....='cd ../../../'
+alias cd/='cd /'
+alias cd-='cd -'
 alias gcd='cd $(git rev-parse --show-toplevel)'
+alias md='mkdir -p'
 
 alias d='dirs -v'
 alias g='git'
 alias v='vim'
-alias g='gvim'
+alias g='git'
 alias gt='gvim --remote-tab'
 alias _='sudo'
 
@@ -27,7 +30,7 @@ alias agi='sudo apt-get install'
 alias acs='apt-cache search'
 alias acss='apt-cache show'
 alias ayi='sudo yum install'
-alias ays='sudo yum search'
+alias ays='sudo yum -C search'
 alias jobs='jobs -l'
 alias tree='tree -F -C'
 #alias ack='ack-grep'
@@ -39,6 +42,7 @@ alias ctags="ctags --fields=+l --c-kinds=+p --c++-kinds=+p"
 # global/suffix aliases
 alias -s zip='zipinfo'
 alias -g G='|& egrep -i'
+alias -g L='|& less'
 alias -g EG='|& egrep '
 alias -g EH='|& head '
 alias -g ET='|& tail -15 '
@@ -108,11 +112,27 @@ setopt zle
 
 
 # completion
-zstyle :compinstall filename '/home/gv/.zshrc'
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+setopt auto_menu
+setopt always_to_end
+setopt complete_in_word
 setopt nonomatch
+
 autoload -Uz compinit
 compinit
+
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+zstyle ':completion:*:*:*:*:processes' command "ps -u $(whoami) -o pid,user,comm -w -w"
+
+zstyle ':completion:*' use-cache 1
+zstyle ':completion:*' cache-path ~/.local/tmp/
+
+zstyle ':completion:*' accept-exact '*(N)'
+zstyle ':completion:*' file-sort name
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
+# zstyle ':completion:*:*:*:*:*' menu select
+# zstyle ':completion:*:*:*:users' ignored-patterns ...
+# zstyle ':completion:*' squeeze-slashes true
 
 
 # limits
@@ -140,9 +160,11 @@ precmd_functions+='vcs_repo_precmd_hook'
 preexec_functions+='vcs_repo_preexec_hook'
 chpwd_functions+='vcs_repo_chpwd_hook'
 
+# set tty tabs
+tabs 5,9,13,17,21,25,29,33,37,41
 
 # virtualenvwrapper
-venvw=`which virtualenvwrapper.sh` 
+venvw=`which virtualenvwrapper.sh`
 [[ ($? -eq 0) && (-n $WORKON_HOME) ]] && source $venvw
 
 # autojump

@@ -18,12 +18,22 @@ export PIP_DOWNLOAD_CACHE=~/.pip/download-cache
 # program options
 export DOTREMINDERS="$HOME/org/reminders"
 
+
+# go
+export GOROOT="$HOME/source/go"
+
 eval `dircolors -b`
 
 fpath=(~/.zfunc $fpath)
 typeset -U fpath
 
-path=($HOME/.local/bin $HOME/bin $HOME/.dotfiles-bin $HOME/.dotfiles/util-co/bin $path)
+path=(\
+    $HOME/.local/bin \
+    $HOME/bin $HOME/.dotfiles-bin \
+    $HOME/.dotfiles/util-co/bin \
+    $HOME/.local/go/bin \
+    $GOROOT/bin \
+    $path )
 typeset -U path
 
 [[ -f $HOME/.zshenv.local ]] && . $HOME/.zshenv.local

@@ -25,7 +25,7 @@ def spark_print(ints, stream=None):
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
-        sparks = map(int, sys.argv[1:])
+        sparks = map(float, sys.argv[1:])
         spark_print(sparks)
         print
     else:

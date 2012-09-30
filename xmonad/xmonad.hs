@@ -22,7 +22,7 @@ import XMonad.Actions.CycleWindows
 import XMonad.Actions.Warp
 import XMonad.Actions.Search
 import XMonad.Actions.TopicSpace
-import XMonad.Actions.FloatSnap 
+import XMonad.Actions.FloatSnap
 import XMonad.Actions.WindowBringer
 import XMonad.Actions.Submap
 import XMonad.Actions.FindEmptyWorkspace
@@ -30,8 +30,8 @@ import XMonad.Actions.MouseGestures
 import XMonad.Actions.GridSelect
 
 -- Prompts
-import XMonad.Prompt                
-import XMonad.Prompt.Man           
+import XMonad.Prompt
+import XMonad.Prompt.Man
 import XMonad.Prompt.Ssh
 import XMonad.Prompt.Input
 import XMonad.Prompt.Workspace
@@ -46,6 +46,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.ManageHook
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.FadeInactive
 
 -- Layouts
 import XMonad.Layout.NoBorders
@@ -68,26 +69,27 @@ join delim l = concat $ intersperse delim l
 
 spawnOn :: String -> String -> X ()
 spawnOn workspace program = do
-                            spawn program     
+                            spawn program
                             windows $ W.greedyView workspace
 
 
 scratchpads :: [NamedScratchpad]
 scratchpads = [
-      NS "konsole" 
-       "konsole -p tabtitle=konsole-scratchpad"
-       (title =? "konsole-scratchpad") 
-       (customFloating $ W.RationalRect (1/4) 0 (1/2) 1)
+  NS "konsole"
+    "gnome-terminal --role=scratchpad-terminal"
+    (role =? "scratchpad-terminal")
+    (customFloating $ W.RationalRect (1/4) 0 (1/2) 1)
 
-    , NS "ipython"
-       "konsole -p tabtitle=ipython-konsole -e ipython"
-       (title =? "ipython-konsole")
-       (customFloating $ W.RationalRect (1/4) 0 (1/2) 1)
-    , NS "notes"
-        "gvim --role vimnotes -c ':Note index'"
-        (role =? "vimnotes")
-        (customFloating $ W.RationalRect (1/4) 0 (1/2) 1)
-    ] where role = stringProperty "WM_WINDOW_ROLE"
+  , NS "ipython"
+    "gnome-terminal --role=ipython-terminal -e ipython"
+    (role =? "ipython-terminal")
+    (customFloating $ W.RationalRect (1/4) 0 (1/2) 1)
+
+  , NS "notes"
+    "gvim --role vimnotes -c ':Note index'"
+    (role =? "vimnotes")
+    (customFloating $ W.RationalRect (1/4) 0 (1/2) 1)
+  ] where role = stringProperty "WM_WINDOW_ROLE"
 
 
 topics :: [Topic]
@@ -104,7 +106,7 @@ topics =
 
 myTopicConfig = TopicConfig
     { topicDirs = M.fromList $
-        [ (" -", "./"      ) 
+        [ (" -", "./"      )
         , ("xmonad"   , ".xmonad" )
         , ("dev"      , "./source"  )
         , ("music"    , "./music" )
@@ -130,7 +132,7 @@ dmenu_run_cmd = [
     ]
 
 
-xpconfig = 
+xpconfig =
     XPC { font              = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
         , bgColor           = "#333333"
         , fgColor           = "#FFFFFF"
@@ -160,14 +162,14 @@ keymap = \conf -> mkKeymap conf $
     ,( "C-A-l" ,  spawn "firefox")
 
     -- actions
-    ,( "M-c" ,    kill                             ) 
-    ,( "M-n" ,    refresh                          ) 
-    ,( "M-z" ,    warpToWindow (1/2) (1/2)         ) 
+    ,( "M-c" ,    kill                             )
+    ,( "M-n" ,    refresh                          )
+    ,( "M-z" ,    warpToWindow (1/2) (1/2)         )
     {- ,( "M-x" ,    currentTopicAction myTopicConfig )  -}
-    ,( "M-S-g" ,  gotoMenu ) 
+    ,( "M-S-g" ,  gotoMenu )
 
     -- focus ops
-    ,( "M-<Tab>"   , windows W.focusDown   ) 
+    ,( "M-<Tab>"   , windows W.focusDown   )
 
     ,( "M-b"       , rotUnfocusedUp)
     ,( "M-n"       , rotUnfocusedDown)
@@ -177,9 +179,9 @@ keymap = \conf -> mkKeymap conf $
     ,( "M-C-i"     , rotFocusedUp)
     ,( "M-C-u"     , rotFocusedDown)
 
-    ,( "M-j"        , windows W.focusDown   ) 
-    ,( "M-k"        , windows W.focusUp     ) 
-    ,( "M-m"        , windows W.focusMaster ) 
+    ,( "M-j"        , windows W.focusDown   )
+    ,( "M-k"        , windows W.focusUp     )
+    ,( "M-m"        , windows W.focusMaster )
     ,( "M-<Return>" , windows W.swapMaster  )
     ,( "M-S-j"      , windows W.swapDown    )
     ,( "M-S-k"      , windows W.swapUp      )
@@ -198,19 +200,19 @@ keymap = \conf -> mkKeymap conf $
     ,( "M-y",  goToSelected gsconfig1)
 
     -- prompts
-    ,( "M-p",   xmonadPrompt xpconfig     ) 
-    ,( "M-s",   shellPrompt xpconfig      ) 
-    ,( "M-C-p",	runOrRaisePrompt xpconfig ) 
+    ,( "M-p",   xmonadPrompt xpconfig     )
+    ,( "M-s",   shellPrompt xpconfig      )
+    ,( "M-C-p",	runOrRaisePrompt xpconfig )
 
     -- expand/shrink master area
-    ,( "M-h"        , sendMessage Shrink ) 
-    ,( "M-l"        , sendMessage Expand ) 
+    ,( "M-h"        , sendMessage Shrink )
+    ,( "M-l"        , sendMessage Expand )
 
     -- push window back into tiling
     ,( "M-t"        , withFocused $ windows . W.sink )
 
-    ,( "M-<Space>"  , sendMessage NextLayout             ) 
-    ,( "M-S-<Space>", setLayout $ XMonad.layoutHook conf ) 
+    ,( "M-<Space>"  , sendMessage NextLayout             )
+    ,( "M-S-<Space>", setLayout $ XMonad.layoutHook conf )
 
     -- increment/decrement the number of windows in the master area
     ,( "M-,"        , sendMessage (IncMasterN 1)    )
@@ -226,7 +228,7 @@ keymap = \conf -> mkKeymap conf $
     ,( "M-`"         , toggleWS)
     ,( "M-S-<Right>" , shiftToNext)
     ,( "M-S-<Left>"  , shiftToPrev)
-    
+
     ]
     ++
 
@@ -242,7 +244,7 @@ keymap = \conf -> mkKeymap conf $
     [ ("M-" ++ k:""  , screenWorkspace s >>= flip whenJust (windows . W.view)) | (k, s) <- zip "w" [0..] ]
     ++
 
-    -- switch client to xinerama screen - mod-shift-{w,e,r} 
+    -- switch client to xinerama screen - mod-shift-{w,e,r}
     [ ("M-S-" ++ k:"" , screenWorkspace s >>= flip whenJust (windows . W.shift)) | (k, s) <- zip "w" [0..] ]
 
 
@@ -253,7 +255,7 @@ button8     =  8 :: Button
 button9     =  9 :: Button
 
 mouse_keymap (XConfig {XMonad.modMask = modm}) = M.fromList $
- 
+
     -- mod-button1, Set the window to floating mode and move by dragging
     [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
                                        >> snapMagicMove (Just 25) (Just 25) w))
@@ -266,7 +268,7 @@ mouse_keymap (XConfig {XMonad.modMask = modm}) = M.fromList $
     {- , ((modm, button2), (\w -> focus w >> windows W.shiftMaster)) -}
 
     , ((modm, button2), mouseGesture gestures)
- 
+
     -- mod-button3, Set the window to floating mode and resize by dragging
     , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
                                        >> windows W.shiftMaster))
@@ -279,34 +281,36 @@ mouse_keymap (XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((controlMask, button8),  (\w -> Paste.sendKey controlMask xK_Page_Up))
     , ((controlMask, button9),  (\w -> Paste.sendKey controlMask xK_Page_Down))
     , ((altMask, button9),    (\w -> Paste.sendKey altMask xK_Up))
-    ] 
+    ]
     where
-    gestures = M.fromList 
-        [ 
+    gestures = M.fromList
+        [
           ([R], \_ -> spawn "qdbus org.mpris.MediaPlayer2.clementine /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next")
         , ([L], \_ -> spawn "qdbus org.mpris.MediaPlayer2.clementine /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous")
         ]
 
 
 -- Layout config
-layout_hook = smartBorders $ 
+layout_hook = smartBorders $
               onWorkspace "skype"  (avoidStruts (withIM (0.15) skypeRoster (Grid))) $
               avoidStruts $ standard_layouts
     where
     -- default tiling algorithm partitions the screen into two panes
     tiled   = Tall nmaster delta ratio
- 
+
     -- The default number of windows in the master pane
     nmaster = 1
- 
+
     -- Default proportion of screen occupied by master pane
     ratio   = 1/2
- 
+
     -- Percent of screen to increment by when resizing panes
     delta   = 3/100
 
     standard_layouts = smartBorders (tiled ||| Mirror tiled ||| Full)
-    skypeRoster = (ClassName "Skype") `And` (Not (Title "Options")) `And` (Not (Title "File Transfers")) `And` (Not (Role "Chats")) `And` (Not (Role "CallWindowForm"))
+    -- skypeRoster = (ClassName "Skype") `And` (Not (Role "ConversationsWindow"))
+    skypeRoster = (ClassName "Skype") `And` (Title "gvalkov.im - Skype™")
+    -- skypeRoster = (ClassName "Skype") `And` (Not (Title "Options")) `And` (Not (Title "File Transfers")) `And` (Not (Role "ConversationsWindow")) `And` (Not (Role "CallWindowForm"))
 
 
 -- Window rules:
@@ -326,18 +330,20 @@ manage_hook = namedScratchpadManageHook scratchpads <+> composeAll
     , className =? "Plasma-desktop" --> doFloat
     ]
 
- 
+
 -- Event config
 event_hook = mempty
 
 log_hook = do ewmhDesktopsLogHook
-              return () 
- 
+              fadeInactiveLogHook fadeAmount
+              return ()
+           where fadeAmount = 0.9
+
 -- Startup hook
 startup_hook = return ()
- 
 
-term = "konsole"
+
+term = "gnome-terminal"
 red_color = "#d46464"
 altMask = mod1Mask
 
@@ -354,7 +360,7 @@ defaults = defaultConfig {
 
         -- colors
         ,normalBorderColor = "#99968b"
-        ,focusedBorderColor = red_color 
+        ,focusedBorderColor = red_color
 
         --- hooks
         , manageHook = manage_hook <+> manageDocks
@@ -362,7 +368,7 @@ defaults = defaultConfig {
         , handleEventHook = event_hook
         , logHook = log_hook
         , startupHook = startup_hook
-        } 
+        }
 
 
 main = do

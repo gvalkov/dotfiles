@@ -5,8 +5,9 @@ verbose = True
 
 [extensions]
 hgext.bookmarks = 
-hgext.git =
+#hgext.git =
 hgext.color = 
 hgext.pager = 
+progress = 
 
 #[hooks]
