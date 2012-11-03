@@ -43,7 +43,7 @@ set spellfile=~/.vim/dict.add
 " load bundle plugins
 " source ~/.vim/bundle/pathogen.git/autoload/pathogen.vim
 
-" let g:pathogen_disabled = ['pyflakes.git', 'easytags.git', 'ropevim.hg', 'ropemode.hg']
+" let g:pathogen_disabled = []
 " call pathogen#runtime_append_all_bundles()
 " call pathogen#helptags()
 " call pathogen#infect()
