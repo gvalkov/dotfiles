@@ -1,0 +1,10 @@
+-R
+--exclude=.svn
+--exclude=.git
+--exclude=.hg
+--exclude=*/build/*
+--python-kinds=-i
+--tag-relative=yes
+--fields=+l 
+--c-kinds=+p 
+--c++-kinds=+p

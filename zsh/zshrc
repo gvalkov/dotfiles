@@ -1,7 +1,4 @@
 # aliases
-alias ls="ls --color=auto -F --group-directories-first"
-alias ll="ls -lsh"
-alias lla="ll -ld *(-/DN)"
 
 alias h='history'
 alias f='find | grep'
@@ -20,24 +17,72 @@ alias md='mkdir -p'
 alias d='dirs -v'
 alias g='git'
 alias v='vim'
-alias g='git'
 alias gt='gvim --remote-tab'
 alias _='sudo'
+alias po='popd'
+alias pu='pushd'
+alias tmuxa='tmux attach-session'
+alias tmuxl='tmux list-sessions'
 
 alias gvimt='gvim --remote-tab'
 alias diff='colordiff'
+alias jobs='jobs -l'
+alias tree='tree -F -C --charset unicode'
+alias tmux='tmux -2'
+#alias ack='ack-grep'
+
+# ls aliases
+alias ls="ls --color=auto -F --group-directories-first"
+alias ll="ls -lsh"
+alias lla="ll -ld *(-/DN)"
+alias l='ls -1A'
+alias lr='ll -R'
+alias lx='ll -XB'
+
+# git aliases
+alias g='git'
+alias gb='git branch'
+alias gbl='git branch -v'
+alias gc='git commit'
+alias gca='git commit --all'
+alias gcs='git show'
+alias gia='git add'
+
+# rsync aliases
+_rsync_base_cmd="rsync -v --progress --human-readable --compress --archive"
+alias rsync-copy="${_rsync_base_cmd}"
+alias rsync-move="${_rsync_base_cmd} --remove-source-files"
+alias rsync-update="${_rsync_base_cmd} --update"
+alias rsync-sync="${_rsync_base_cmd} --update --delete"
+unset _rsync_base_cmd
+
+# debian aliases
 alias agi='sudo apt-get install'
 alias acs='apt-cache search'
 alias acss='apt-cache show'
+alias debf='apt-file search --regexp'
+alias debi='sudo apt-get install'
+alias debI='sudo dpkg -i'
+alias debq='apt-cache show'
+alias debr='sudo apt-get remove'
+alias debs='apt-cache search'
+alias deb-build='time dpkg-buildpackage -rfakeroot -us -uc'
+
+# yum aliases
 alias ayi='sudo yum install'
-alias ays='sudo yum -C search'
-alias jobs='jobs -l'
-alias tree='tree -F -C'
-#alias ack='ack-grep'
+alias ays='sudo yum --noplugins -C search'
+alias yumh="sudo yum history"
+alias yumi='sudo yum install'
+alias yums='sudo yum --noplugins -C search'
+alias yuml='sudo yum --noplugins -C list'
+
 
 alias nautilus="nautilus --no-desktop"
 alias pyclean='rm **/*.(pyc|pyo)'
 alias ctags="ctags --fields=+l --c-kinds=+p --c++-kinds=+p"
+
+# misc aliases
+alias py-http-serve='python3 -m http.server'
 
 # global/suffix aliases
 alias -s zip='zipinfo'
@@ -51,45 +96,49 @@ alias -g XC='| perl -pe "chomp if eof" | xclip -i -selection clipboard'
 alias -g XCP='| perl -pe "chomp if eof" | xclip -i -selection primary'
 alias -g DN='/dev/null'
 
-
 # history
 HISTFILE=~/.histfile
 HISTSIZE=10000
 SAVEHIST=10000
 
-setopt share_history
-setopt histignoredups
-
-setopt hist_verify
-setopt inc_append_history
-setopt extended_history
-setopt hist_expire_dups_first
-setopt hist_ignore_space
-
+setopt SHARE_HISTORY
+setopt INC_APPEND_HISTORY
+setopt EXTENDED_HISTORY
+setopt BANG_HIST
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_SPACE
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_VERIFY
 
 # directories
 DIRSTACKSIZE=10
 #setopt auto_name_dirs
-setopt autopushd
-setopt pushd_ignore_dups
-setopt autocd
-
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
+setopt AUTO_CD
+setopt AUTO_PUSHD
+#setopt CDABLE_VARS
+setopt AUTO_NAME_DIRS
 
 # key bindings
 bindkey -e # emacs mode
-bindkey "\e[1~" beginning-of-line    # Home
-bindkey "\e[4~" end-of-line          # End
-bindkey "\e[5~" beginning-of-history # PageUp
-bindkey "\e[6~" end-of-history       # PageDown
-bindkey "\e[2~" quoted-insert        # Ins
-bindkey "\e[3~" delete-char          # Del
-bindkey "\e[5C" forward-word
-bindkey "\eOc" emacs-forward-word
-bindkey "\e[5D" backward-word
-bindkey "\eOd" emacs-backward-word
+bindkey "\e[1~"  beginning-of-line    # Home
+bindkey "\e[4~"  end-of-line          # End
+bindkey "\e[5~"  beginning-of-history # PageUp
+bindkey "\e[6~"  end-of-history       # PageDown
+bindkey "\e[2~"  quoted-insert        # Ins
+bindkey "\e[3~"  delete-char          # Del
+bindkey "\e[5C"  forward-word
+bindkey "\eOc"   emacs-forward-word
+bindkey "\e[5D"  backward-word
+bindkey "\eOd"   emacs-backward-word
 bindkey "\e\e[C" forward-word
 bindkey "\e\e[D" backward-word
-bindkey "\e[Z" reverse-menu-complete # Shift+Tab
+bindkey "\e[Z"   reverse-menu-complete # Shift+Tab
+bindkey "^[r"    history-incremental-search-forward
 # for rxvt
 bindkey "\e[7~" beginning-of-line # Home
 bindkey "\e[8~" end-of-line       # End
@@ -99,40 +148,97 @@ bindkey "\eOF" end-of-line
 # for freebsd console
 bindkey "\e[H" beginning-of-line
 bindkey "\e[F" end-of-line
+bindkey "^X^E" edit-command-line
 
 # misc
 WORDCHARS='*?_[]~&;!#$%^(){}<>'
+#WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
+setopt MULTIOS
+setopt CLOBBER
+unsetopt BEEP
+unsetopt MAIL_WARNING
+#setopt PRINTEXITVALUE
+setopt INTERACTIVE_comments
+setopt NOTIFY
+setopt LONG_list_jobs
+setopt ZLE
 
-unsetopt beep
-#setopt printexitvalue
-setopt interactivecomments
-setopt notify
-setopt long_list_jobs
-setopt zle
+# tbd
+eval $(dircolors "$HOME/.dotfiles/solarized-dircolors.256dark")
+
+
+# jobs
+setopt LONG_LIST_JOBS
+unsetopt AUTO_RESUME
+setopt NOTIFY
+unsetopt BG_NICE
+#unsetopt HUP
+#unsetopt CHECK_JOBS
+
+# editor
+autoload -Uz edit-command-line
+zle -N edit-command-line
+
+autoload -Uz url-quote-magic
+zle -N self-insert url-quote-magic
 
 
 # completion
-setopt auto_menu
-setopt always_to_end
-setopt complete_in_word
-setopt nonomatch
+setopt AUTO_MENU
+setopt ALWAYS_TO_END
+setopt COMPLETE_IN_WORD
+setopt AUTO_PARAM_SLASH
+setopt PATH_DIRS
+setopt NO_NOMATCH
+setopt CASE_GLOB
 
-autoload -Uz compinit
-compinit
-
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
-zstyle ':completion:*:*:*:*:processes' command "ps -u $(whoami) -o pid,user,comm -w -w"
+autoload -Uz compinit && compinit
 
 zstyle ':completion:*' use-cache 1
-zstyle ':completion:*' cache-path ~/.local/tmp/
+zstyle ':completion:*' cache-path ~/.zcompcache
 
+# completion look & feel
+#zstyle ':completion:*:*:*:*:*' menu select
+zstyle ':completion:*:matches' group 'yes'
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%d'
+zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
+zstyle ':completion:*:descriptions' format ' %F{green}%d %f'
+zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+zstyle ':completion:*' format '%B%F{yellow}%d: %f'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' verbose yes
+
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+
+zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
+zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
+
+# procutils completion
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:*:kill:*' force-list always
+zstyle ':completion:*:*:kill:*' insert-ids single
+
+# path completion
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' file-sort name
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
+zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
+zstyle ':completion:*:-tilde-:*' group-order 'named-directories' 'path-directories' 'users' 'expand'
+zstyle ':completion:*' squeeze-slashes true
 
-# zstyle ':completion:*:*:*:*:*' menu select
-# zstyle ':completion:*:*:*:users' ignored-patterns ...
-# zstyle ':completion:*' squeeze-slashes true
+# history completion
+zstyle ':completion:*:history-words' stop yes
+zstyle ':completion:*:history-words' remove-all-dups yes
+zstyle ':completion:*:history-words' list false
+zstyle ':completion:*:history-words' menu yes
 
 
 # limits
@@ -141,24 +247,13 @@ limit descriptors  1024
 limit coredumpsize 0
 limit -s
 
-
 # prompt
-autoload -Uz colors
+autoload -Uz colors && colors
 autoload -Uz promptinit
 setopt promptsubst
-colors
-promptinit
-prompt mine red yellow vc:0
-
-
-## need to figure out a way to set these from within prompt setup ...
-typeset -ga preexec_functions
-typeset -ga precmd_functions
-typeset -ga chpwd_functions
-
-precmd_functions+='vcs_repo_precmd_hook'
-preexec_functions+='vcs_repo_preexec_hook'
-chpwd_functions+='vcs_repo_chpwd_hook'
+#promptinit
+#prompt mine red yellow vc:0
+PROMPT="%{$fg_bold[red]%}%n%{$reset_color%}.%{$fg_bold[yellow]%}%m %{$fg_bold[white]%}%~ %{$reset_color%}$ "
 
 # set tty tabs
 tabs 5,9,13,17,21,25,29,33,37,41
@@ -168,7 +263,32 @@ venvw=`which virtualenvwrapper.sh`
 [[ ($? -eq 0) && (-n $WORKON_HOME) ]] && source $venvw
 
 # autojump
-[[ -f /usr/share/autojump/autojump.zsh ]] && source /usr/share/autojump/autojump.zsh
+#[[ -f /usr/share/autojump/autojump.zsh ]] && source /usr/share/autojump/autojump.zsh
 
 for s (~/.zfunc/*.zsh(x)) source $s
 [[ -f $HOME/.zshrc.local ]] && . $HOME/.zshrc.local
+
+# syntax highlighting
+source $HOME/.zfunc/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(brackets main)
+ZSH_HIGHLIGHT_STYLES[default]=none
+ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold
+ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=green
+ZSH_HIGHLIGHT_STYLES[alias]=none
+ZSH_HIGHLIGHT_STYLES[builtin]=none
+ZSH_HIGHLIGHT_STYLES[function]=none
+ZSH_HIGHLIGHT_STYLES[command]=none
+ZSH_HIGHLIGHT_STYLES[precommand]=none
+ZSH_HIGHLIGHT_STYLES[commandseparator]=none
+ZSH_HIGHLIGHT_STYLES[hashed-command]=none
+ZSH_HIGHLIGHT_STYLES[path]=none
+ZSH_HIGHLIGHT_STYLES[globbing]=none
+ZSH_HIGHLIGHT_STYLES[history-expansion]=fg=blue
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=none
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=none
+ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=none
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]=fg=yellow
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=yellow
+ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=cyan
+ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=cyan
+ZSH_HIGHLIGHT_STYLES[assign]=none

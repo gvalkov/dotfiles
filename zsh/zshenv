@@ -13,6 +13,7 @@ export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="1;32" #green
 export WORKON_HOME=~/.virtualenvs
 export PIP_DOWNLOAD_CACHE=~/.pip/download-cache
+export TERM=xterm-256color
 
 
 # program options
@@ -21,8 +22,6 @@ export DOTREMINDERS="$HOME/org/reminders"
 
 # go
 export GOROOT="$HOME/source/go"
-
-eval `dircolors -b`
 
 fpath=(~/.zfunc $fpath)
 typeset -U fpath

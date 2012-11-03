@@ -2,19 +2,12 @@ function mcd () {
     mkdir -p "$1" && cd "$1";
 }
 
-function vw () {
-    vim `which $1`
+function cdls () {
+    builtin cd "$1" && ll
 }
 
-function cd () {
-    case "$*" in
-        "...")
-            cd ../../ ;;
-        "....")
-            cd ../../../ ;;
-        *)
-            builtin cd "$@";;
-    esac
+function vw () {
+    vim `which $1`
 }
 
 function _cmd_on_last () {
@@ -25,6 +18,10 @@ function _cmd_on_last () {
     $1 $_tmp
 }
 
+function find-exec {
+    find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
+}
+
 function vl () {
     _cmd_on_last vim
 }
@@ -33,6 +30,10 @@ function gl () {
     _cmd_on_last gvim
 }
 
-function insert_sudo () {zle beginning-of-line; zle -U "sudo ";}
+function insert_sudo () {
+    zle beginning-of-line;
+    zle -U "sudo "
+}
+
 zle -N insert-sudo insert_sudo
 bindkey "^[s" insert-sudo
