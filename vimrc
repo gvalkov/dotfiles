@@ -41,12 +41,12 @@ set hidden
 set spellfile=~/.vim/dict.add
 
 " load bundle plugins
-" source ~/.vim/bundle/pathogen.git/autoload/pathogen.vim
+source ~/.vim/bundle/pathogen.git/autoload/pathogen.vim
 
 " let g:pathogen_disabled = []
-" call pathogen#runtime_append_all_bundles()
-" call pathogen#helptags()
-" call pathogen#infect()
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+call pathogen#infect()
 
 " load user functions
 source ~/.vim/functions.vim
@@ -99,7 +99,8 @@ if has('gui_running')
 
     "colorscheme wombat
     " colorscheme ir_black
-    colorscheme zenburn
+    colorscheme Tomorrow-Night_eighties
+    "colorscheme zenburn
     "colorscheme solarized
     "colorscheme blackboard
     set background=dark
@@ -237,11 +238,10 @@ vnoremap <C-g> <Esc>
 onoremap <C-g> <Esc>
 nnoremap <C-g> <Esc>
 nnoremap <M-g> n :cnext<CR>
-nnoremap <M-;> ,c<space>
-vnoremap <M-;> ,c<space>
-onoremap <M-;> ,c<space>
-inoremap <M-;> ,c<space>
-
+nnoremap <M-;> :TComment<CR> 
+vnoremap <M-;> :TCommentBlock<CR>
+onoremap <M-;> :TComment<CR>
+inoremap <M-;> :TComment<CR>
 
 " Tabs ---
 map <leader>tn :tabnew<cr>
@@ -278,9 +278,12 @@ let g:fuf_modesDisable = []
 let g:fuf_mrufile_maxItem = 400
 let g:fuf_mrucmd_maxItem = 400
 
-nnoremap <silent> ,l     :FufBuffer<CR>
-nnoremap <silent> sF     :FufFileWithCurrentBufferDir<CR>
-nnoremap <silent> ,f     :FufFileWithFullCwd<CR>
+nnoremap <silent> ,b         :FufBuffer<CR>
+nnoremap <silent> <C-x><C-b> :FufBuffer<CR>
+
+nnoremap <silent> ,f         :FufFileWithFullCwd<CR>
+nnoremap <silent> <C-x><C-f> :FufFileWithFullCwd<CR>
+
 nnoremap <silent> ,c     :FufCoverageFile<CR>
 nnoremap <silent> sC     :FufCoverageFileChange<CR>
 nnoremap <silent> s<C-c> :FufCoverageFileRegister<CR>
@@ -298,24 +301,11 @@ nnoremap <silent> s<C-i> :FufBookmarkDirAdd<CR>
 nnoremap <silent> st     :FufTag<CR>
 nnoremap <silent> sT     :FufTag!<CR>
 
-" conqueterm
-let g:ConqueTerm_CWInsert = 1
-let g:ConqueTerm_ReadUnfocused = 1
-
 " thesaurus
 let g:thesaurus_file = "/usr/share/mythes/th_en_US_v2"
 
 " easymotion (not sure if I like this yet)
 let g:EasyMotion_keys = 'fjdkslewio' 
-
-" yankring
-let g:yankring_history_file = '.yankring_history'
-nnoremap <silent> <F11> :YRShow<CR>
-
-" gundo
-let g:gundo_right = 1
-let g:gundo_width = 60
-nmap ,u :GundoToggle<CR>
 
 " lustyjuggler 
 let g:LustyJugglerShowKeys = 'a'
@@ -340,28 +330,8 @@ let g:zenburn_color_also_Ignore = 1
 " remove fugitive buffers
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
-" haskellmode
-let g:haddock_browser = '/usr/bin/firefox'
-" au BufEnter *.hs compiler ghc
-
-" notes
-let g:notes_directory = "~/dropbox/notes"
-let g:notes_suffix = '.note'
-let g:notes_smart_quotes = 1
-
 " python syntax
 let python_highlight_all = 0
-
-" pydiction
-"let g:pydiction_location = "~/.vim/bundle/pydiction/complete-dict"
-
-" rope
-let ropevim_vim_completion = 1
-let ropevim_extended_complete = 1
-
-" utl
-:nmap <F5> :Utl ol<cr>
-:nmap <2-LeftMouse> :Utl ol<cr>
 
 " delimit mate
 let delimitMate_smart_quotes = 0
@@ -405,24 +375,8 @@ au BufNewFile,BufWritePre * call AutoMkDir()
 " File templates ---
 au BufNewFile **/setup.py  silent! 0r ~/.vim/templates/setup.py
 au BufNewFile **/build.xml silent! 0r ~/.vim/templates/build.xml
-au BufNewFile **/Makefile  silent! 0r ~/.vim/templates/Makefile
+"au BufNewFile **/Makefile  silent! 0r ~/.vim/templates/Makefile
 
-au FileType python set omnifunc=pythoncomplete#Complete
 au FileType python set listchars=tab:>.,trail:.,extends:#,nbsp:.
 
 
-" File type overrides ---
-au BufReadPre  *.pdf setlocal binary
-au FileReadCmd *.doc execute "read! antiword \"<afile>\""
-
-au BufRead  *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\" 
-au BufRead  *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m 
-au BufWrite *.py :call DeleteTrailingWS()
-
-au FileType notes let b:delimitMate_autoclose = 0
-" au FileType notes nmap <buffer>  <leader><Space> :NoteToggleCheckbox<CR>
-
-au BufNewFile,BufRead *.jinja set syntax=htmljinja
-au BufNewFile,BufRead *.jinja2 set syntax=htmljinja
-au BufNewFile,BufRead *.mako set ft=mako
-autocmd BufNewFile,BufRead *.jelly set ft=xml
