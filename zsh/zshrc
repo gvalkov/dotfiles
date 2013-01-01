@@ -1,7 +1,7 @@
+# -*- mode: sh -*- 
 # aliases
-
 alias h='history'
-alias f='find | grep'
+alias f='find-simple'
 
 alias c="cats"
 
@@ -47,6 +47,7 @@ alias gc='git commit'
 alias gca='git commit --all'
 alias gcs='git show'
 alias gia='git add'
+alias girh='git reset --hard'
 
 # rsync aliases
 _rsync_base_cmd="rsync -v --progress --human-readable --compress --archive"
@@ -256,7 +257,7 @@ setopt promptsubst
 PROMPT="%{$fg_bold[red]%}%n%{$reset_color%}.%{$fg_bold[yellow]%}%m %{$fg_bold[white]%}%~ %{$reset_color%}$ "
 
 # set tty tabs
-tabs 5,9,13,17,21,25,29,33,37,41
+tabs 5,9,13,17,21,25,29,33,37,41 &> /dev/null
 
 # virtualenvwrapper
 venvw=`which virtualenvwrapper.sh`
@@ -292,3 +293,9 @@ ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=yellow
 ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=cyan
 ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=cyan
 ZSH_HIGHLIGHT_STYLES[assign]=none
+
+export PERL_LOCAL_LIB_ROOT="/home/gv/perl5";
+export PERL_MB_OPT="--install_base /home/gv/perl5";
+export PERL_MM_OPT="INSTALL_BASE=/home/gv/perl5";
+export PERL5LIB="/home/gv/perl5/lib/perl5/x86_64-linux-thread-multi:/home/gv/perl5/lib/perl5";
+export PATH="/home/gv/perl5/bin:$PATH";

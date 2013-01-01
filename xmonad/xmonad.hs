@@ -324,15 +324,40 @@ manage_hook = namedScratchpadManageHook scratchpads <+> composeAll
     , className =? "stalonetray"    --> doShift "dashboard"
     , className =? "Tilda"          --> doFloat
     , className =? "stalonetray"    --> doIgnore
+    , className =? "Qtpanel.py"     --> doIgnore
     , className =? "VirtualBox"     --> doShift "vm"
     , resource  =? "desktop_window" --> doIgnore
     , className =? "plasma-desktop" --> doFloat
     , className =? "Plasma-desktop" --> doFloat
+    , className =? "Plasmoidviewer" --> doFloat
+    , className =? "Cairo-dock" --> doFloat
     ]
 
 
 -- Event config
 event_hook = mempty
+
+tupleItem :: String -> String -> String
+tupleItem key value =
+  wrap "(" "),\n" $
+  wrap "'" "', " key ++ wrap "'" "'" value
+
+
+pythonPP :: PP
+pythonPP = defaultPP {
+    ppCurrent         = tupleItem "current"
+  , ppVisible         = tupleItem "visible"
+  , ppHidden          = tupleItem "hidden"
+  , ppHiddenNoWindows = tupleItem "nowin"
+  , ppUrgent          = tupleItem "urgent"
+  , ppSep             = ""
+  , ppWsSep           = ""
+  , ppTitle           = tupleItem "title"
+  , ppLayout          = tupleItem "layout"
+  , ppOrder           = id
+  , ppExtras          = []
+  }
+             
 
 log_hook = do ewmhDesktopsLogHook
               fadeInactiveLogHook fadeAmount
@@ -342,10 +367,18 @@ log_hook = do ewmhDesktopsLogHook
 -- Startup hook
 startup_hook = return ()
 
-
 term = "gnome-terminal"
 red_color = "#d46464"
 altMask = mod1Mask
+
+main = do
+  h <- spawnPipe "cat > /dev/null"
+  xmonad $ ewmh defaults {
+    logHook = do logHook defaults >> dynamicLogWithPP pythonPP {
+                   ppOutput = hPutStrLn h . wrap "(" ") "
+                 }
+  }
+    
 
 defaults = defaultConfig {
           modMask  = mod4Mask
@@ -369,8 +402,3 @@ defaults = defaultConfig {
         , logHook = log_hook
         , startupHook = startup_hook
         }
-
-
-main = do
-    {-checkTopicConfig topics topic_config-}
-    xmonad $ ewmh defaults

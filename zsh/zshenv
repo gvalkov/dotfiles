@@ -1,3 +1,4 @@
+# -*- mode: sh -*- 
 # .zshenv
 
 export PATH="$HOME/.local/bin:$PATH"
@@ -27,12 +28,12 @@ fpath=(~/.zfunc $fpath)
 typeset -U fpath
 
 path=(\
-    $HOME/.local/bin \
-    $HOME/bin $HOME/.dotfiles-bin \
-    $HOME/.dotfiles/util-co/bin \
-    $HOME/.local/go/bin \
-    $GOROOT/bin \
-    $path )
+  $HOME/.local/bin \
+  $HOME/bin $HOME/.dotfiles-bin \
+  $HOME/.dotfiles/util-co/bin \
+  $HOME/.local/go/bin \
+  $GOROOT/bin \
+  $path )
 typeset -U path
 
 [[ -f $HOME/.zshenv.local ]] && . $HOME/.zshenv.local
