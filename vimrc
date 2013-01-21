@@ -99,7 +99,7 @@ if has('gui_running')
 
     "colorscheme wombat
     " colorscheme ir_black
-    colorscheme Tomorrow-Night_eighties
+    colorscheme Tomorrow-Night-Eighties
     "colorscheme zenburn
     "colorscheme solarized
     "colorscheme blackboard
@@ -198,6 +198,8 @@ vnoremap <C-C> "*y
 
 set pastetoggle=<F10>
 
+" select previous paste
+nnoremap gp `[v`]
 
 " toggle hidden characters
 map <F12> :set invlist<CR>
