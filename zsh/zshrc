@@ -39,6 +39,10 @@ alias l='ls -1A'
 alias lr='ll -R'
 alias lx='ll -XB'
 
+# ls aliases (freebsd)
+# alias ls="ls -G -F"
+
+
 # git aliases
 alias g='git'
 alias gb='git branch'
@@ -164,7 +168,8 @@ setopt NOTIFY
 setopt LONG_list_jobs
 setopt ZLE
 
-# tbd
+# tbd 
+which dircolors &>/dev/null && \
 eval $(dircolors "$HOME/.dotfiles/solarized-dircolors.256dark")
 
 

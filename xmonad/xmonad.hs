@@ -47,6 +47,7 @@ import XMonad.ManageHook
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.FadeInactive
+import XMonad.Hooks.Place
 
 -- Layouts
 import XMonad.Layout.NoBorders
@@ -102,6 +103,7 @@ topics =
   , "media"
   , "wip"
   , "vm"
+  , "org-mode"  
   ]
 
 myTopicConfig = TopicConfig
@@ -111,14 +113,16 @@ myTopicConfig = TopicConfig
         , ("dev"      , "./source"  )
         , ("music"    , "./music" )
         , ("wip"      , "wip"     )
+        , ("org-mode" , "~/private/org")
         ]
-    , defaultTopic = "dashboard"
+    , defaultTopic = "-"
     , maxTopicHistory = 10
     , topicActions = M.fromList $
         [ ("media"   , spawn "clementine" )
         , ("web"     , spawn "firefox")
         , ("re-logs" , spawnOn "re-logs" "urxvt --title logs -tr -tint white -sh 35 -e multimon.sh")
         , ("re-web"  , spawnOn "re-web" "urxvt --title logs -tr -tint white -sh 35 -e multimon.sh")
+        , ("org-mode", spawnOn "org-mode" "EMACS_THEME_NAME=sanityinc-solarized-light emacs --execute '(my-org-mode-calendar-combo)' --title Emacs-Org-Mode")  
         ]
     }
 
@@ -157,7 +161,7 @@ keymap = \conf -> mkKeymap conf $
     ,( "M-r" ,    spawn $ join " " dmenu_run_cmd)
     ,( "M-f" ,    spawn "firefox")
     ,( "M-g" ,    spawn "gvim")
-    ,( "M-S-e" ,  spawn "emacs")
+    ,( "M-S-e" ,  spawn "emc")
     ,( "M-e" ,    spawn "dolphin")
     ,( "C-A-l" ,  spawn "firefox")
 
@@ -165,7 +169,7 @@ keymap = \conf -> mkKeymap conf $
     ,( "M-c" ,    kill                             )
     ,( "M-n" ,    refresh                          )
     ,( "M-z" ,    warpToWindow (1/2) (1/2)         )
-    {- ,( "M-x" ,    currentTopicAction myTopicConfig )  -}
+    ,( "M-x" ,    currentTopicAction myTopicConfig )
     ,( "M-S-g" ,  gotoMenu )
 
     -- focus ops
@@ -292,7 +296,7 @@ mouse_keymap (XConfig {XMonad.modMask = modm}) = M.fromList $
 
 -- Layout config
 layout_hook = smartBorders $
-              onWorkspace "skype"  (avoidStruts (withIM (0.15) skypeRoster (Grid))) $
+              onWorkspace "skype" (avoidStruts (withIM (0.15) skypeRoster (Grid))) $
               avoidStruts $ standard_layouts
     where
     -- default tiling algorithm partitions the screen into two panes
@@ -314,7 +318,10 @@ layout_hook = smartBorders $
 
 
 -- Window rules:
-manage_hook = namedScratchpadManageHook scratchpads <+> composeAll
+manage_hook =
+  namedScratchpadManageHook scratchpads 
+  <+> placeHook simpleSmart
+  <+> composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Vlc"            --> doFloat
     , className =? "Gimp"           --> doFloat
@@ -330,7 +337,14 @@ manage_hook = namedScratchpadManageHook scratchpads <+> composeAll
     , className =? "plasma-desktop" --> doFloat
     , className =? "Plasma-desktop" --> doFloat
     , className =? "Plasmoidviewer" --> doFloat
-    , className =? "Cairo-dock" --> doFloat
+    , className =? "Cairo-dock"     --> doFloat
+    , className =? "Conky"          --> doFloat
+    , isInProperty "_NET_WM_WINDOW_TYPE" "_NET_WM_WINDOW_TYPE_SPLASH"        --> doIgnore
+    , isInProperty "_NET_WM_WINDOW_TYPE" "_NET_WM_WINDOW_TYPE_NOTIFICATION"  --> doIgnore
+    ]
+  <+> composeOne
+    [ isFullscreen -?> doFullFloat
+    , isDialog -?> doCenterFloat  
     ]
 
 
