@@ -50,6 +50,7 @@ import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.Place
 
 -- Layouts
+import XMonad.Layout.LayoutHints
 import XMonad.Layout.NoBorders
 import XMonad.Layout.IndependentScreens
 import XMonad.Layout.PerWorkspace
@@ -136,22 +137,22 @@ dmenu_run_cmd = [
     ]
 
 
-xpconfig =
-    XPC { font              = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
-        , bgColor           = "#333333"
-        , fgColor           = "#FFFFFF"
-        , fgHLight          = "#000000"
-        , bgHLight          = "#BBBBBB"
-        , borderColor       = red_color
-        , promptBorderWidth = 1
-        , position          = Bottom
-        , height            = 18
-        , historySize       = 256
-        , historyFilter     = id
-        , defaultText       = []
-        , autoComplete      = Nothing
-        , showCompletionOnTab = False
-        }
+-- xpconfig =
+--     XPC { font              = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+--         , bgColor           = "#333333"
+--         , fgColor           = "#FFFFFF"
+--         , fgHLight          = "#000000"
+--         , bgHLight          = "#BBBBBB"
+--         , borderColor       = red_color
+--         , promptBorderWidth = 1
+--         , position          = Bottom
+--         , height            = 18
+--         , historySize       = 256
+--         , historyFilter     = id
+--         , defaultText       = []
+--         , autoComplete      = Nothing
+--         , showCompletionOnTab = False
+--         }
 
 gsconfig1 = defaultGSConfig { gs_cellheight = 30, gs_cellwidth = 100 }
 
@@ -161,8 +162,8 @@ keymap = \conf -> mkKeymap conf $
     ,( "M-r" ,    spawn $ join " " dmenu_run_cmd)
     ,( "M-f" ,    spawn "firefox")
     ,( "M-g" ,    spawn "gvim")
-    ,( "M-S-e" ,  spawn "emc")
-    ,( "M-e" ,    spawn "dolphin")
+    -- ,( "M-S-e" ,  spawn "emc")
+    -- ,( "M-e" ,    spawn "dolphin")
     ,( "C-A-l" ,  spawn "firefox")
 
     -- actions
@@ -204,9 +205,9 @@ keymap = \conf -> mkKeymap conf $
     ,( "M-y",  goToSelected gsconfig1)
 
     -- prompts
-    ,( "M-p",   xmonadPrompt xpconfig     )
-    ,( "M-s",   shellPrompt xpconfig      )
-    ,( "M-C-p",	runOrRaisePrompt xpconfig )
+    -- ,( "M-p",   xmonadPrompt xpconfig     )
+    -- ,( "M-s",   shellPrompt xpconfig      )
+    -- ,( "M-C-p",	runOrRaisePrompt xpconfig )
 
     -- expand/shrink master area
     ,( "M-h"        , sendMessage Shrink )
@@ -245,11 +246,11 @@ keymap = \conf -> mkKeymap conf $
     ++
 
     -- switch to xinerama screen - mod-{w,e,r} -- (I really need R for run, though)
-    [ ("M-" ++ k:""  , screenWorkspace s >>= flip whenJust (windows . W.view)) | (k, s) <- zip "w" [0..] ]
+    [ ("M-" ++ k:""  , screenWorkspace s >>= flip whenJust (windows . W.view)) | (k, s) <- zip "ew" [0..] ]
     ++
 
     -- switch client to xinerama screen - mod-shift-{w,e,r}
-    [ ("M-S-" ++ k:"" , screenWorkspace s >>= flip whenJust (windows . W.shift)) | (k, s) <- zip "w" [0..] ]
+    [ ("M-S-" ++ k:"" , screenWorkspace s >>= flip whenJust (windows . W.shift)) | (k, s) <- zip "ew" [0..] ]
 
 
 -- Mouse config
@@ -334,9 +335,9 @@ manage_hook =
     , className =? "Qtpanel.py"     --> doIgnore
     , className =? "VirtualBox"     --> doShift "vm"
     , resource  =? "desktop_window" --> doIgnore
-    , className =? "plasma-desktop" --> doFloat
-    , className =? "Plasma-desktop" --> doFloat
-    , className =? "Plasmoidviewer" --> doFloat
+    , className =? "plasma-desktop" --> doIgnore
+    , className =? "Plasma-desktop" --> doIgnore
+    , className =? "Plasmoidviewer" --> doIgnore
     , className =? "Cairo-dock"     --> doFloat
     , className =? "Conky"          --> doFloat
     , isInProperty "_NET_WM_WINDOW_TYPE" "_NET_WM_WINDOW_TYPE_SPLASH"        --> doIgnore

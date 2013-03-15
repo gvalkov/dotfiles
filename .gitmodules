@@ -13,3 +13,6 @@
 [submodule "emacs"]
 	path = emacs
 	url = git@github.com:gvalkov/dotfiles-emacs.git
+[submodule "awesome"]
+	path = awesome
+	url = git@github.com:gvalkov/dotfiles-awesome.git

@@ -5,7 +5,8 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # preferred tools
 export EDITOR="vim"
-export PAGER="vimpager"
+#export PAGER="vimpager"
+export PAGER="less"
 export BROWSER="firefox"
 
 
@@ -16,19 +17,22 @@ export WORKON_HOME=~/.virtualenvs
 export PIP_DOWNLOAD_CACHE=~/.pip/download-cache
 export TERM=xterm-256color
 
+# misc options
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
 # program options
 export DOTREMINDERS="$HOME/org/reminders"
 
-
 # go
-export GOROOT="$HOME/source/go"
+export GOROOT="$HOME/.local/go"
+export GOPATH="$HOME/source/go"
 
 fpath=(~/.zfunc $fpath)
 typeset -U fpath
 
 path=(\
   $HOME/.local/bin \
+  $HOME/.luarocks/bin \
   $HOME/bin $HOME/.dotfiles-bin \
   $HOME/.dotfiles/util-co/bin \
   $HOME/.local/go/bin \

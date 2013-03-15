@@ -15,5 +15,6 @@ ln -svnf `c screenrc`       ~/.screenrc
 ln -svnf `c tmux.conf`      ~/.tmux.conf
 ln -snvf `c xmonad`         ~/.xmonad
 ln -snvf `c ctags`          ~/.ctags
+ln -snvf `c compton.conf`   ~/.compton.conf
 #ln -svnf `c xinitrc`        ~/.xinitrc
 #ln -svnf `c stalonetrayrc`  ~/.stalonetrayrc

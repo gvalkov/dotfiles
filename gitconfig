@@ -103,3 +103,7 @@
     fontui = DejaVu Sans,8,-1,5,50,0,0,0,0,0
     fontdiff = DejaVu Sans Mono,8,-1,5,50,0,0,0,0,0
 
+[url "git://anongit.kde.org/"]
+	insteadOf = kde:
+[url "git@git.kde.org:"]
+	pushInsteadOf = kde:
