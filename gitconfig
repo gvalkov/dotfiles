@@ -63,6 +63,7 @@
     wc = whatchanged
     cp = cherry-pick
     cf = cat-file
+    fa = fetch --all
     tags = log -l -n1
     summary = log --oneline
 

@@ -33,10 +33,13 @@ typeset -U fpath
 path=(\
   $HOME/.local/bin \
   $HOME/.luarocks/bin \
+  $HOME/.cabal/bin \
   $HOME/bin $HOME/.dotfiles-bin \
   $HOME/.dotfiles/util-co/bin \
   $HOME/.local/go/bin \
   $GOROOT/bin \
+  /opt/nodejs/bin/ \
+  /opt/mathematica/bin/ \
   $path )
 typeset -U path
 

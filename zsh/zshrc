@@ -76,7 +76,7 @@ alias deb-build='time dpkg-buildpackage -rfakeroot -us -uc'
 
 # yum aliases
 alias ayi='sudo yum install'
-alias ays='sudo yum --noplugins -C search'
+alias ays='yum --noplugins -C search'
 alias yumh="sudo yum history"
 alias yumi='sudo yum install'
 alias yums='sudo yum --noplugins -C search'
@@ -104,20 +104,20 @@ alias -g DN='/dev/null'
 
 # history
 HISTFILE=~/.histfile
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=20000
+SAVEHIST=20000
 
 setopt SHARE_HISTORY
 setopt INC_APPEND_HISTORY
 setopt EXTENDED_HISTORY
 setopt BANG_HIST
 setopt HIST_EXPIRE_DUPS_FIRST
-setopt HIST_IGNORE_SPACE
 setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_FIND_NO_DUPS
 setopt HIST_VERIFY
+setopt HIST_IGNORE_SPACE
 
 # directories
 DIRSTACKSIZE=10
