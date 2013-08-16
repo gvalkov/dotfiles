@@ -1,0 +1,12 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
+import platform as pl
+
+p = lambda x: callable(getattr(pl, x)) and x[0] != '_' \
+
+methods = filter(p, dir(pl))
+
+for m in methods:
+    try: print '%-25s: %s' % (m+'()', getattr(pl, m)())
+    except TypeError: pass

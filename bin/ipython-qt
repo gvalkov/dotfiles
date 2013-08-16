@@ -1,0 +1,4 @@
+#!/bin/sh
+# needed by awesome scratch.drop (because it can't handle commands with arguments)
+
+exec ipython qtconsole --pylab=inline --gui-completion=ncurses --editor=emacsclientc --paging=vsplit "$@"

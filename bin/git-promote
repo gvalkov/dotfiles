@@ -1,0 +1,13 @@
+#!/bin/bash
+# Promotes a local topic branch to a remote tracking branch of the same name,
+
+current=`git symbolic-ref -q HEAD | sed -e 's,^refs/heads/,,'`
+
+remote=`git branch -r | grep "origin/$current"`
+[ -z "$remote" ] && git push origin "$current"
+
+origin=`git config --get "branch.$branch.remote"`
+[ -z "$origin" ] && git config --add "branch.$current.remote" origin
+
+merge=`git config --get "branch.$branch.merge"`
+[ -z "$merge" ] && git config --add "branch.$current.merge" "refs/heads/$current"

@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+res=() ; max=""
+ibase=10
+
+conv () { echo "ibase=${ibase}; obase=$1; $2" | bc ;}
+
+for i in "$@"; do
+    res+=$(for base in 10 8 16 2; conv $base $i) 
+done
+
+printf "%-5s %-5s %-5s %-5s\n" dec oct hex bin
+printf "%-5s %-5s %-5s %-5s\n" $(echo $res | paste -s)

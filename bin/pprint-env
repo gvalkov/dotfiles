@@ -1,0 +1,10 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
+from os import environ
+from sys import argv
+from pprint import pprint
+
+for arg in argv[1:]:
+    env = environ[arg].split(':')
+    pprint(env)

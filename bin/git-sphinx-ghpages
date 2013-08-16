@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -xue
+
+tmptar=`mktemp -u /tmp/tmp.XXXXXXX.tar`
+
+pushd doc
+    make html
+    (cd _build/html && tar cvf $tmptar ./)
+popd 
+
+git co gh-pages
+rm .git/index
+git clean -fdx
+touch .nojekyll
+tar xvf $tmptar
+git add -A && git commit -m 'sphinxdoc update'
+rm $tmptar

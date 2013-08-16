@@ -1,0 +1,4 @@
+#!/bin/bash
+export TMPDIR=/tmp
+set -eu
+exec /usr/bin/emacsclient -c "$@"

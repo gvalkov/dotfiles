@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+require 'open3'
+
+blobs = Enumerator.new do |yielder|
+    `git rev-list --all --pretty=oneline | cut -d" " -f1`.each_line do |rev|
+        `git diff-tree -r -c -M -C --no-commit-id #{rev}`.each_line do |line| 
+            tmp = line.split()
+            blob = tmp[2].length == 40 ? tmp[2] : tmp[3]
+            next if blob == '0'*40
+            yielder.yield(blob, tmp[-1])
+        end
+    end
+end
+
+seen = []
+blob_sizes = []
+stdin, stdout = Open3.popen2('git cat-file --batch-check')
+blobs.each do |blob, fn| 
+    next if seen.include? blob
+    seen.push blob
+    stdin.puts blob
+
+    if !stdout.closed? 
+        res = stdout.readline().lstrip.split
+        blob_sizes.push([res[2].to_i, res[0], fn]) 
+    end
+end
+
+blob_sizes.sort.each do |el|
+    puts "#{el[1]} #{el[0]}\n  - #{el[2]}"
+end

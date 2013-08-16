@@ -1,0 +1,10 @@
+#!/bin/bash
+
+file "$1" | grep -q 'shell script' && opts='-l bash'
+
+nl="`which nl` -n rn -b a -s'┃ ' -w 3"
+
+eval pygmentize "$opts" "$1" 2>/dev/null | eval $nl
+if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
+    eval $nl "$1"
+fi
