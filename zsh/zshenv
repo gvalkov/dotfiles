@@ -31,10 +31,11 @@ fpath=(~/.zfunc $fpath)
 typeset -U fpath
 
 path=(\
+  $HOME/bin \
   $HOME/.local/bin \
   $HOME/.luarocks/bin \
   $HOME/.cabal/bin \
-  $HOME/bin $HOME/.dotfiles-bin \
+  $HOME/.dotfiles/bin \
   $HOME/.dotfiles/util-co/bin \
   $HOME/.local/go/bin \
   $GOROOT/bin \
