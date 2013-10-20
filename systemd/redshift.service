@@ -1,0 +1,11 @@
+[Unit]
+Description=redshift
+Before=progs.target
+
+[Service]
+#ExecStart=/usr/bin/gtk-redshift -l 42.15:24.75
+ExecStart=/usr/bin/gtk-redshift -l 51.26:05.28
+Restart=no
+
+[Install]
+WantedBy=progs.target

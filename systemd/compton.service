@@ -1,0 +1,11 @@
+[Unit]
+Description=compton
+Before=progs.target
+
+[Service]
+ExecStart=/usr/bin/compton --config ~/.compton.conf
+Restart=no
+Environment=DISPLAY=:0
+
+[Install]
+WantedBy=progs.target

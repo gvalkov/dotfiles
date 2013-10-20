@@ -1,0 +1,11 @@
+[Unit]
+Description=emacs
+Before=progs.target
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/emacs --daemon
+Restart=no
+
+[Install]
+WantedBy=progs.target

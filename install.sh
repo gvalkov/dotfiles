@@ -17,5 +17,6 @@ ln -snvf `c xmonad`         ~/.xmonad
 ln -snvf `c ctags`          ~/.ctags
 ln -snvf `c compton.conf`   ~/.compton.conf
 ln -snvf `c user-dirs.dirs` ~/.config/user-dirs.dirs
+ln -snvf `c vimperatorrc`   ~/.vimperatorrc
 #ln -svnf `c xinitrc`        ~/.xinitrc
 #ln -svnf `c stalonetrayrc`  ~/.stalonetrayrc

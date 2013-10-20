@@ -1,0 +1,71 @@
+set gui=none,tabs,navigation,addons
+set complete=lbs
+set wildmode="list:full"
+set editor=emacsclientc
+set showstatuslinks=2
+"set focuscontent
+
+inoremap <C-a> <Ins><C-a><Ins>
+cnoremap <C-g> <Esc>
+"highlight Hint opacity:0.90
+"highlight Hint opacity:0.70
+
+set hintchars="1234567qw"
+set highlight Hint font:"DejaVu Sans Mono";font-size:120%;color:red;background-color:yellow;padding:2px;
+set hinttimeout=400
+
+set hlsearch
+
+
+map Ф A
+map И B
+map С C
+map В D
+map У E
+map А F
+map П G
+map Р H
+map Ш I
+map О J
+map Л K
+map Д L
+map Ь M
+map Т N
+map Щ O
+map З P
+map Й Q
+map К R
+map Ы S
+map Е T
+map Г U
+map М V
+map Ц W
+map Ч X
+map Н Y
+map Я Z
+map ф a
+map и b
+map с c
+map в d
+map у e
+map а f
+map п g
+map р h
+map ш i
+map о j
+map л k
+map д l
+map ь m
+map т n
+map щ o
+map з p
+map й q
+map к r
+map ы s
+map е t
+map г u
+map м v
+map ц w
+map ч x
+map н y
+map я z

@@ -1,0 +1,10 @@
+[Unit]
+Description=thunderbird
+Before=progs.target
+
+[Service]
+ExecStart=/usr/bin/thunderbird
+Restart=no
+
+[Install]
+WantedBy=progs.target

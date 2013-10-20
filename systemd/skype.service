@@ -1,0 +1,10 @@
+[Unit]
+Description=skype
+Before=progs.target
+
+[Service]
+ExecStart=/usr/bin/skype
+Restart=no
+
+[Install]
+WantedBy=progs.target
