@@ -1,20 +1,45 @@
+set runtimepath+=~/.dotfiles/vimperator
+source ~/.dotfiles/vimperator/plugins/noscript.js
+
 set gui=none,tabs,navigation,addons
 set complete=lbs
 set wildmode="list:full"
 set editor=emacsclientc
 set showstatuslinks=2
-"set focuscontent
+set focuscontent
 
 inoremap <C-a> <Ins><C-a><Ins>
 cnoremap <C-g> <Esc>
 "highlight Hint opacity:0.90
 "highlight Hint opacity:0.70
+"highlight Hint font:"DejaVu Sans Mono";font-size:90%;color:red;background-color:yellow;padding:2px;
 
 set hintchars="1234567qw"
-set highlight Hint font:"DejaVu Sans Mono";font-size:120%;color:red;background-color:yellow;padding:2px;
 set hinttimeout=400
 
 set hlsearch
+set smartcase
+
+map <S-m> :tabmove<SPACE>
+map <S-Left> :tabmove! -1<CR>
+map <S-Right> :tabmove! +1<CR>
+
+map s :noscript popup<CR>
+"map <C-c>s :noscript toggletemp<CR>
+"map <C-c>S :noscript popup<CR>
+
+" emacs compatibility
+cmap <C-n> <Tab>
+cmap <C-p> <S-Tab>
+cmap <C-j> <CR>
+inoremap <C-n> <Down>
+inoremap <C-p> <Up>
+inoremap <C-j> <CR>
+noremap  <C-j> <CR>
+cmap <C-g> <Esc>
+imap <C-g> <Esc>
+noremap <C-g> <Esc>
+noremap <C-x><C-g> <Esc>
 
 
 map Ф A

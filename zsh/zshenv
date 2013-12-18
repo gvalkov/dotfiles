@@ -39,6 +39,7 @@ path=(\
   $HOME/.dotfiles/util-co/bin \
   $HOME/.local/go/bin \
   $GOROOT/bin \
+  /usr/pgsql-9.3/bin/ \
   /opt/nodejs/bin/ \
   /opt/mathematica/bin/ \
   $path )
