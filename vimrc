@@ -88,6 +88,7 @@ filetype plugin on
 filetype indent on
 
 set number nuw=3
+set nonumber
 if has('gui_running')
     set guioptions=aic
     " set guifont=Monospace\ 10
@@ -233,6 +234,10 @@ nnoremap <silent> <F4> :TagbarToggle<CR>
 " Search for current visual selection
 vnoremap <silent> * :call VisualSearch('f')<CR>
 vnoremap <silent> # :call VisualSearch('b')<CR>
+
+ca WQ wq
+ca Q q
+
 
 " Emacs compatibility ---
 inoremap <C-g> <Esc>
