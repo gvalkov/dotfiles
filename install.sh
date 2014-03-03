@@ -18,5 +18,10 @@ ln -snvf `c ctags`          ~/.ctags
 ln -snvf `c compton.conf`   ~/.compton.conf
 ln -snvf `c user-dirs.dirs` ~/.config/user-dirs.dirs
 ln -snvf `c vimperatorrc`   ~/.vimperatorrc
+ln -snvf `c mostrc`         ~/.mostrc
 #ln -svnf `c xinitrc`        ~/.xinitrc
 #ln -svnf `c stalonetrayrc`  ~/.stalonetrayrc
+
+mkdir -p ~/.config/mpd/
+touch ~/.config/mpd/{database,log,pid,state,sticker.sql}
+ln -snvf `c mpd.conf`   ~/.config/mpd/

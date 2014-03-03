@@ -6,7 +6,7 @@ export PATH="$HOME/.local/bin:$PATH"
 # preferred tools
 export EDITOR="vim"
 #export PAGER="vimpager"
-export PAGER="less"
+export PAGER="most"
 export BROWSER="firefox"
 
 
@@ -27,6 +27,13 @@ export DOTREMINDERS="$HOME/org/reminders"
 export GOROOT="$HOME/.local/go"
 export GOPATH="$HOME/source/go"
 
+# perl locallib
+export PERL_LOCAL_LIB_ROOT="/home/gv/.perl5"
+export PERL_MB_OPT="--install_base /home/gv/.perl5"
+export PERL_MM_OPT="INSTALL_BASE=/home/gv/.perl5"
+export PERL5LIB="/home/gv/.perl5/lib/perl5/x86_64-linux-thread-multi:/home/gv/.perl5/lib/perl5"
+export PATH="/home/gv/perl5/bin:$PATH"
+
 fpath=(~/.zfunc $fpath)
 typeset -U fpath
 
@@ -38,6 +45,7 @@ path=(\
   $HOME/.dotfiles/bin \
   $HOME/.dotfiles/util-co/bin \
   $HOME/.local/go/bin \
+  $HOME/.perl5/bin \
   $GOROOT/bin \
   /usr/pgsql-9.3/bin/ \
   /opt/nodejs/bin/ \

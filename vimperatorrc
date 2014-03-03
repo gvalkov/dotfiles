@@ -2,6 +2,7 @@ set runtimepath+=~/.dotfiles/vimperator
 source ~/.dotfiles/vimperator/plugins/noscript.js
 
 set gui=none,tabs,navigation,addons
+set tabnumbers
 set complete=lbs
 set wildmode="list:full"
 set editor=emacsclientc

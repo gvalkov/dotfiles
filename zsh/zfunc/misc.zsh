@@ -35,6 +35,13 @@ function insert_sudo () {
   zle -U "sudo "
 }
 
+function rpm-extract () {
+  src=$(readlink -f "$1")
+  dest=$(basename "$1" .rpm)
+  mkdir -p "$dest"
+  ( cd "$dest" && rpm2cpio "$src" | cpio -idmv )
+}
+
 function find-simple () {
   dir=${2:-'.'}
   regex=${1:-'^.*$'}

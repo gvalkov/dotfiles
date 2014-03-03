@@ -1,4 +1,4 @@
-# -*- mode: sh -*- 
+# -*- mode: sh -*-
 # aliases
 alias h='history'
 alias f='find-simple'
@@ -31,6 +31,7 @@ alias diff='colordiff'
 alias jobs='jobs -l'
 alias tree='tree -F -C --charset unicode'
 alias tmux='tmux -2'
+alias ctl='systemctl'
 #alias ack='ack-grep'
 
 # ls aliases
@@ -85,7 +86,7 @@ alias yuml='sudo yum --noplugins -C list'
 
 
 alias nautilus="nautilus --no-desktop"
-alias pyclean='rm **/*.(pyc|pyo)'
+alias pyclean='rm -r **/*.(pyc|pyo) **/__pycache__'
 alias ctags="ctags --fields=+l --c-kinds=+p --c++-kinds=+p"
 
 # misc aliases
@@ -129,6 +130,19 @@ setopt AUTO_CD
 setopt AUTO_PUSHD
 #setopt CDABLE_VARS
 setopt AUTO_NAME_DIRS
+setopt ZLE
+
+# misc
+WORDCHARS='*?_[]~&;!#$%^(){}<>'
+#WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
+setopt MULTIOS
+setopt CLOBBER
+unsetopt BEEP
+unsetopt MAIL_WARNING
+#setopt PRINTEXITVALUE
+setopt INTERACTIVE_comments
+setopt NOTIFY
+setopt LONG_list_jobs
 
 # key bindings
 bindkey -e # emacs mode
@@ -146,6 +160,7 @@ bindkey "\e\e[C" forward-word
 bindkey "\e\e[D" backward-word
 bindkey "\e[Z"   reverse-menu-complete # Shift+Tab
 bindkey "^[r"    history-incremental-search-forward
+bindkey \^U      backward-kill-line
 # for rxvt
 bindkey "\e[7~" beginning-of-line # Home
 bindkey "\e[8~" end-of-line       # End
@@ -157,20 +172,12 @@ bindkey "\e[H" beginning-of-line
 bindkey "\e[F" end-of-line
 bindkey "^X^E" edit-command-line
 
-# misc
-WORDCHARS='*?_[]~&;!#$%^(){}<>'
-#WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
-setopt MULTIOS
-setopt CLOBBER
-unsetopt BEEP
-unsetopt MAIL_WARNING
-#setopt PRINTEXITVALUE
-setopt INTERACTIVE_comments
-setopt NOTIFY
-setopt LONG_list_jobs
-setopt ZLE
+bindkey "~" global-alias-tilde
+bindkey "^@" after-first-word
+bindkey "^X^F" global-alias-dirstack
 
-# tbd 
+
+# tbd
 which dircolors &>/dev/null && \
 eval $(dircolors "$HOME/.dotfiles/solarized-dircolors.256dark")
 
@@ -300,9 +307,3 @@ ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=yellow
 ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=cyan
 ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=cyan
 ZSH_HIGHLIGHT_STYLES[assign]=none
-
-export PERL_LOCAL_LIB_ROOT="/home/gv/perl5";
-export PERL_MB_OPT="--install_base /home/gv/perl5";
-export PERL_MM_OPT="INSTALL_BASE=/home/gv/perl5";
-export PERL5LIB="/home/gv/perl5/lib/perl5/x86_64-linux-thread-multi:/home/gv/perl5/lib/perl5";
-export PATH="/home/gv/perl5/bin:$PATH";

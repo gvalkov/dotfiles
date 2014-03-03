@@ -5,4 +5,4 @@ set -xu
 version=$1
 
 git tag v${version} HEAD -m "version ${version}" --force
-git tag latest-stable v${version} -m 'latest stable version' --force
+#git tag latest-stable v${version} -m 'latest stable version' --force
