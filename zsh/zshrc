@@ -16,6 +16,7 @@ alias md='mkdir -p'
 
 alias d='dirs -v'
 alias g='git'
+alias ct='cleartool'
 alias v='vim'
 alias r='ranger'
 alias emc='emacsclient -n -c'
@@ -41,6 +42,12 @@ alias lla="ll -ld *(-/DN)"
 alias l='ls -1A'
 alias lr='ll -R'
 alias lx='ll -XB'
+
+# freebsd specific aliases
+if [[ "$OSTYPE" =~ "freebsd" ]]; then
+alias ls="gls --color=auto -F --group-directories-first"
+alias ll="gls -lsh"
+fi
 
 # ls aliases (freebsd)
 # alias ls="ls -G -F"
@@ -94,6 +101,7 @@ alias py-http-serve='python3 -m http.server'
 
 # global/suffix aliases
 alias -s zip='zipinfo'
+alias -s whl='zipinfo'
 alias -g G='|& egrep -i'
 alias -g L='|& less'
 alias -g EG='|& egrep '

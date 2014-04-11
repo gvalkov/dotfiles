@@ -83,7 +83,7 @@ scratchpads = [
     (customFloating $ W.RationalRect (1/4) 0 (1/2) 1)
 
   , NS "ipython"
-    "gnome-terminal --role=ipython-terminal -e ipython"
+    "gnome-terminal --role=ipython-terminal -e $HOME/.local/bin/ipython3"
     (role =? "ipython-terminal")
     (customFloating $ W.RationalRect (1/4) 0 (1/2) 1)
 
@@ -94,45 +94,14 @@ scratchpads = [
   ] where role = stringProperty "WM_WINDOW_ROLE"
 
 
-topics :: [Topic]
-topics =
-  [ "-"
-  , "web"
-  , "dev"
-  , "skype"
-  , "irc"
-  , "media"
-  , "wip"
-  , "vm"
-  , "org-mode"  
-  ]
-
-myTopicConfig = TopicConfig
-    { topicDirs = M.fromList $
-        [ (" -", "./"      )
-        , ("xmonad"   , ".xmonad" )
-        , ("dev"      , "./source"  )
-        , ("music"    , "./music" )
-        , ("wip"      , "wip"     )
-        , ("org-mode" , "~/private/org")
-        ]
-    , defaultTopic = "-"
-    , maxTopicHistory = 10
-    , topicActions = M.fromList $
-        [ ("media"   , spawn "clementine" )
-        , ("web"     , spawn "firefox")
-        , ("re-logs" , spawnOn "re-logs" "urxvt --title logs -tr -tint white -sh 35 -e multimon.sh")
-        , ("re-web"  , spawnOn "re-web" "urxvt --title logs -tr -tint white -sh 35 -e multimon.sh")
-        , ("org-mode", spawnOn "org-mode" "EMACS_THEME_NAME=sanityinc-solarized-light emacs --execute '(my-org-mode-calendar-combo)' --title Emacs-Org-Mode")  
-        ]
-    }
+topics = [ "1" , "2", "3", "4" , "5", "6" , "7" , "8", "9"]
 
 dmenu_run_cmd = [
      "dmenu-launch.py"
-    ,"-nb", "'#3F3F3F'" -- normal background color
-    ,"-nf", "'#DCDCCC'" -- normal foreground color
-    ,"-sb", "'#7F9F7F'" -- selected background color
-    ,"-sf", "'#DCDCCC'" -- selected foreground color
+    -- ,"-nb", "'#3F3F3F'" -- normal background color
+    -- ,"-nf", "'#DCDCCC'" -- normal foreground color
+    -- ,"-sb", "'#7F9F7F'" -- selected background color
+    -- ,"-sf", "'#DCDCCC'" -- selected foreground color
     ,"-b"               -- at the bottom of the screen
     ]
 
@@ -159,22 +128,19 @@ gsconfig1 = defaultGSConfig { gs_cellheight = 30, gs_cellwidth = 100 }
 
 keymap = \conf -> mkKeymap conf $
     [( "M-a" ,    spawn $ XMonad.terminal conf)
-    ,( "M-r" ,    spawn $ join " " dmenu_run_cmd)
+    ,( "M-S-r" ,  spawn $ join " " dmenu_run_cmd)
     ,( "M-f" ,    spawn "firefox")
     ,( "M-g" ,    spawn "gvim")
-    -- ,( "M-S-e" ,  spawn "emc")
-    -- ,( "M-e" ,    spawn "dolphin")
-    ,( "C-A-l" ,  spawn "firefox")
+    ,( "M-e" ,    spawn "firefox")
 
     -- actions
-    ,( "M-c" ,    kill                             )
-    ,( "M-n" ,    refresh                          )
-    ,( "M-z" ,    warpToWindow (1/2) (1/2)         )
-    ,( "M-x" ,    currentTopicAction myTopicConfig )
-    ,( "M-S-g" ,  gotoMenu )
+    ,( "M-c" ,    kill)
+    ,( "M-n" ,    refresh)
+    ,( "M-z" ,    warpToWindow (1/2) (1/2))
+    ,( "M-S-g" ,  gotoMenu)
 
     -- focus ops
-    ,( "M-<Tab>"   , windows W.focusDown   )
+    ,( "M-<Tab>"   , windows W.focusDown)
 
     ,( "M-b"       , rotUnfocusedUp)
     ,( "M-n"       , rotUnfocusedDown)
@@ -225,7 +191,7 @@ keymap = \conf -> mkKeymap conf $
 
     -- quit/restart xmonad
     ,( "M-C-S-q"     , io (exitWith ExitSuccess))
-    ,( "M-q"         , spawn "xmonad --recompile && xmonad --restart")
+    ,( "M-C-q"       , spawn "xmonad --recompile && xmonad --restart")
 
     ,( "M-<Right>"   , nextWS)
     ,( "M-<Left>"    , prevWS)
@@ -245,12 +211,12 @@ keymap = \conf -> mkKeymap conf $
     [ ("M-S-" ++ k, windows $ W.shift w) | (w, k) <- zip (workspaces conf) $ map show [1..9] ]
     ++
 
-    -- switch to xinerama screen - mod-{w,e,r} -- (I really need R for run, though)
-    [ ("M-" ++ k:""  , screenWorkspace s >>= flip whenJust (windows . W.view)) | (k, s) <- zip "ew" [0..] ]
+    -- switch to xinerama screen - mod-{w,e}
+    [ ("M-" ++ k:""  , screenWorkspace s >>= flip whenJust (windows . W.view)) | (k, s) <- zip "qw" [0..] ]
     ++
 
-    -- switch client to xinerama screen - mod-shift-{w,e,r}
-    [ ("M-S-" ++ k:"" , screenWorkspace s >>= flip whenJust (windows . W.shift)) | (k, s) <- zip "ew" [0..] ]
+    -- switch client to xinerama screen - mod-shift-{w,e}
+    [ ("M-S-" ++ k:"" , screenWorkspace s >>= flip whenJust (windows . W.shift)) | (k, s) <- zip "qw" [0..] ]
 
 
 -- Mouse config
@@ -383,7 +349,6 @@ log_hook = do ewmhDesktopsLogHook
 startup_hook = return ()
 
 term = "gnome-terminal"
-red_color = "#d46464"
 altMask = mod1Mask
 
 main = do
@@ -407,8 +372,8 @@ defaults = defaultConfig {
         , mouseBindings = mouse_keymap
 
         -- colors
-        ,normalBorderColor = "#99968b"
-        ,focusedBorderColor = red_color
+        ,normalBorderColor = "#3F3F3F"
+        ,focusedBorderColor = "#0E90D2"
 
         --- hooks
         , manageHook = manage_hook <+> manageDocks

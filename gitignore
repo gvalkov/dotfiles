@@ -11,6 +11,7 @@ dropin.cache
 pip-log.txt
 .installed.cfg
 .coverage
+__pycache__/
 
 
 # --- Swap ---

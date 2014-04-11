@@ -1,7 +1,8 @@
-#!/bin/bash -x
+#!/bin/sh
+set -x
 
 cd $(dirname $0)
-function c () { readlink -f $1 ; }
+c () { readlink -f $1 ; }
 
 ln -snvf `c zshrc`   ~/.zshrc
 ln -snvf `c zshenv`  ~/.zshenv

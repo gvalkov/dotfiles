@@ -1,6 +1,7 @@
-#!/bin/bash -x
+#!/bin/sh
+set -x
 
-function c () { readlink -f $1 ; }
+c () { readlink -f $1 ; }
 
 for i in zsh bin; do
     [[ -x $i/install.sh ]] && $i/install.sh
@@ -22,6 +23,6 @@ ln -snvf `c mostrc`         ~/.mostrc
 #ln -svnf `c xinitrc`        ~/.xinitrc
 #ln -svnf `c stalonetrayrc`  ~/.stalonetrayrc
 
-mkdir -p ~/.config/mpd/
-touch ~/.config/mpd/{database,log,pid,state,sticker.sql}
-ln -snvf `c mpd.conf`   ~/.config/mpd/
+#mkdir -p ~/.config/mpd/
+#touch ~/.config/mpd/{database,log,pid,state,sticker.sql}
+#ln -snvf `c mpd.conf`   ~/.config/mpd/
