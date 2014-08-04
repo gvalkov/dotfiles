@@ -14,7 +14,7 @@
     ui = true
     status = auto
     branch = auto
-    diff = false
+    diff = true
 
 [core]
 	warnambiguousrefs = false

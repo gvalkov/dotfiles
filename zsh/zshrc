@@ -91,7 +91,6 @@ alias yumi='sudo yum install'
 alias yums='sudo yum --noplugins -C search'
 alias yuml='sudo yum --noplugins -C list'
 
-
 alias nautilus="nautilus --no-desktop"
 alias pyclean='rm -r **/*.(pyc|pyo) **/__pycache__'
 alias ctags="ctags --fields=+l --c-kinds=+p --c++-kinds=+p"
@@ -102,6 +101,7 @@ alias py-http-serve='python3 -m http.server'
 # global/suffix aliases
 alias -s zip='zipinfo'
 alias -s whl='zipinfo'
+alias -s mp3='mplayer'
 alias -g G='|& egrep -i'
 alias -g L='|& less'
 alias -g EG='|& egrep '

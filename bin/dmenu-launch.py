@@ -6,7 +6,11 @@ from os  import getenv, unlink, system
 from sys import exit, argv, stdout
 from operator import itemgetter
 
-from cPickle import dump, load
+try:
+    from cPickle import dump, load
+except:
+    from pickle import dump, load
+
 from subprocess import check_output, Popen, PIPE
 
 cache_fn = getenv('HOME') + '/.cache/dmenu-launch.pickle'
@@ -21,7 +25,7 @@ def create_cache():
     return dict.fromkeys(cmd_list, 0)
 
 def write_cache(cache):
-    fh = open(cache_fn, 'w')
+    fh = open(cache_fn, 'wb')
     dump(cache, fh)
 
 def read_cache():
@@ -45,21 +49,22 @@ def dmenu(l):
     cmd.extend(argv[1:])
     p = Popen(cmd, stdin=PIPE, stdout=PIPE)
 
-    out, err = p.communicate('\n'.join(l))
+    inp = '\n'.join(l)
+    out, err = p.communicate(inp.encode('utf8'))
     return out
 
 cache = read_cache()
 cache = update_cache(cache)
-cache_items = cache.items()
+cache_items = list(cache.items())
 
-cache_items.sort(key=itemgetter(1))
-cache_items.reverse()
-cache_items = map(itemgetter(0), cache_items)
+cache_items = sorted(cache_items, key=itemgetter(1))
+cache_items = reversed(cache_items)
+cache_items = [i[0].decode('utf8') for i in cache_items]
 
 commands = {
-        'dmenu-cache-clear'  : lambda : unlink(cache_fn),
-        'dmenu-cache-update' : lambda : update_cache(cache),
-    }
+    'dmenu-cache-clear'  : lambda : unlink(cache_fn),
+    'dmenu-cache-update' : lambda : update_cache(cache),
+}
 
 cache_items.extend(commands.keys())
 
