@@ -24,8 +24,7 @@ export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 export DOTREMINDERS="$HOME/org/reminders"
 
 # go
-#export GOROOT="$HOME/.local/go"
-export GOPATH="$HOME/source/go"
+export GOPATH="$HOME/.local/go"
 
 # perl locallib
 export PERL_LOCAL_LIB_ROOT="/home/gv/.perl5"
@@ -46,7 +45,6 @@ path=(\
   $HOME/.dotfiles/util-co/bin \
   $HOME/.local/go/bin \
   $HOME/.perl5/bin \
-  $GOROOT/bin \
   /usr/pgsql-9.3/bin/ \
   /opt/nodejs/bin/ \
   /opt/mathematica/bin/ \

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 export TMPDIR=/tmp
 set -eu
-exec /usr/bin/emacsclient -c "$@"
+exec emacsclient -c "$@"

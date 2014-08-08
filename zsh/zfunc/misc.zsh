@@ -43,18 +43,60 @@ function rpm-extract () {
 }
 
 function find-simple () {
-  dir=${2:-'.'}
-  regex=${1:-'^.*$'}
+  local dir=${2:-'.'}
+  local regex=${1:-'^.*$'}
 
-  excludes=(".git" "\*.pyc" "\*.pyo")
+  local excludes
+  excludes=(".git" ".hg" ".svn" "\*.pyc" "\*.pyo" "__pycache__")
+
   for m in $excludes; do
-    _excludes="${_excludes}-name ${m} -prune -o "
+    local _excludes="${_excludes}-name ${m} -prune -o "
   done
 
   [[ ${regex[1]} != '^' ]] && regex=".*${regex}"
   [[ ${regex[-1]} != '$' ]] && regex="${regex}.*"
 
-  eval find ${dir} ${_excludes} -regextype posix-extended -regex "${regex}" -print
+  if [[ "$OSTYPE" =~ "freebsd" ]]; then
+    local findargs="-E ${dir}"
+  else
+    local findargs="${dir} -regextype posix-extended"
+  fi
+
+  eval find ${findargs} ${_excludes} -regex "${regex}" -print
+}
+
+function pkg () {
+  case "$1" in
+    search)
+      shift
+      command pkg search "$@" \
+        | nl -nrn -w6 \
+        | tee /tmp/pkg-search.tmp \
+        | awk '{printf("%s (%s)\n", $2, $1)}' \
+        | column -t -s ' '
+      ;;
+    install)
+      shift
+
+      local -a regex args
+      local pkgs;
+
+      # $@ = "%1 bash %15" --> regex = "^(1|15)"; args = "bash"
+      for arg in "$@"; do
+        if [[ ${arg:0:1} == '%' ]]; then
+          shift
+          regex+=( ${arg:1} )
+        else
+          args+=( ${arg} )
+        fi
+      done
+      regex="(${(j:|:)regex})"
+      pkgs=$(awk -v "query=$regex" '$1 ~ query {printf("%s ", $2)}' /tmp/pkg-search.tmp)
+      command pkg install "$args" "$pkgs"
+      ;;
+    *)
+      command pkg "$@";;
+  esac
 }
 
 zle -N insert-sudo insert_sudo

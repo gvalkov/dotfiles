@@ -1,0 +1,14 @@
+[Unit]
+Description=Lock X session on sleep
+Before=sleep.target
+ 
+[Service]
+User=gv
+Type=forking
+Environment=DISPLAY=:0
+ExecStart=/home/gv/.dotfiles/bin/i3lock-wrapper
+ 
+[Install]
+WantedBy=sleep.target
+
+
