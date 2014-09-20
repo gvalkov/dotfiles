@@ -1,0 +1,8 @@
+# -*- mode: sh -*-
+
+function rpm-extract () {
+  src=$(readlink -f "$1")
+  dest=$(basename "$1" .rpm)
+  mkdir -p "$dest"
+  ( cd "$dest" && rpm2cpio "$src" | cpio -idmv )
+}

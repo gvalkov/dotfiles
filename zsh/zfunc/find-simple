@@ -1,0 +1,24 @@
+# -*- mode: sh -*-
+
+function find-simple () {
+  local regex=${1:-'.*'}
+  local dir=${2:-'.'}
+
+  local excludes
+  excludes=(".git" ".hg" ".svn" "\*.pyc" "\*.pyo" "__pycache__")
+
+  for m in $excludes; do
+    local _excludes="${_excludes}-name ${m} -prune -o "
+  done
+
+  [[ ${regex[1]} != '^' ]] && regex=".*${regex}"
+  [[ ${regex[-1]} != '$' ]] && regex="${regex}.*"
+
+  if [[ "$OSTYPE" =~ "freebsd" ]]; then
+    local findargs="-E ${dir}"
+  else
+    local findargs="${dir} -regextype posix-extended"
+  fi
+
+  eval find ${findargs} ${_excludes} -regex "${regex}" -print
+}

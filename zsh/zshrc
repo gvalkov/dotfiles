@@ -1,40 +1,21 @@
 # -*- mode: sh -*-
-# aliases
-alias h='history'
-alias f='find-simple'
 
-alias c="cats"
-
+#-----------------------------------------------------------------------------
+# movement aliases
 alias   ..='cd ..'
 alias cd..='cd ..'
 alias cd...='cd ../../'
 alias cd....='cd ../../../'
 alias cd/='cd /'
 alias cd-='cd -'
-alias gcd='cd $(git rev-parse --show-toplevel)'
-alias md='mkdir -p'
-
-alias d='dirs -v'
-alias g='git'
-alias ct='cleartool'
-alias v='vim'
-alias r='ranger'
-alias emc='emacsclient -n -c'
-alias gt='gvim --remote-tab'
-alias _='sudo'
 alias po='popd'
 alias pu='pushd'
-alias tmuxa='tmux attach-session -t'
-alias tmuxl='tmux list-sessions'
+alias d='dirs -v' # dirstack
+for i in {1..9}; do alias "$i"="cd +${i}"; done; unset i
+#-----------------------------------------------------------------------------
 
-alias gvimt='gvim --remote-tab'
-alias diff='colordiff'
-alias jobs='jobs -l'
-alias tree='tree -F -C --charset unicode'
-alias tmux='tmux -2'
-alias ctl='systemctl'
-#alias ack='ack-grep'
 
+#-----------------------------------------------------------------------------
 # ls aliases
 alias ls="ls --color=auto -F --group-directories-first"
 alias ll="ls -lsh"
@@ -42,81 +23,177 @@ alias lla="ll -ld *(-/DN)"
 alias l='ls -1A'
 alias lr='ll -R'
 alias lx='ll -XB'
-
-# freebsd specific aliases
-if [[ "$OSTYPE" =~ "freebsd" ]]; then
-alias ls="gls --color=auto -F --group-directories-first"
-alias ll="gls -lsh"
-fi
-
-# ls aliases (freebsd)
-# alias ls="ls -G -F"
+#-----------------------------------------------------------------------------
 
 
-# git aliases
-alias g='git'
-alias gb='git branch'
-alias gbl='git branch -v'
-alias gc='git commit'
-alias gca='git commit --all'
-alias gcs='git show'
-alias gia='git add'
-alias girh='git reset --hard'
+#-----------------------------------------------------------------------------
+# command aliases
+alias c="cats"
+alias h='history'
+alias f='find-simple'
 
-# rsync aliases
-_rsync_base_cmd="rsync -v --progress --human-readable --compress --archive"
-alias rsync-copy="${_rsync_base_cmd}"
-alias rsync-move="${_rsync_base_cmd} --remove-source-files"
-alias rsync-update="${_rsync_base_cmd} --update"
-alias rsync-sync="${_rsync_base_cmd} --update --delete"
-unset _rsync_base_cmd
+alias ct='cleartool'
+alias v='vim'
+alias r='ranger'
 
-# debian aliases
-alias agi='sudo apt-get install'
-alias acs='apt-cache search'
-alias acss='apt-cache show'
-alias debf='apt-file search --regexp'
-alias debi='sudo apt-get install'
-alias debI='sudo dpkg -i'
-alias debq='apt-cache show'
-alias debr='sudo apt-get remove'
-alias debs='apt-cache search'
-alias deb-build='time dpkg-buildpackage -rfakeroot -us -uc'
+alias tmux='tmux -2'
+alias tmuxa='tmux attach-session -t'
+alias tmuxl='tmux list-sessions'
 
-# yum aliases
-alias ayi='sudo yum install'
-alias ays='yum --noplugins -C search'
-alias yumh="sudo yum history"
-alias yumi='sudo yum install'
-alias yums='sudo yum --noplugins -C search'
-alias yuml='sudo yum --noplugins -C list'
+alias diff='colordiff'
+alias jobs='jobs -l'
+alias tree='tree -F -C --charset unicode'
+
+_rsync="rsync -v --progress --human-readable --compress --archive"
+alias rsync-copy="${_rsync}"
+alias rsync-move="${_rsync} --remove-source-files"
+alias rsync-update="${_rsync} --update"
+alias rsync-sync="${_rsync} --update --delete"
+unset _rsync
 
 alias nautilus="nautilus --no-desktop"
 alias pyclean='rm -r **/*.(pyc|pyo) **/__pycache__'
 alias ctags="ctags --fields=+l --c-kinds=+p --c++-kinds=+p"
 
-# misc aliases
 alias py-http-serve='python3 -m http.server'
+#-----------------------------------------------------------------------------
 
-# global/suffix aliases
+
+#-----------------------------------------------------------------------------
+# freebsd specific aliases
+if [[ "$OSTYPE" =~ "freebsd" ]]; then
+  if (( $+commands[gls] )); then
+    alias ls="gls --color=auto -F --group-directories-first"
+    alias ll="gls -lsh"
+  fi
+fi
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# dircolors config
+if [[ "$OSTYPE" =~ "freebsd" ]]; then
+  export LSCOLORS='exfxcxdxbxGxDxabagacad'
+fi
+if [[ -f "$HOME/.dotfiles/solarized-dircolors.256dark" ]]; then
+  (( $+commands[dircolors] )) && eval $(dircolors "$HOME/.dotfiles/solarized-dircolors.256dark")
+fi
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# editor aliases
+alias gvimt='gvim --remote-tab'
+alias emc='emacsclient -n -c'
+alias gt='gvim --remote-tab'
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# git aliases
+if (( $+commands[git] )); then
+  alias g='git'
+  alias gb='git branch'
+  alias gbl='git branch -v'
+  alias gc='git commit'
+  alias gca='git commit --all'
+  alias gcs='git show'
+  alias gia='git add'
+  alias girh='git reset --hard'
+  alias gcd='cd $(git rev-parse --show-toplevel)'
+fi
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# debian aliases
+if (( $+commands[apt-get] )); then
+  alias agi='sudo apt-get install'
+  alias agr='sudo apt-get remove'
+  alias acs='apt-cache search'
+  alias acss='apt-cache show'
+  alias debbuild='time dpkg-buildpackage -rfakeroot -us -uc'
+fi
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# yum aliases
+if (( $+commands[yum] )); then
+  alias ayi='sudo yum install'
+  alias ays='sudo yum --noplugins -C search'
+fi
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# pacman aliases
+if (( $+commands[pacman] )); then
+  alias pac='pacman'
+  alias api='sudo pacman --sync'
+  alias apr='sudo pacman --remove'
+fi
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# suffix aliases
 alias -s zip='zipinfo'
 alias -s whl='zipinfo'
 alias -s mp3='mplayer'
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# global aliases
 alias -g G='|& egrep -i'
 alias -g L='|& less'
 alias -g EG='|& egrep '
 alias -g EH='|& head '
 alias -g ET='|& tail -15 '
 alias -g WC='| wc -l'
-alias -g XC='| perl -pe "chomp if eof" | xclip -i -selection clipboard'
+alias -g  XC='| perl -pe "chomp if eof" | xclip -i -selection clipboard'
 alias -g XCP='| perl -pe "chomp if eof" | xclip -i -selection primary'
 alias -g DN='/dev/null'
+#-----------------------------------------------------------------------------
 
-# history
+
+#-----------------------------------------------------------------------------
+# utility functions
+function mcd ()  { mkdir -p "$1" && cd "$1"; }
+function cdls () { builtin cd "$1" && ll; }
+function vw ()   { vim $(which $1); }
+
+function find-exec {
+  find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;
+}
+
+# re-execute last command and run a command on its collected stdout
+function _cmd_on_last () {
+  local tpmfile=$(mktemp)
+  trap "rm ${tpmfile}" SIGINT SIGTERM EXIT
+
+  eval $(fc -l -n -1) > $tpmfile
+  eval $1 $tpmfile
+}
+
+function viml  { _cmd_on_last vim; }
+function gviml { _cmd_on_last "gvim -f"; }
+function emcl  { _cmd_on_last "emacsclient -c"; }
+
+autoload find-simple
+autoload rpm-extract
+autoload pkg
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# history config
 HISTFILE=~/.histfile
 HISTSIZE=20000
 SAVEHIST=20000
 
+setopt BANG_HIST
 setopt SHARE_HISTORY
 setopt INC_APPEND_HISTORY
 setopt EXTENDED_HISTORY
@@ -128,190 +205,326 @@ setopt HIST_SAVE_NO_DUPS
 setopt HIST_FIND_NO_DUPS
 setopt HIST_VERIFY
 setopt HIST_IGNORE_SPACE
+unsetopt HIST_BEEP
 
-# directories
+autoload -Uz history-beginning-search-menu
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# directory movement config
 DIRSTACKSIZE=10
-#setopt auto_name_dirs
-setopt PUSHD_IGNORE_DUPS
-setopt PUSHD_SILENT
+
 setopt AUTO_CD
 setopt AUTO_PUSHD
-#setopt CDABLE_VARS
-setopt AUTO_NAME_DIRS
-setopt ZLE
+setopt PUSHD_SILENT
+setopt PUSHD_IGNORE_DUPS
+unsetopt AUTO_NAME_DIRS
+unsetopt CDABLE_VARS  # a=/tmp; cd a; pwd -> /tmp
+#-----------------------------------------------------------------------------
 
-# misc
-WORDCHARS='*?_[]~&;!#$%^(){}<>'
-#WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
-setopt MULTIOS
-setopt CLOBBER
+
+#-----------------------------------------------------------------------------
+# zsh config
 unsetopt BEEP
 unsetopt MAIL_WARNING
-#setopt PRINTEXITVALUE
-setopt INTERACTIVE_comments
-setopt NOTIFY
-setopt LONG_list_jobs
+setopt MULTIOS
+setopt CLOBBER
+setopt ZLE
 
-# key bindings
-bindkey -e # emacs mode
-bindkey "\e[1~"  beginning-of-line    # Home
-bindkey "\e[4~"  end-of-line          # End
-bindkey "\e[5~"  beginning-of-history # PageUp
-bindkey "\e[6~"  end-of-history       # PageDown
-bindkey "\e[2~"  quoted-insert        # Ins
-bindkey "\e[3~"  delete-char          # Del
-bindkey "\e[5C"  forward-word
-bindkey "\eOc"   emacs-forward-word
-bindkey "\e[5D"  backward-word
-bindkey "\eOd"   emacs-backward-word
-bindkey "\e\e[C" forward-word
-bindkey "\e\e[D" backward-word
-bindkey "\e[Z"   reverse-menu-complete # Shift+Tab
-bindkey "^[r"    history-incremental-search-forward
-bindkey \^U      backward-kill-line
-# for rxvt
-bindkey "\e[7~" beginning-of-line # Home
-bindkey "\e[8~" end-of-line       # End
-# for non RH/Debian xterm, can't hurt for RH/Debian xterm
-bindkey "\eOH" beginning-of-line
-bindkey "\eOF" end-of-line
-# for freebsd console
-bindkey "\e[H" beginning-of-line
-bindkey "\e[F" end-of-line
-bindkey "^X^E" edit-command-line
+unsetopt FLOW_CONTROL # C-s C-q
+unsetopt PRINT_EXIT_VALUE
+setopt INTERACTIVE_COMMENTS
 
-bindkey "~" global-alias-tilde
-bindkey "^@" after-first-word
-bindkey "^X^F" global-alias-dirstack
-
-
-# tbd
-which dircolors &>/dev/null && \
-eval $(dircolors "$HOME/.dotfiles/solarized-dircolors.256dark")
-
-
-# jobs
-setopt LONG_LIST_JOBS
-unsetopt AUTO_RESUME
-setopt NOTIFY
-unsetopt BG_NICE
-#unsetopt HUP
-#unsetopt CHECK_JOBS
-
-# editor
-autoload -Uz edit-command-line
-zle -N edit-command-line
-
-autoload -Uz url-quote-magic
-zle -N self-insert url-quote-magic
-
-
-# completion
-setopt AUTO_MENU
-setopt ALWAYS_TO_END
-setopt COMPLETE_IN_WORD
-setopt AUTO_PARAM_SLASH
-setopt PATH_DIRS
-setopt NO_NOMATCH
-setopt CASE_GLOB
-
-autoload -Uz compinit && compinit
-
-zstyle ':completion:*' use-cache 1
-zstyle ':completion:*' cache-path ~/.zcompcache
-
-# completion look & feel
-#zstyle ':completion:*:*:*:*:*' menu select
-zstyle ':completion:*:matches' group 'yes'
-zstyle ':completion:*:options' description 'yes'
-zstyle ':completion:*:options' auto-description '%d'
-zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
-zstyle ':completion:*:descriptions' format ' %F{green}%d %f'
-zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
-zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
-zstyle ':completion:*:default' list-prompt '%S%M matches%s'
-zstyle ':completion:*' format '%B%F{yellow}%d: %f'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' verbose yes
-
-zstyle ':completion:*' completer _complete _match _approximate
-zstyle ':completion:*:match:*' original only
-zstyle ':completion:*:approximate:*' max-errors 1 numeric
-
-zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
-zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
-
-# procutils completion
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
-zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
-zstyle ':completion:*:*:kill:*' menu yes select
-zstyle ':completion:*:*:kill:*' force-list always
-zstyle ':completion:*:*:kill:*' insert-ids single
-
-# path completion
-zstyle ':completion:*' accept-exact '*(N)'
-zstyle ':completion:*' file-sort name
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
-zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
-zstyle ':completion:*:-tilde-:*' group-order 'named-directories' 'path-directories' 'users' 'expand'
-zstyle ':completion:*' squeeze-slashes true
-
-# history completion
-zstyle ':completion:*:history-words' stop yes
-zstyle ':completion:*:history-words' remove-all-dups yes
-zstyle ':completion:*:history-words' list false
-zstyle ':completion:*:history-words' menu yes
-
-
-# limits
-limit stack        8192
-limit descriptors  1024
-limit coredumpsize 0
-limit -s
-
-# prompt
 autoload -Uz colors && colors
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# bindkey config
+if [[ "$TERM" != 'dumb' ]]; then
+  WORDCHARS='*?_[]~&;!#$%^(){}<>'
+  #WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
+
+  # widgets
+  function insert-sudo () {
+    BUFFER="sudo $BUFFER"
+    (( CURSOR += 5 ))
+  }
+
+  function after-first-word () {
+    zle beginning-of-line
+    zle vi-forward-blank-word
+    zle backward-char
+    LBUFFER+=' '
+  }
+
+  function global-alias-dirstack () {
+    LBUFFER+="cd -"
+    zle expand-or-complete
+  }
+
+  autoload -Uz edit-command-line
+
+  zle -N insert-sudo
+  zle -N edit-command-line
+  zle -N after-first-word
+  zle -N global-alias-dirstack
+  zle -N history-beginning-search-menu
+
+  # key bindings
+  bindkey -e # emacs mode
+
+  # move
+  bindkey "\e[H"   beginning-of-line    # Home
+  bindkey "\e[7~"  beginning-of-line    # Home
+  bindkey "\e[F"   end-of-line          # End
+  bindkey "\e[8~"  end-of-line          # End
+  bindkey "\e[5~"  beginning-of-history # PageUp
+  bindkey "\e[6~"  end-of-history       # PageDown
+  bindkey "^X^F"   vi-find-next-char    # C-x X-f
+  bindkey "^X^P"   vi-find-prev-char    # C-x X-p
+  bindkey "^X^]"   vi-match-bracket     # C-x C-%
+
+  # edit
+  bindkey "\e[2~"   overwrite-mode       # Ins
+  bindkey "\e[3~"   delete-char          # Del
+  bindkey "\"     backward-delete-char # Backspace
+  bindkey "\e[1;5C" forward-word         # C-<Right>
+  bindkey "\e[1;5D" backward-word        # C-<Left>
+  bindkey "^X^E"    edit-command-line    # C-x C-e
+  bindkey "\^U"     backward-kill-line   # C-u
+  bindkey "\^_"     redo                 # C-_
+  bindkey "\^L"     clear-screen         # C-l
+  bindkey "\em"     copy-prev-shell-word # C-m
+  bindkey "\eq"     push-line-or-edit    # M-q
+
+  # completion
+  bindkey " "       magic-space
+  bindkey "\e[Z"    reverse-menu-complete # S-<tab>
+  bindkey "\^R"     history-incremental-search-forward
+  bindkey '^X^X'    history-beginning-search-menu
+
+  # widgets
+  # bindkey "^X^D" global-alias-dirstack # navigate dirstack
+  bindkey "^[s"  insert-sudo
+  # bindkey "~"    global-alias-tilde
+  bindkey "^@"   after-first-word
+
+fi
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# job management config
+setopt LONG_LIST_JOBS
+setopt NOTIFY
+setopt HUP
+unsetopt AUTO_RESUME
+unsetopt BG_NICE
+setopt CHECK_JOBS
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# globbing config
+setopt EXTENDED_GLOB
+setopt CASE_GLOB
+setopt BRACE_CCL
+setopt BAD_PATTERN
+setopt EQUALS
+unsetopt GLOB_DOTS
+unsetopt NULL_GLOB
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# prompt config
 autoload -Uz promptinit
-setopt promptsubst
+setopt PROMPT_SUBST
 #promptinit
 #prompt mine red yellow vc:0
-PROMPT="%{$fg_bold[red]%}%n%{$reset_color%}.%{$fg_bold[yellow]%}%m %{$fg_bold[white]%}%~ %{$reset_color%}$ "
+PROMPT="%{$fg_bold[red]%}%n%{$reset_color%}" # username
+PROMPT="${PROMPT}.%{$fg_bold[yellow]%}%m "   # hostname
+PROMPT="${PROMPT}%{$fg_bold[white]%}%~ %{$reset_color%}" # directory
+PROMPT="${PROMPT}$ "
+#-----------------------------------------------------------------------------
 
+
+#-----------------------------------------------------------------------------
+# limits config
+limit stack        8192
+limit descriptors  1024
+#limit coredumpsize 0
+limit -s
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# plugin config
+autoload -Uz url-quote-magic
+zle -N self-insert url-quote-magic
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# third-party plugin config
+if [[ -f $HOME/.zfunc/plugins/zsh-history-substring-search.zsh ]]; then
+  source $HOME/.zfunc/plugins/zsh-history-substring-search.zsh
+  bindkey "^[[A" history-substring-search-up
+  bindkey "^[[B" history-substring-search-down
+  bindkey -M emacs '^P' history-substring-search-up
+  bindkey -M emacs '^N' history-substring-search-down
+fi
+
+if [[ -f $HOME/.zfunc/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+  source $HOME/.zfunc/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  ZSH_HIGHLIGHT_HIGHLIGHTERS=(brackets main)
+  ZSH_HIGHLIGHT_STYLES[default]=none
+  ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold
+  ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=green
+  ZSH_HIGHLIGHT_STYLES[alias]=none
+  ZSH_HIGHLIGHT_STYLES[builtin]=none
+  ZSH_HIGHLIGHT_STYLES[function]=none
+  ZSH_HIGHLIGHT_STYLES[command]=none
+  ZSH_HIGHLIGHT_STYLES[precommand]=none
+  ZSH_HIGHLIGHT_STYLES[commandseparator]=none
+  ZSH_HIGHLIGHT_STYLES[hashed-command]=none
+  ZSH_HIGHLIGHT_STYLES[path]=none
+  ZSH_HIGHLIGHT_STYLES[globbing]=none
+  ZSH_HIGHLIGHT_STYLES[history-expansion]=fg=green,bold
+  ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=none
+  ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=none
+  ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=none
+  ZSH_HIGHLIGHT_STYLES[single-quoted-argument]=fg=yellow,bold
+  ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=yellow,bold
+  ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=cyan
+  ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=cyan
+  ZSH_HIGHLIGHT_STYLES[assign]=none
+fi
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# fasd config
+if (( $+commands[fasd] )); then
+  local fasd_cache_init="$HOME/.fasd-cache-init.zsh"
+  if [[ "${commands[fasd]}" -nt "$fasd_cache_init" || ! -s "$fasd_cache_init" ]]; then
+    init_args=(zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install)
+    fasd --init ${init_args[@]} >! "$fasd_cache_init" 2> /dev/null
+  fi
+
+  source $fasd_cache_init
+  unset fasd_cache_init
+
+  function fasd_cd {
+    local fasd_ret="$(fasd -d "$@")"
+    if [[ -d "$fasd_ret" ]]; then
+      cd "$fasd_ret"
+    else
+      print "$fasd_ret"
+    fi
+  }
+
+  alias j='fasd_cd -i'
+fi
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# virtualenvwrapper config
+if (( $+commands[virtualenvwrapper_lazy.sh] )); then
+  export WORKON_HOME="$HOME/.virtualenvs/"
+  source "$commands[virtualenvwrapper_lazy.sh]"
+fi
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# completion config
+if [[ "$TERM" != 'dumb' ]]; then
+  autoload -Uz compinit && compinit -i
+
+  setopt AUTO_MENU
+  setopt AUTO_LIST
+  setopt ALWAYS_TO_END
+  setopt COMPLETE_IN_WORD
+  setopt AUTO_PARAM_SLASH
+  setopt PATH_DIRS
+  setopt NO_NOMATCH
+  setopt MENU_COMPLETE
+
+  zstyle ':completion:*' use-cache on
+  zstyle ':completion:*' cache-path $HOME/.zcompcache/
+
+  # completion look & feel (lifted from prezto's completion config)
+  #zstyle ':completion:*:*:*:*:*' menu select
+  zstyle ':completion:*:matches' group 'yes'
+  zstyle ':completion:*:options' description 'yes'
+  zstyle ':completion:*:options' auto-description '%d'
+  zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
+  zstyle ':completion:*:descriptions' format ' %F{green}%d %f'
+  zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+  zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+  zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+  zstyle ':completion:*' format '%B%F{yellow}%d: %f'
+  zstyle ':completion:*' group-name ''
+  zstyle ':completion:*' verbose yes
+
+  # fuzzy maching
+  zstyle ':completion:*' completer _complete _match _approximate
+  zstyle ':completion:*:match:*' original only
+  zstyle ':completion:*:approximate:*' max-errors 1 numeric
+
+  # ignore unavailable commands
+  zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
+
+  #
+  zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
+
+  # procutils completion
+  zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+  zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+  zstyle ':completion:*:*:kill:*' menu yes select
+  zstyle ':completion:*:*:kill:*' verbose yes
+  zstyle ':completion:*:*:kill:*' force-list always
+  zstyle ':completion:*:*:kill:*' insert-ids single
+
+  # path completion
+  zstyle ':completion:*' accept-exact '*(N)'
+  zstyle ':completion:*' file-sort name
+  zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+  zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
+  zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
+  zstyle ':completion:*:-tilde-:*' group-order 'named-directories' 'path-directories' 'users' 'expand'
+  zstyle ':completion:*' squeeze-slashes true
+
+  # man
+  zstyle ':completion:*:manuals' separate-sections true
+  zstyle ':completion:*:manuals.(^1*)' insert-sections true
+
+  # rsync
+  zstyle ':completion:*:(scp|rsync):*' tag-order 'hosts:-host:host hosts:-domain:domain hosts:-ipaddr:ip\ address *'
+  zstyle ':completion:*:(scp|rsync):*' group-order users files all-files hosts-domain hosts-host hosts-ipaddr
+  zstyle ':completion:*:ssh:*' tag-order 'hosts:-host:host hosts:-domain:domain hosts:-ipaddr:ip\ address *'
+  zstyle ':completion:*:ssh:*' group-order users hosts-domain hosts-host users hosts-ipaddr
+  zstyle ':completion:*:(ssh|scp|rsync):*:hosts-host' ignored-patterns '*(.|:)*' loopback ip6-loopback localhost ip6-localhost broadcasthost
+  zstyle ':completion:*:(ssh|scp|rsync):*:hosts-domain' ignored-patterns '<->.<->.<->.<->' '^[-[:alnum:]]##(.[-[:alnum:]]##)##' '*@*'
+  zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.0.<->' '255.255.255.255' '::1' 'fe80::*'
+
+
+  # history completion
+  zstyle ':completion:*:history-words' stop yes
+  zstyle ':completion:*:history-words' remove-all-dups yes
+  zstyle ':completion:*:history-words' list false
+  zstyle ':completion:*:history-words' menu yes select
+fi
+#-----------------------------------------------------------------------------
+
+#-----------------------------------------------------------------------------
 # set tty tabs
-tabs 5,9,13,17,21,25,29,33,37,41 &> /dev/null
+tabs 4,9,13,17,21,25,29,33,37,41 &> /dev/null
+#-----------------------------------------------------------------------------
 
-# virtualenvwrapper
-venvw=`which virtualenvwrapper.sh`
-[[ ($? -eq 0) && (-n $WORKON_HOME) ]] && source $venvw
-
-# autojump
-#[[ -f /usr/share/autojump/autojump.zsh ]] && source /usr/share/autojump/autojump.zsh
-
-for s (~/.zfunc/*.zsh(x)) source $s
+#-----------------------------------------------------------------------------
 [[ -f $HOME/.zshrc.local ]] && . $HOME/.zshrc.local
-
-# syntax highlighting
-source $HOME/.zfunc/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(brackets main)
-ZSH_HIGHLIGHT_STYLES[default]=none
-ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold
-ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=green
-ZSH_HIGHLIGHT_STYLES[alias]=none
-ZSH_HIGHLIGHT_STYLES[builtin]=none
-ZSH_HIGHLIGHT_STYLES[function]=none
-ZSH_HIGHLIGHT_STYLES[command]=none
-ZSH_HIGHLIGHT_STYLES[precommand]=none
-ZSH_HIGHLIGHT_STYLES[commandseparator]=none
-ZSH_HIGHLIGHT_STYLES[hashed-command]=none
-ZSH_HIGHLIGHT_STYLES[path]=none
-ZSH_HIGHLIGHT_STYLES[globbing]=none
-ZSH_HIGHLIGHT_STYLES[history-expansion]=fg=blue
-ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=none
-ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=none
-ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=none
-ZSH_HIGHLIGHT_STYLES[single-quoted-argument]=fg=yellow
-ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=yellow
-ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=cyan
-ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=cyan
-ZSH_HIGHLIGHT_STYLES[assign]=none

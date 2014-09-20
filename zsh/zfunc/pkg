@@ -1,0 +1,35 @@
+# -*- mode: sh -*-
+
+function pkg () {
+  case "$1" in
+    search)
+      shift
+      command pkg search "$@" \
+        | nl -nrn -w6 \
+        | tee /tmp/pkg-search.tmp \
+        | awk '{printf("%s (%s)\n", $2, $1)}' \
+        | column -t -s ' '
+      ;;
+    install)
+      shift
+
+      local -a regex args
+      local pkgs;
+
+      # $@ = "%1 bash %15" --> regex = "^(1|15)"; args = "bash"
+      for arg in "$@"; do
+        if [[ ${arg:0:1} == '%' ]]; then
+          shift
+          regex+=( ${arg:1} )
+        else
+          args+=( ${arg} )
+        fi
+      done
+      regex="(${(j:|:)regex})"
+      pkgs=$(awk -v "query=$regex" '$1 ~ query {printf("%s ", $2)}' /tmp/pkg-search.tmp)
+      command pkg install "$args" "$pkgs"
+      ;;
+    *)
+      command pkg "$@";;
+  esac
+}
