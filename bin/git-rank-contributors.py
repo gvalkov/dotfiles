@@ -8,8 +8,8 @@ from collections import Counter
 authors = Counter()
 cmd = ('git', 'log', '--patch', '--find-renames', '--find-copies-harder')
 
-re_diffpm = compile(r'^[\+\-]')
-re_commit = compile(r'^commit [0-9A-Fa-f]{40}$')
+re_diffpm = compile(b'^[\+\-]')
+re_commit = compile(b'^commit [0-9A-Fa-f]{40}$')
 
 def itercommits(log):
   commit = []
@@ -17,19 +17,19 @@ def itercommits(log):
     if re_commit.match(line) and commit:
       yield commit
       commit = []
-    commit.append(line)
+      commit.append(line)
 
 def index(l, s):
-  for n,line in enumerate(l):
+  for n, line in enumerate(l):
     if line.startswith(s):
       return n
 
 def rank(commit):
-  author = commit[index(commit, 'Author: ')]
-  author = author.split('Author: ', 1)[-1]
+  author = commit[index(commit, b'Author: ')]
+  author = author.split(b'Author: ', 1)[-1]
   rank = 0
 
-  for line in commit[index(commit, '+++'):]:
+  for line in commit[index(commit, b'+++'):]:
     if re_diffpm.match(line):
       rank += 1
 
@@ -42,4 +42,4 @@ for author, rank in ranks:
   authors[author] += rank
 
 for author, rank in authors.most_common():
-  print('{} {}'.format(rank, author))
+  print('{:4} {}'.format(rank, author.decode('utf8')))

@@ -16,7 +16,7 @@
 #     sudo cp onchange.sh /usr/local/bin
 #
 # Example use - rsync local changes to the remote server:
-#    
+#
 #    onchange.sh rsync -avt . host:/remote/dir
 #
 # Released to Public Domain. Use it as you like.

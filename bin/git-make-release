@@ -1,8 +1,6 @@
-#!/bin/bash
-
+#!/bin/sh
 set -xu
 
-version=$1
-
-git tag v${version} HEAD -m "version ${version}" --force
+version="$1"
+git tag "v${version}" HEAD -m "version ${version}" --force
 #git tag latest-stable v${version} -m 'latest stable version' --force

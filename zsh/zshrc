@@ -452,7 +452,7 @@ if [[ "$TERM" != 'dumb' ]]; then
   setopt AUTO_PARAM_SLASH
   setopt PATH_DIRS
   setopt NO_NOMATCH
-  setopt MENU_COMPLETE
+  unsetopt MENU_COMPLETE
 
   zstyle ':completion:*' use-cache on
   zstyle ':completion:*' cache-path $HOME/.zcompcache/

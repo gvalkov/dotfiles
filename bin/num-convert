@@ -1,13 +1,27 @@
-#!/usr/bin/env zsh
+#!/bin/sh
+set -ue
 
-res=() ; max=""
+if ! which bc 1>/dev/null 2>&1; then
+  echo "error: bc not found" 1>&2; exit 1
+fi
+
+res=""
+max=""
 ibase=10
 
-conv () { echo "ibase=${ibase}; obase=$1; $2" | bc ;}
-
-for i in "$@"; do
-    res+=$(for base in 10 8 16 2; conv $base $i) 
+while getopts 'b:' arg; do
+  if [ $arg = 'b' ]; then
+    ibase=$OPTARG
+    shift; shift  # just assume it's always the first argument
+  fi
 done
 
+conv () {
+  echo "ibase=${ibase}; obase=$1; $2" | bc
+}
+
 printf "%-5s %-5s %-5s %-5s\n" dec oct hex bin
-printf "%-5s %-5s %-5s %-5s\n" $(echo $res | paste -s)
+for i in "$@"; do
+  res=$(for base in 10 8 16 2; do conv $base $i; done)
+  printf "%-5s %-5s %-5s %-5s\n" $(echo "$res" | paste -s)
+done

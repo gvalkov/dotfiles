@@ -1,13 +1,12 @@
-#!/bin/bash
-
+#!/bin/sh
 set -xue
 
 tmptar=`mktemp -u /tmp/tmp.XXXXXXX.tar`
 
 pushd doc
-    make html
-    (cd _build/html && tar cvf $tmptar ./)
-popd 
+  make html
+  (cd _build/html && tar cvf $tmptar ./)
+popd
 
 git co gh-pages
 rm .git/index

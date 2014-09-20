@@ -1,10 +1,15 @@
-#!/bin/bash
+#!/bin/sh -u
 
-file "$1" | grep -q 'shell script' && opts='-l bash'
+py_opts="-f console256 -g"
+nlcmd='nl -n rn -b a -s"┃ " -w 3 --'
 
-nl="`which nl` -n rn -b a -s'┃ ' -w 3"
+mimetype=$(file --mime-type "$1" | cut -d':' -f2)
+case $mimetype in
+  " text/x-shellscript") py_opts="$py_opts -l bash" ;;
+esac
 
-eval pygmentize "$opts" "$1" 2>/dev/null | eval $nl
-if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
-    eval $nl "$1"
+if which pygmentize 1>/dev/null 2>&1 ; then
+  eval pygmentize "$py_opts" "$1" 2>/dev/null | eval $nlcmd
+else
+  eval $nlcmd "$1"
 fi

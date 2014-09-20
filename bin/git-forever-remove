@@ -1,12 +1,12 @@
-#!/bin/bash
-
+#!/bin/sh
 set -xu
 
-[[ $# -eq 0 ]] && exit 1
+[ $# -eq 0 ] && exit 1
 
-topdir=$(git rev-parse --show-toplevel) ; [[ $? -ne 0 ]] && exit 1
+topdir=$(git rev-parse --show-toplevel)
+[ $? -ne 0 ] && exit 1
 
-pushd $topdir
+pushd "$topdir"
     git filter-branch -f --index-filter "git rm -r --cached $@ --ignore-unmatch" --prune-empty --tag-name-filter cat -- --all
     rm -rf .git/refs/original/ && \
     git reflog expire --all && \

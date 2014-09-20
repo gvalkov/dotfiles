@@ -1,11 +1,12 @@
+# -*- mode: sh -*-
+
 # environment
 setenv EDITOR 'vim'
 setenv WINDEDITOR 'vim'
 
-
 # aliases
 alias ll 'ls-F -lF'
-alias rm 'cp -ip'
+alias cp 'cp -ip'
 alias mv 'mv -i'
 
 
@@ -14,7 +15,7 @@ set nobeep
 set autocorrect
 set autolist
 set autoexpand
-set printexitvalue
+#set printexitvalue
 set rmstar
 
 set color
@@ -30,14 +31,17 @@ set histfile = "$HOME/.csh-histfile"
 set ignoreeof = 1
 
 # set implicitcd
-# set prompt = "%B%n%b@%m %# %L"
+if ($?prompt) then
+    # keys
+    stty sane
+    stty echoe
+    stty erase "^H"
+    stty erase "^?"
 
+    # prompts
+    set prompt = "%B%n%b@%m %~ %# %L"
+endif
 
-# keys
-stty sane
-stty echoe
-stty erase "^H"
-stty erase "^?"
 
 bindkey -e
 bindkey "^W"     backward-delete-word
@@ -91,4 +95,4 @@ complete where  'p/1/c/'
 complete which  'p/*/c/'
 
 
-[ -f $HOME/.cshrc.local ] && . $HOME/.cshrc.local
+[ -f $HOME/.cshrc.local ] && source $HOME/.cshrc.local

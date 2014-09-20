@@ -1,9 +1,3 @@
-[submodule "util-co/vimpager"]
-	path = util-co/vimpager
-	url = https://github.com/rkitover/vimpager.git
-[submodule "util-co/youtube-dl"]
-	path = util-co/youtube-dl
-	url = https://github.com/rg3/youtube-dl.git
 [submodule "vim"]
 	path = vim
 	url = git@github.com:gvalkov/dotfiles-vim.git

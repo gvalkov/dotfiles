@@ -2,8 +2,8 @@
 
 from sys import stdin
 
-last = lambda x: x.split(':')[-1].rstrip('\r\n')
 
+last = lambda x: x.split(':')[-1].rstrip('\r\n')
 m = (None, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
 
@@ -26,4 +26,4 @@ for dtstart, summary in parse():
     name = ''.join(summary.split('Birthday')[0])
     month = m[int(dtstart[4:6])]
     day = dtstart[6:8]
-    print( fmt.format(day, month, name) )
+    print(fmt.format(day, month, name))

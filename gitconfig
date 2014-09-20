@@ -1,6 +1,6 @@
 [user]
-	name = Georgi Valkov
-	email = georgi.t.valkov@gmail.com
+    name = Georgi Valkov
+    email = georgi.t.valkov@gmail.com
 
 [apply]
     #whitespace = fix
@@ -17,17 +17,17 @@
     diff = true
 
 [core]
-	warnambiguousrefs = false
+    warnambiguousrefs = false
     editor = vim
     autocrlf = false
     #excludesfile = ~/.gitignore
-    
+
 [diff]
-	tool = meld
+    tool = meld
     mnemonicprefix = true
 
 [merge]
-	tool = meld
+    tool = meld
 
 [web]
     browser = firefox
@@ -90,22 +90,22 @@
 
 [gui]
     fontdiff = -family terminus -size 9 -weight normal -slant roman -underline 0 -overstrike 0
-	historybrowser = gitg
+    historybrowser = gitg
 
-# 
+#
 [giggle]
-	main-window-maximized = false
-	main-window-geometry = 958x1057+0+21
-	main-window-view = HistoryView
-	file-view-vpane-position = 361
-	history-view-vpane-position = 538
-	show-graph = true
+    main-window-maximized = false
+    main-window-geometry = 958x1057+0+21
+    main-window-view = HistoryView
+    file-view-vpane-position = 361
+    history-view-vpane-position = 538
+    show-graph = true
 
 [cola]
     fontui = DejaVu Sans,8,-1,5,50,0,0,0,0,0
     fontdiff = DejaVu Sans Mono,8,-1,5,50,0,0,0,0,0
 
 [url "git://anongit.kde.org/"]
-	insteadOf = kde:
+    insteadOf = kde:
 [url "git@git.kde.org:"]
-	pushInsteadOf = kde:
+    pushInsteadOf = kde:
