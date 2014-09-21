@@ -1,5 +1,5 @@
 [user]
-    name = Georgi Valkov
+    name  = Georgi Valkov
     email = georgi.t.valkov@gmail.com
 
 [apply]
@@ -17,7 +17,7 @@
     diff = true
 
 [core]
-    warnambiguousrefs = false
+    warnambiguousrefs = true
     editor = vim
     autocrlf = false
     #excludesfile = ~/.gitignore
@@ -33,29 +33,40 @@
     browser = firefox
 
 [alias]
+    #-----------------------------------------------------------
     a = add
-    b = "!git branch --verbose | cut -c -$(tput cols)"
     d = diff
     l = log --decorate --graph --date=short --name-status
     p = push
     s = status
     r = remote --verbose
+    b = "!git branch --verbose | cut -c -$(tput cols)"
     t = "!git tag -n | cut -c -$(tput cols)"
+    #-----------------------------------------------------------
 
+    #-----------------------------------------------------------
     l1 = !git --no-pager log --graph --all --decorate --abbrev-commit --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%cr)%C(reset) %C(white)%s%C(reset) %C(bold white)— %cn%C(reset)%C(bold yellow)%d%C(reset)'
     l2 = !git --no-pager log --graph --all --decorate --abbrev-commit --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%cD%C(reset) %C(bold green)(%cr)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(bold white)— %cn%C(reset)'
+    lg = !git --no-pager log --graph --oneline --decorate
+    lc = log ORIG_HEAD.. --stat --no-merges # list new commits after merge
+    heads = !"git log origin/master.. --format='%Cred%h%Creset;%C(yellow)%an%Creset;%H;%C(white)%f%Creset' | git name-rev --stdin --always --name-only | column -t -s';'"
+    #-----------------------------------------------------------
 
-    co = checkout
-    ci = commit -m
-    ca = commit -a -m
-
+    #-----------------------------------------------------------
     amend = commit --amend
     difflast = diff HEAD~
     changelog = log --pretty=format:\" * %s\"
     staged = diff --cached
     unstage = reset HEAD
     filelog = log -u
+    tags = log -l -n1
+    summary = log --oneline
+    #-----------------------------------------------------------
 
+    #-----------------------------------------------------------
+    co = checkout
+    ci = commit -m
+    ca = commit -a -m
     st = status
     mt = mergetool
     br = branch -a
@@ -65,47 +76,33 @@
     cf = cat-file
     fa = fetch --all
     rh = reset --hard
-    tags = log -l -n1
-    summary = log --oneline
+    #-----------------------------------------------------------
 
-    # list new commits after merge
-    lc = log ORIG_HEAD.. --stat --no-merges
-
+    #-----------------------------------------------------------
     edit-last-commit = !vim `git diff-tree -r --name-only HEAD HEAD~1`
     edit-unmerged    = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; editor `f`"
     add-unmerged     = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
-
-    lg = !git --no-pager log --graph --oneline --decorate
+    #-----------------------------------------------------------
 
     svnup = !git config --get-regexp 'svn-remote.*url' | cut -d . -f 2 | xargs -n1 git svn fetch
 
+    #-----------------------------------------------------------
     # from https://gist.github.com/492227
     wip = !"git add -A; git ls-files --deleted -z | xargs -0 git rm; git commit -m \"[wip]\""
     unwip = !"git log -n 1 | grep -q -c "[wip]" && git reset HEAD~1"
+    #-----------------------------------------------------------
 
+    #-----------------------------------------------------------
     lost = "!git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Creset %C(white)%ai%Creset %f' --stdin | awk '/^SHA1/ {sub(\"SHA1: \", \"\"); print}'"
-    heads = !"git log origin/master.. --format='%Cred%h%Creset;%C(yellow)%an%Creset;%H;%C(white)%f%Creset' | git name-rev --stdin --always --name-only | column -t -s';'"
-
     rm-merged = "!git branch --merged | grep -v '^*' | grep -v 'master' | xargs git branch -d"
+    #-----------------------------------------------------------
 
 [gui]
     fontdiff = -family terminus -size 9 -weight normal -slant roman -underline 0 -overstrike 0
     historybrowser = gitg
 
-#
-[giggle]
-    main-window-maximized = false
-    main-window-geometry = 958x1057+0+21
-    main-window-view = HistoryView
-    file-view-vpane-position = 361
-    history-view-vpane-position = 538
-    show-graph = true
-
-[cola]
-    fontui = DejaVu Sans,8,-1,5,50,0,0,0,0,0
-    fontdiff = DejaVu Sans Mono,8,-1,5,50,0,0,0,0,0
-
 [url "git://anongit.kde.org/"]
     insteadOf = kde:
+
 [url "git@git.kde.org:"]
     pushInsteadOf = kde:

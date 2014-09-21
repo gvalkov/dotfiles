@@ -21,7 +21,7 @@ def spark_print(ints, stream=None):
     """Prints spark to given stream."""
     if stream is None:
         stream = sys.stdout
-    stream.write(spark_string(ints).encode('utf-8'))
+    stream.write(spark_string(ints))
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
@@ -29,13 +29,13 @@ if __name__ == '__main__':
         spark_print(sparks)
         print
     else:
-        print "spark\n"
-        print "USAGE:"
-        print "  spark.py [space separated values]\n"
-        print "EXAMPLES:"
-        print "  spark.py 1 5 22 13 53"
+        print("spark\n")
+        print("USAGE:")
+        print("  spark.py [space separated values]\n")
+        print("EXAMPLES:")
+        print("  spark.py 1 5 22 13 53")
         spark_print([1, 5, 22, 13, 53])
-        print
-        print "  spark.py 0 30 55 80 33 150"
+        print()
+        print("  spark.py 0 30 55 80 33 150")
         spark_print([0, 30, 55, 80, 33, 150])
-        print
+        print()
