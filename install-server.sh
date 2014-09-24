@@ -3,7 +3,7 @@ set -x
 
 c () { readlink -f $1 ; }
 
-[[ -x zsh/install.sh ]] && zsh/install.sh
+[ -x zsh/install.sh ] && zsh/install.sh
 
 ln -svnf `c gitconfig`      ~/.gitconfig
 ln -svnf `c gitignore`      ~/.gitignore
