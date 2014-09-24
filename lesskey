@@ -1,0 +1,9 @@
+? help
+
+v pipe . vim - \n
+v pipe $ vim - \n
+
+h left-scroll
+j forw-line
+k back-line
+l right-scroll

@@ -131,6 +131,7 @@ fi
 if (( $+commands[pacman] )); then
   alias pac='pacman'
   alias api='sudo pacman --sync'
+  alias aps='sudo pacman --sync --search'
   alias apr='sudo pacman --remove'
 fi
 #-----------------------------------------------------------------------------
@@ -163,6 +164,7 @@ alias -g DN='/dev/null'
 function mcd ()  { mkdir -p "$1" && cd "$1"; }
 function cdls () { builtin cd "$1" && ll; }
 function vw ()   { vim $(which $1); }
+function a ()    { awk "{ print \$$1 }"; }
 
 function find-exec {
   find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;

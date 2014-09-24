@@ -3,8 +3,16 @@
 #-----------------------------------------------------------------------------
 # preferred programs
 export EDITOR="vim"
-(( $+commands[most] ))    && export PAGER="most"
+export PAGER="less"
+# (( $+commands[most] ))    && export PAGER="most"
 (( $+commands[firefox] )) && export BROWSER="firefox"
+
+#-----------------------------------------------------------------------------
+# pager config
+if [[ "$PAGER" = "less" ]]; then
+  export LESS="-egiMXRF"
+  export LESSCHARSET="utf-8"
+fi
 
 #-----------------------------------------------------------------------------
 # system program options
@@ -50,6 +58,9 @@ path=(\
   $GOPATH/bin \
   $path )
 typeset -U path
+
+#-----------------------------------------------------------------------------
+umask 007
 
 #-----------------------------------------------------------------------------
 # local config
