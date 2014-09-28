@@ -65,6 +65,8 @@ if [[ "$OSTYPE" =~ "freebsd" ]]; then
   if (( $+commands[gls] )); then
     alias ls="gls --color=auto -F --group-directories-first"
     alias ll="gls -lsh"
+  else
+    alias ls="ls -G -F"
   fi
 fi
 #-----------------------------------------------------------------------------
