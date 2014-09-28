@@ -20,5 +20,6 @@ ln -snvf `c user-dirs.dirs` ~/.config/user-dirs.dirs
 ln -snvf `c vimperatorrc`   ~/.vimperatorrc
 ln -snvf `c mostrc`         ~/.mostrc
 ln -snvf `c lessrc`         ~/.lessrc
+ln -snvf `c flake8rc`       ~/.config/flake8
 #ln -svnf `c xinitrc`        ~/.xinitrc
 #ln -svnf `c stalonetrayrc`  ~/.stalonetrayrc
