@@ -1,35 +1,59 @@
 # -*- mode: sh -*-
 
-function pkg () {
+function pkg() {
+  local ret=1
+  local pkgs=''
+  local tmpfn=/tmp/.pkg-search.tmp
+
+  function getlast() {
+    # In:  $@ = "%1 bash %15"
+    # Out: regex = "^(1|15)"; args = "bash"
+    local -a regex args
+
+    for arg in "$@"; do
+      if [[ ${arg:0:1} = '%' ]]; then
+        shift
+        regex+=( ${arg:1} )
+      else
+        args+=( ${arg} )
+      fi
+    done
+
+    regex="(${(j:|:)regex})"
+    echo -n "$args "
+    awk -v "query=^${regex}\$" '$1 ~ query {printf("%s ", $2)}' $tmpfn
+  }
+
   case "$1" in
+    #-------------------------------------------------------------------------
     search)
       shift
-      command pkg search "$@" \
-        | nl -nrn -w6 \
-        | tee /tmp/pkg-search.tmp \
-        | awk '{printf("%s (%s)\n", $2, $1)}' \
-        | column -t -s ' '
+
+      if [[ $1 = '-f' ]]; then
+        command pkg search -f $(getlast ${@[@]:2})
+        ret=$?
+      else
+        command pkg search "$@" \
+          | nl -nrn -w6 \
+          | tee $tmpfn \
+          | awk '{printf("%s (%s)\n", $2, $1)}' \
+          | column -t -s ' '
+        ret=${pipestatus[1]}
+      fi
       ;;
+
+    #-------------------------------------------------------------------------
     install)
       shift
-
-      local -a regex args
-      local pkgs;
-
-      # $@ = "%1 bash %15" --> regex = "^(1|15)"; args = "bash"
-      for arg in "$@"; do
-        if [[ ${arg:0:1} == '%' ]]; then
-          shift
-          regex+=( ${arg:1} )
-        else
-          args+=( ${arg} )
-        fi
-      done
-      regex="(${(j:|:)regex})"
-      pkgs=$(awk -v "query=$regex" '$1 ~ query {printf("%s ", $2)}' /tmp/pkg-search.tmp)
-      command pkg install "$args" "$pkgs"
+      command pkg install $(getlast ${@[@]:1}) 
       ;;
+
+    #-------------------------------------------------------------------------
     *)
-      command pkg "$@";;
+      command pkg "$@"
+      ret=$?
+      ;;
   esac
+
+  return $ret
 }
