@@ -6,7 +6,7 @@ set gui=none,tabs,navigation,addons
 set tabnumbers
 set complete=lbs
 set wildmode="list:full"
-set editor=emacsclientc
+set editor=~/.dotfiles/bin/emacsclientc
 set showstatuslinks=2
 set focuscontent
 

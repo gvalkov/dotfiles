@@ -375,8 +375,8 @@ zle -N self-insert url-quote-magic
 # third-party plugin config
 if [[ -f $HOME/.zfunc/plugins/zsh-history-substring-search.zsh ]]; then
   source $HOME/.zfunc/plugins/zsh-history-substring-search.zsh
-  bindkey "^[[A" history-substring-search-up
-  bindkey "^[[B" history-substring-search-down
+  bindkey "\e[1;5A" history-substring-search-up   # C-<up>
+  bindkey "\e[1;5B" history-substring-search-down # C-<down>
   bindkey -M emacs '^P' history-substring-search-up
   bindkey -M emacs '^N' history-substring-search-down
 fi
@@ -439,7 +439,8 @@ fi
 # virtualenvwrapper config
 if (( $+commands[virtualenvwrapper_lazy.sh] )); then
   export WORKON_HOME="$HOME/.virtualenvs/"
-  source "$commands[virtualenvwrapper_lazy.sh]"
+  VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.4
+  source "$commands[virtualenvwrapper.sh]"
 fi
 #-----------------------------------------------------------------------------
 

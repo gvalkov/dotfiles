@@ -14,8 +14,8 @@ ln -svnf `c tidyrc`         ~/.tidyrc
 ln -svnf `c screenrc`       ~/.screenrc
 ln -svnf `c tmux.conf`      ~/.tmux.conf
 ln -snvf `c xmonad`         ~/.xmonad
-ln -snvf `c ctags`          ~/.ctags
-ln -snvf `c compton.conf`   ~/.compton.conf
+#ln -snvf `c ctags`          ~/.ctags
+#ln -snvf `c compton.conf`   ~/.compton.conf
 ln -snvf `c user-dirs.dirs` ~/.config/user-dirs.dirs
 ln -snvf `c vimperatorrc`   ~/.vimperatorrc
 ln -snvf `c mostrc`         ~/.mostrc
