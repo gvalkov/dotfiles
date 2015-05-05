@@ -112,8 +112,5 @@
     fontdiff = -family terminus -size 9 -weight normal -slant roman -underline 0 -overstrike 0
     historybrowser = gitg
 
-[url "git://anongit.kde.org/"]
-    insteadOf = kde:
-
-[url "git@git.kde.org:"]
-    pushInsteadOf = kde:
+[credential]
+	helper = cache --timeout=86400

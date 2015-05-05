@@ -20,21 +20,21 @@ for rev in $revs; do
   svn diff -c "$rev" $jjjj
 done
 
-   url=$1 # current url of file
-    svn log -q $url | grep -E -e "^r[[:digit:]]+" -o | cut -c2- | sort -n | {
+# url=$1  # current url of file
+# svn log -q $url | grep -E -e "^r[[:digit:]]+" -o | cut -c2- | sort -n | {
 
-#       first revision as full text
-        echo
-        read r
-        svn log -r$r $url@HEAD
-        svn cat -r$r $url@HEAD
-        echo
+# #       first revision as full text
+#         echo
+#         read r
+#         svn log -r$r $url@HEAD
+#         svn cat -r$r $url@HEAD
+#         echo
 
-#       remaining revisions as differences to previous revision
-        while read r
-        do
-            echo
-            svn log -r$r $url@HEAD
-            svn diff -c$r $url@HEAD
-            echo
-        done
+# #       remaining revisions as differences to previous revision
+#         while read r
+#         do
+#             echo
+#             svn log -r$r $url@HEAD
+#             svn diff -c$r $url@HEAD
+#             echo
+#         done

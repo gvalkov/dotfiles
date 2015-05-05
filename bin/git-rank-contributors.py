@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 
 from re import compile
@@ -6,18 +6,20 @@ from subprocess import check_output
 from collections import Counter
 
 authors = Counter()
-cmd = ('git', 'log', '--patch', '--find-renames', '--find-copies-harder')
+cmd = ['git', 'log', '--patch', '--find-renames', '--find-copies-harder']
 
 re_diffpm = compile(b'^[\+\-]')
 re_commit = compile(b'^commit [0-9A-Fa-f]{40}$')
 
 def itercommits(log):
-  commit = []
+  commit_diff = []
   for line in log.splitlines():
-    if re_commit.match(line) and commit:
-      yield commit
-      commit = []
-      commit.append(line)
+    if re_commit.match(line):
+      if commit_diff:
+        yield commit_diff
+      commit_diff = []
+    else:
+      commit_diff.append(line)
 
 def index(l, s):
   for n, line in enumerate(l):

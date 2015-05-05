@@ -1,6 +1,6 @@
 #!/bin/sh
 
-dest=$(mktemp --tmpdir i3lock-wrapper-XXXXXXXX.png)
+dest="$(mktemp /tmp/i3lock-wrapper.XXXXXXXX).png"
 trap "rm '$dest'" EXIT
 
 scrot -d0 "$dest"

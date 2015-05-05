@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from itertools import chain
 from subprocess import check_output, Popen, PIPE
@@ -43,18 +43,22 @@ def catfile():
 
 seen = set()
 sizes = []
+
 cf = catfile(); next(cf)
 for blob, fn in chain(*(blobs(rev) for rev in revs())):
-    if blob in seen: continue
+    if blob in seen:
+        continue
     seen.add(blob)
 
     size = cf.send(blob)
     if size:
-        sizes.append((size, blob, fn))
+        sizes.append((size, blob.decode('utf8'), fn))
 
-try: cf.send(0)
-except StopIteration: pass
+try:
+    cf.send(0)
+except StopIteration:
+    pass
 
 for size, blob, fn in reversed(sorted(sizes)):
-    res = '{blob} {size}\n  - {fn}'.format_map(vars())
+    res = '{blob!s} {size}\n  - {fn}'.format_map(vars())
     print(res)
