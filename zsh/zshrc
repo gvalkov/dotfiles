@@ -18,6 +18,8 @@ for i in {1..9}; do alias "$i"="cd +${i}"; done; unset i
 #-----------------------------------------------------------------------------
 # ls aliases
 alias ls="ls --color=auto -F --group-directories-first"
+alias le="ls --quoting-style=escape"
+alias lS="ls -LrsS"
 alias ll="ls -lsh"
 alias lla="ll -ld *(-/DN)"
 alias l='ls -1A'
@@ -133,7 +135,7 @@ fi
 if (( $+commands[pacman] )); then
   alias pac='pacman'
   alias api='sudo pacman --sync'
-  alias aps='sudo pacman --sync --search'
+  alias aps='pacman --sync --search'
   alias apr='sudo pacman --remove'
 fi
 #-----------------------------------------------------------------------------

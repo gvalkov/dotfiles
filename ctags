@@ -1,4 +1,5 @@
 -R
+--extra=+q
 --exclude=.svn
 --exclude=.git
 --exclude=.hg

@@ -1,3 +1,5 @@
+# -*- mode: conf; -*-
+
 [user]
     name  = Georgi Valkov
     email = georgi.t.valkov@gmail.com
@@ -8,10 +10,11 @@
 
 [push]
     default = tracking
+    #default = simple
 
 [color]
+    ui = auto
     pager = true
-    ui = true
     status = auto
     branch = auto
     diff = true
@@ -19,6 +22,7 @@
 [core]
     warnambiguousrefs = true
     editor = vim
+    #editor = emacsclient
     autocrlf = false
     #excludesfile = ~/.gitignore
 
@@ -26,8 +30,14 @@
     tool = meld
     mnemonicprefix = true
 
+[difftool]
+    prompt = false
+
 [merge]
     tool = meld
+
+[mergetool]
+    prompt = false
 
 [web]
     browser = firefox
@@ -37,6 +47,7 @@
     a = add
     d = diff
     l = log --decorate --graph --date=short --name-status
+    ls = log --decorate --oneline --graph
     p = push
     s = status
     r = remote --verbose

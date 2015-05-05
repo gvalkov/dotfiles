@@ -47,8 +47,9 @@ alias h='history'
 # globbing config
 shopt -s extglob
 shopt -s dotglob
-shopt -s nullglob
+#shopt -s nullglob
 shopt -s cdspell
+shopt -s globstar
 #shopt -s nocaseglob
 #-----------------------------------------------------------------------------
 
@@ -56,6 +57,17 @@ shopt -s cdspell
 # general config
 shopt -s checkwinsize
 shopt -s cdspell
+shopt -s no_empty_cmd_completion
+#-----------------------------------------------------------------------------
+
+#-----------------------------------------------------------------------------
+# set tty tabs
+tabs 4,9,13,17,21,25,29,33,37,41 &> /dev/null
+#-----------------------------------------------------------------------------
+
+#-----------------------------------------------------------------------------
+# completion options
+#complete -d cd
 #-----------------------------------------------------------------------------
 
 #-----------------------------------------------------------------------------
@@ -85,7 +97,7 @@ shopt -s cmdhist
 #-----------------------------------------------------------------------------
 # bash config
 unset MAILCHECK
-setterm -bfreq 0
+#setterm -bfreq 0
 #shopt -o noclobber
 #-----------------------------------------------------------------------------
 
@@ -95,4 +107,4 @@ export EDITOR="vim"
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="1;32" #green
 export PIP_DOWNLOAD_CACHE="$HOME/.pip/download-cache"
-export TERM=xterm-256color
+#export TERM=xterm-256color
