@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: tryelse
+# key: try
+# expand-env: ((yas/indent-line 'fixed)))
+# --
+try:
+    $1
+except $2:
+    $3
+else:
+    $0

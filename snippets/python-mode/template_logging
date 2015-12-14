@@ -1,0 +1,63 @@
+# -*- mode: snippet -*-
+# name: setup_logging
+# key: setup_logging
+# --
+import logging
+
+def setup_logging(opts):
+    # Add a new log level for marking sections - to be used as log.section().
+    logging.SECTION = 25  # between INFO and WARN
+    logging.addLevelName(logging.SECTION, 'SECTION')
+
+    def section(self, msg, *args, **kw):
+        if self.isEnabledFor(logging.SECTION):
+            self._log(logging.SECTION, msg, args, **kw)
+
+    # Sends a line of '-' to the logger.
+    logging.Logger.line = lambda self, *args, **kw: section(self, '-' * 78, *args, **kw)
+    logging.Logger.section = section
+
+    # console_formatter = logging.Formatter('%(asctime)s [%(levelno)d] - %(message)s', '%H:%M')
+    console_formatter = logging.Formatter('%(message)s')
+    logfile_formatter = logging.Formatter('%(asctime)-15s %(message)s')
+
+    if config['debug/log_timestamps'] or opts.log_timestamps:
+        console_formatter = logfile_formatter
+
+    # We can configure the ansi color codes of the emitted message
+    # here. Keep in mind that people use different color schemes and
+    # it is challenging to find colors that look good for everyone.
+    # Note that ANSI escape codes will not be used if the output
+    # stream is not a tty.
+    console_handler = VoyagerColorizingStreamHandler(sys.stdout)
+    console_handler.level_map[logging.INFO]    = (None, None, False)
+    console_handler.level_map[logging.DEBUG]   = (None, None, False)
+    console_handler.level_map[logging.SECTION] = (None, None, True)
+    console_handler.level_map[logging.ERROR]   = (None, 'red', True)
+    console_handler.level_map[logging.WARN]    = (None, 'yellow', True)
+
+    # The console handler should log only >= INFO messages by default.
+    console_handler.setLevel(logging.INFO)
+    console_handler.setFormatter(console_formatter)
+
+    # Silence the console handler if '-q', '--quiet' is set.
+    if config['debug/quiet']:
+        console_handler = logutils.NullHandler()
+
+    # Everything that is sent to the console should also be sent to the logfile.
+    if opts.logfile:
+        logfile_handler = logging.FileHandler(opts.logfile, mode='w')
+        logfile_handler.setLevel(logging.DEBUG)
+        logfile_handler.setFormatter(logfile_formatter)
+
+        log.addHandler(logfile_handler)
+
+    # The final logging decision is deferred to the handlers.
+    # Therefor, the main logger accepts all levels of messages.
+    log.setLevel(logging.DEBUG)
+
+    # If needed, the console handler may also log everything.
+    console_handler.setLevel(config['debug/loglevel'])
+    log.addHandler(console_handler)
+
+    sys.excepthook = partial(log_unhandled_exceptions, config)

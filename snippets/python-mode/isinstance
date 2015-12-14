@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: isinstance
+# key: isi
+# --
+isinstance($0)
