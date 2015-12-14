@@ -177,12 +177,18 @@ to abort the minibuffer."
     (abort-recursive-edit)))
 
 ;-----------------------------------------------------------------------------
-; The following have been 'borrowed' from the excellent steckemacs config
 (defun my/show-and-copy-file-name ()
-  "Show and copy the full path name."
+  "Show and copy the full path name. If tramp buffer, the local
+name of the file and the full buffer name will be pushed to the
+kill ring."
   (interactive)
-  (message (buffer-file-name))
-  (kill-new (file-truename buffer-file-name)))
+    (let* ((vec (ignore-errors (tramp-dissect-file-name (buffer-file-name))))
+           (local-name (when vec (elt vec 3)))
+           (buffer-name (file-truename buffer-file-name)))
+      (message buffer-name)
+      (when local-name
+        (kill-new local-name))
+      (kill-new buffer-name)))
 
 (defun my/url-insert-file-contents (url)
   "Prompt for URL and insert file contents at point."

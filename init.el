@@ -12,12 +12,12 @@ values."
 
    dotspacemacs-configuration-layers
    '(
-     org
+     better-defaults
+     emacs-lisp
      git
+     org
      yaml
      (ibuffer :variables ibuffer-group-buffers-by 'projects)
-     emacs-lisp
-     better-defaults
      syntax-checking
      (auto-completion
       :variables
@@ -30,6 +30,8 @@ values."
    dotspacemacs-additional-packages
    '(visual-regexp
      mark-multiple
+     ibuffer-tramp
+     dtrt-indent
      dedicated)
 
    dotspacemacs-excluded-packages '()
@@ -142,6 +144,7 @@ layers configuration. You are free to put any user code."
         make-backup-files t
         backup-by-copying t
         delete-by-moving-to-trash nil
+        delete-old-versions t
         kept-old-versions 5
         kept-new-versions 9
         auto-save-timeout 20
@@ -170,7 +173,7 @@ layers configuration. You are free to put any user code."
   (setq-default tab-width 4
                 c-basic-offset 4
                 indent-tabs-mode nil
-                tab-always-indent 'complete)
+                tab-always-indent t)
 
   (setq require-final-newline t)
 
@@ -192,6 +195,9 @@ layers configuration. You are free to put any user code."
 
   ;; tramp -------------------------------------------------------------------
   (setq password-cache-expiry nil)
+  (setq tramp-ssh-controlmaster-options
+        (concat
+         "-o ControlMaster=auto -o ControlPersist=yes"))
 
   ;; ibuffer -----------------------------------------------------------------
   (spacemacs|use-package-add-hook ibuffer
@@ -210,6 +216,9 @@ layers configuration. You are free to put any user code."
                    (ibuffer-tramp-set-filter-groups-by-tramp-connection)
                    (ibuffer-do-sort-by-alphabetic)))))
 
+  ;; flycheck ----------------------------------------------------------------
+  (setq flycheck-check-syntax-automatically '(save))
+
   ;; magit -------------------------------------------------------------------
   (spacemacs|use-package-add-hook magit
     :post-config
@@ -219,6 +228,13 @@ layers configuration. You are free to put any user code."
             magit-diff-refine-hunk nil
             magit-repository-directories '("~/source/github" "~/source/work" "~/source/misc"))))
 
+  ;; python ------------------------------------------------------------------
+  (spacemacs|use-package-add-hook python
+    :post-config
+    (add-hook! 'python-mode-hook
+               (setq indent-tabs-mode t
+                     python-indent-offset 4
+                     tab-width 4)))
 
   ;; helm --------------------------------------------------------------------
   ;; (eval-after-load 'helm
@@ -258,6 +274,11 @@ layers configuration. You are free to put any user code."
   (use-package dedicated
     :bind ("C-x d" . dedicated-mode))
 
+  (use-package dtrt-indent
+	:init
+	(progn
+	  (add-hook 'prog-mode-hook 'dtrt-indent-mode)))
+
   ;;--------------------------------------------------------------------------
   ;; shortcuts
   (global-set-key [down-mouse-3] 'x-menu-bar-open)
@@ -269,6 +290,7 @@ layers configuration. You are free to put any user code."
                          (lookup-key evil-leader--default-map (kbd "o"))))
 
   (global-set-key (kbd "<f12>") 'spacemacs/toggle-whitespace)
+  (global-set-key (kbd "C-c n") 'my/show-and-copy-file-name)
 
   (evil-define-key 'visual evil-surround-mode-map "S" 'evil-surround-region)
   (evil-define-key 'visual evil-surround-mode-map "s" 'evil-substitute)
@@ -292,7 +314,7 @@ layers configuration. You are free to put any user code."
     "o k" 'kill-this-buffer
     "o d" 'kill-buffer-and-window
     "o q" 'kill-buffer-and-window
-    "s c" (lambda () (interactive) (switch-to-buffer "*scratch*"))
+    "o sc" (lambda () (interactive) (switch-to-buffer "*scratch*"))
 
     "o h" 'ff-find-other-file
     "o u" 'undo-tree-visualize
@@ -310,6 +332,7 @@ layers configuration. You are free to put any user code."
 
   ;; compatibility vars and defuns
   (setq-default redisplay-dont-pause t)
+  (evil-define-key 'normal evil-jumper-mode-map (kbd "TAB") nil)
 
   ;;--------------------------------------------------------------------------
   ;; hooks
@@ -317,6 +340,11 @@ layers configuration. You are free to put any user code."
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (add-hook 'text-mode-hook 'enable-hard-wrap)
   (add-hook 'prog-mode-hook 'enable-comment-hard-wrap)
+
+  ;;--------------------------------------------------------------------------
+  ;; site-specific elisp
+  (let ((site-local (concat dotspacemacs-directory "site-local.el")))
+    (when (file-readable-p site-local) (load site-local)))
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
