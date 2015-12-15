@@ -270,6 +270,19 @@ layers configuration. You are free to put any user code."
   (setq calendar-intermonth-header
         (propertize "Wk" 'font-lock-face 'font-lock-keyword-face))
 
+  ;; org ----------------------------------------------------------------------
+  (setq org-startup-folded 0)
+  (setq org-cycle-separator-lines 2)
+
+  ;; org-babel ----------------------------------------------------------------
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((sh . t)
+     (plantuml . t)
+     (dot .t )
+     (ledger . t)
+     (python . t)))
+
   ;; -------------------------------------------------------------------------
   (use-package dedicated
     :bind ("C-x d" . dedicated-mode))
@@ -278,6 +291,15 @@ layers configuration. You are free to put any user code."
 	:init
 	(progn
 	  (add-hook 'prog-mode-hook 'dtrt-indent-mode)))
+
+  ;;--------------------------------------------------------------------------
+  ;; custom toggles
+  (spacemacs|add-toggle auto-save-on-focus-out
+    :on (add-hook 'focus-out-hook 'my/save-buffer-if-needed)
+    :off (remove-hook 'focus-out-hook 'my/save-buffer-if-needed)
+    :status (member 'my/save-buffer-if-needed focus-out-hook)
+    :documentation "Auto-save on focus-out."
+    :evil-leader "tS")
 
   ;;--------------------------------------------------------------------------
   ;; shortcuts

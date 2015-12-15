@@ -195,6 +195,11 @@ kill ring."
   (interactive "sURL: ")
   (url-insert-file-contents url))
 
+(defun my/save-buffer-if-needed ()
+  (interactive)
+  (when (and (buffer-file-name) (buffer-modified-p))
+    (save-buffer)))
+
 ;-----------------------------------------------------------------------------
 ; Skip uninteresing buffers.
 ; http://stackoverflow.com/questions/14323516/make-emacs-next-buffer-skip-messages-buffer
