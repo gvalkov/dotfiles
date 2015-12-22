@@ -441,7 +441,7 @@ fi
 # virtualenvwrapper config
 if (( $+commands[virtualenvwrapper_lazy.sh] )); then
   export WORKON_HOME="$HOME/.virtualenvs/"
-  VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.4
+  VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
   source "$commands[virtualenvwrapper.sh]"
 fi
 #-----------------------------------------------------------------------------

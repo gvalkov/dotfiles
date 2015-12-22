@@ -1,10 +1,12 @@
 #!/bin/sh
 
-dest="$(mktemp /tmp/i3lock-wrapper.XXXXXXXX).png"
-trap "rm '$dest'" EXIT
+set -u
 
-scrot -d0 "$dest"
+dest="$(mktemp /tmp/i3lock-wrapper.XXXXXXXX.png)"
+trap "rm -f '${dest}'" EXIT SIGTERM SIGINT
+
+scrot -d0 "${dest}"
 mogrify -modulate 80,100 -scale 10% -scale 1000% "$dest" 
 
 #feh $dest
-exec i3lock -i "$dest" "$@"
+i3lock -i "${dest}" "$@"

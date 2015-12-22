@@ -20,6 +20,7 @@ fi
 #export GREP_COLOR="1;32" #green
 export TERM=xterm-256color
 export MANWIDTH=80
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket" 
 
 #-----------------------------------------------------------------------------
 # user program options
