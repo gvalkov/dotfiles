@@ -14,6 +14,7 @@ values."
    '(
      better-defaults
      emacs-lisp
+     lua
      git
      org
      yaml
@@ -307,44 +308,44 @@ layers configuration. You are free to put any user code."
   (global-set-key (kbd "<menu>") 'x-menu-bar-open)
   (global-set-key (kbd "C-:") 'eval-expression)
 
-  (dolist (map '(normal visual motion hybrid emacs))
-    (evil-global-set-key map (kbd ",")
-                         (lookup-key evil-leader--default-map (kbd "o"))))
-
   (global-set-key (kbd "<f12>") 'spacemacs/toggle-whitespace)
   (global-set-key (kbd "C-c n") 'my/show-and-copy-file-name)
 
   (evil-define-key 'visual evil-surround-mode-map "S" 'evil-surround-region)
   (evil-define-key 'visual evil-surround-mode-map "s" 'evil-substitute)
 
-  (evil-leader/set-key
+  (bind-map my/quick-leader-map
+    :evil-keys (",")
+    :evil-states (normal visual motion hybrid emacs))
+
+  (bind-map-set-keys my/quick-leader-map
     ;; helm shortcuts
-    "o f"  'helm-find-files
-    "o m"  'helm-recentf
-    "o l"  'helm-mini
-    "o p"  'helm-projectile
-    "o y"  'helm-show-kill-ring
-    "o sw" 'helm-swoop
-    "o b"  'ibuffer
+    "f"  'helm-find-files
+    "m"  'helm-recentf
+    "l"  'helm-mini
+    "p"  'helm-projectile
+    "y"  'helm-show-kill-ring
+    "sw" 'helm-swoop
+    "b"  'ibuffer
 
     ;; query/replace
-    "o vr" 'vr/replace
-    "o vq" 'vr/query-replace
+    "vr" 'vr/replace
+    "vq" 'vr/query-replace
 
     ;; files and buffers
-    "o w" 'spacemacs/write-file
-    "o k" 'kill-this-buffer
-    "o d" 'kill-buffer-and-window
-    "o q" 'kill-buffer-and-window
-    "o sc" (lambda () (interactive) (switch-to-buffer "*scratch*"))
+    "w" 'save-buffer
+    "k" 'kill-this-buffer
+    "d" 'kill-buffer-and-window
+    "q" 'kill-buffer-and-window
+    "sc" (lambda () (interactive) (switch-to-buffer "*scratch*"))
 
-    "o h" 'ff-find-other-file
-    "o u" 'undo-tree-visualize
-    "o r" 'dired-jump
-    "o i" 'helm-semantic-or-imenu
-    "o er" 'evil-show-registers
+    "h" 'ff-find-other-file
+    "u" 'undo-tree-visualize
+    "r" 'dired-jump
+    "i" 'helm-semantic-or-imenu
+    "er" 'evil-show-registers
 
-    "o g" (lookup-key evil-leader--default-map (kbd "g"))
+    "g" (lookup-key spacemacs-default-map (kbd "g"))
     )
 
   ;; misc
