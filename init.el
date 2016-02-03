@@ -13,11 +13,13 @@ values."
    dotspacemacs-configuration-layers
    '(
      better-defaults
+     markdown
      emacs-lisp
      lua
      git
      org
      yaml
+     ruby
      (ibuffer :variables ibuffer-group-buffers-by 'projects)
      syntax-checking
      (auto-completion
@@ -33,9 +35,12 @@ values."
      mark-multiple
      ibuffer-tramp
      dtrt-indent
+     cmake-mode
      dedicated)
 
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages
+   '(;evil-jumper
+     )
 
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
@@ -55,13 +60,13 @@ values."
    dotspacemacs-startup-lists '(recents bookmarks projects)
 
    ;; Press <leader> T n to cycle to the next theme in the list.
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(zenburn
+                         spacemacs-dark
                          spacemacs-light
                          solarized-light
                          solarized-dark
                          leuven
-                         monokai
-                         zenburn)
+                         monokai)
 
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Source Code Pro"
@@ -139,11 +144,11 @@ layers configuration. You are free to put any user code."
 
   ;;--------------------------------------------------------------------------
   ;; backup, autosave and lockfiles
-  (setq backup-directory-alist         `((".*" . ,(concat spacemacs-cache-directory "/backups/"))))
+  (setq backup-directory-alist `((".*" . ,(concat spacemacs-cache-directory "/backups/"))))
   ;; (setq auto-save-file-name-transforms `((".*", "~/.emacs.d/backups/" t))
   (setq version-control t
         make-backup-files t
-        backup-by-copying t
+        backup-by-copying nil
         delete-by-moving-to-trash nil
         delete-old-versions t
         kept-old-versions 5
@@ -196,9 +201,12 @@ layers configuration. You are free to put any user code."
 
   ;; tramp -------------------------------------------------------------------
   (setq password-cache-expiry nil)
+  (setq tramp-verbose 6)
   (setq tramp-ssh-controlmaster-options
-        (concat
-         "-o ControlMaster=auto -o ControlPersist=yes"))
+        (s-join " "
+                `("-o ControlMaster=yes"
+                  "-o ControlPersist=yes"
+                  ,(format "-oControlPath='%s/ssh.%%%%r@%%%%h:%%%%p'" spacemacs-cache-directory))))
 
   ;; ibuffer -----------------------------------------------------------------
   (spacemacs|use-package-add-hook ibuffer
@@ -272,8 +280,9 @@ layers configuration. You are free to put any user code."
         (propertize "Wk" 'font-lock-face 'font-lock-keyword-face))
 
   ;; org ----------------------------------------------------------------------
-  (setq org-startup-folded 0)
-  (setq org-cycle-separator-lines 2)
+  (with-eval-after-load 'org
+    (setq org-startup-folded 0
+          org-cycle-separator-lines 2))
 
   ;; org-babel ----------------------------------------------------------------
   (org-babel-do-load-languages
