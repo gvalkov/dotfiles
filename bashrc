@@ -104,7 +104,7 @@ unset MAILCHECK
 #-----------------------------------------------------------------------------
 # preferred programs
 export EDITOR="vim"
-export GREP_OPTIONS="--color=auto"
+#export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="1;32" #green
 export PIP_DOWNLOAD_CACHE="$HOME/.pip/download-cache"
 #export TERM=xterm-256color

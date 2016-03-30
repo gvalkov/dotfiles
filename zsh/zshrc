@@ -42,7 +42,6 @@ alias tmux='tmux -2'
 alias tmuxa='tmux attach-session -t'
 alias tmuxl='tmux list-sessions'
 
-alias diff='colordiff'
 alias jobs='jobs -l'
 alias tree='tree -F -C --charset unicode'
 
@@ -58,6 +57,17 @@ alias pyclean='rm -r **/*.(pyc|pyo) **/__pycache__'
 alias ctags="ctags --fields=+l --c-kinds=+p --c++-kinds=+p"
 
 alias py-http-serve='python3 -m http.server'
+
+if (( $+commands[realpath] )); then
+  alias rl='realpath'
+else
+  alias rl='readlink -f'
+fi
+
+
+if (( $+commands[colordiff] )); then
+  alias diff='colordiff'
+fi
 #-----------------------------------------------------------------------------
 
 
@@ -122,13 +132,24 @@ fi
 
 
 #-----------------------------------------------------------------------------
-# yum aliases
+# yum/dnf aliases
 if (( $+commands[yum] )); then
   alias ayi='sudo yum install'
   alias ays='sudo yum --noplugins -C search'
 fi
+
+if (( $+commands[dnf] )); then
+  alias ayi='sudo dnf install'
+  alias ays='dnf search'
+fi
 #-----------------------------------------------------------------------------
 
+#-----------------------------------------------------------------------------
+# systemctl/service aliases
+if (( $+commands[systemctl] )); then
+  alias sys='systemctl'
+fi
+#-----------------------------------------------------------------------------
 
 #-----------------------------------------------------------------------------
 # pacman aliases
