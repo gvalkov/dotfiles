@@ -1,2 +1,2 @@
 #!/bin/sh
-exec ipython qtconsole --gui-completion=ncurses --paging=vsplit "$@"
+exec ipython3 qtconsole --gui-completion=droplist --paging=vsplit "$@"

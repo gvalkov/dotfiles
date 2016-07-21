@@ -22,6 +22,11 @@ ln -snvf `c flake8rc`       ~/.config/flake8
 ln -snvf `c i3`             ~/.config/i3
 ln -snvf `c i3status`       ~/.config/i3status
 
+ln -snvf `c Xmodmap`        ~/.Xmodmap
+
+mkdir -p ~/.config/rofi
+ln -snvf `c rofi`           ~/.config/rofi/config
+
 # ln -svnf `c xinitrc`        ~/.xinitrc
 # ln -svnf `c stalonetrayrc`  ~/.stalonetrayrc
 # ln -snvf `c bspwm`          ~/.config/bspwm

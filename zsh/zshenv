@@ -20,7 +20,7 @@ fi
 #export GREP_COLOR="1;32" #green
 export TERM=xterm-256color
 export MANWIDTH=80
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket" 
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 #-----------------------------------------------------------------------------
 # user program options
@@ -37,6 +37,12 @@ export PERL_MB_OPT="--install_base /home/gv/.perl5"
 export PERL_MM_OPT="INSTALL_BASE=/home/gv/.perl5"
 export PERL5LIB="/home/gv/.perl5/lib/perl5/x86_64-linux-thread-multi:/home/gv/.perl5/lib/perl5"
 export PATH="/home/gv/perl5/bin:$PATH"
+
+# python
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+export VIRTUALENVWRAPPER_SCRIPT=$HOME/.local/bin/virtualenvwrapper.sh
+source $HOME/.local/bin/virtualenvwrapper_lazy.sh
 
 #-----------------------------------------------------------------------------
 # zsh load path

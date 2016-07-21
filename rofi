@@ -1,0 +1,39 @@
+! rofi.background: #073642
+! rofi.foreground: #657b83
+! rofi.highlightbg: #859900
+! rofi.highlightfg: #073642
+! rofi.bordercolor: #678698
+! rofi.padding: 1
+! rofi.lines: 10
+! rofi.borderwidth: 1
+! rofi.opacity: 85
+! rofi.font: Terminus 12
+! rofi.location: 7
+! rofi.yoffset: 0
+! rofi.xoffset: 0
+! rofi.width: 100
+! rofi.ssh-set-title: false
+
+
+! rofi -- dmenu clone
+rofi.opacity:  100
+rofi.width:    20
+rofi.lines:    20
+!rofi.font:     DejaVu Sans Mono 10
+rofi.font: Terminus 12
+rofi.location: 0
+rofi.padding:  5
+rofi.threads:  2
+rofi.yoffset: -50
+rofi.scrollbar-width: 10
+rofi.terminal: gnome-terminal
+
+rofi.color-enabled: true
+rofi.color-window: #3F3F3F,#000000
+rofi.color-normal: #3F3F3F,#DCDCCC,#383838,#4F4F4F,#FFFFEF
+rofi.color-active: #4C7073,#DCDCCC,#366060,#5C888B,#FFFFEF
+rofi.color-urgent: #8C5353,#DCDCCC,#7C4343,#9C6363,#FFFFEF
+
+! Local Variables:
+! mode: conf-xdefaults
+! End:
