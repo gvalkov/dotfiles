@@ -1,22 +1,27 @@
-" General settings ---
+"-----------------------------------------------------------------------------
+" General settings
+"-----------------------------------------------------------------------------
 set nocompatible
-set ruler
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 set ttyfast
+set lazyredraw
 set modeline
 set noshortname
-set shortmess=aI "t
+set shortmess=aI
 
 set history=512
 set undolevels=512
 
+set showmode
 set cmdheight=1
 set nrformats-=octal
 set shell=/usr/bin/zsh
 set encoding=utf8
 set clipboard=unnamedplus "yank to clipboard
+set display+=lastline
 
-set timeoutlen=500  " map sequence timeout 
+set timeoutlen=500  " map sequence timeout
+set ttimeout
 set ttimeoutlen=50  " make esc work faster
 set updatetime=4000 " fire CursorHold after this many ms
 
@@ -27,96 +32,75 @@ set wildignore=*.swp,*.bak,*.pyc,*.pyo,*.class
 "set autoread
 "set autowrite
 "set autochdir
-"set cursorline
-"set scrolloff=2
-"set undofile
-
+"
+set scrolloff=3
 set virtualedit=block
-" set virtualedit=all
 
 set splitbelow
 set splitright
 set hidden
+set noautoread
 
 set spellfile=~/.vim/dict.add
-
-" load bundle plugins
-source ~/.vim/bundle/pathogen.git/autoload/pathogen.vim
-
-" let g:pathogen_disabled = []
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
-call pathogen#infect()
 
 " load user functions
 source ~/.vim/functions.vim
 
-" load menus
-source ~/.vim/menu.vim
-
-" load roapvim
-"let $PYTHONPATH .= expand('$HOME/.vim/bundle/ropevim.hg:$HOME/.vim/bundle/ropemode.hg:')
-"source ~/.vim/bundle/ropevim.hg/ropevim.vim
-
-
 " Searching & highlighting ---
 set showmatch
-set ignorecase 
+set ignorecase
 set smartcase
 set hlsearch
 set incsearch
 
 
 " Folding ---
-set nofoldenable 
+set nofoldenable
 set foldmethod=marker
 set foldlevel=100
 set foldopen=block,hor,mark,percent,quickfix,tag
 
 
-" [wip] 
-autocmd!
-"https://github.com/tpope/tpope/blob/master/.vim/plugin/ztemplate.vim
-"flatfoot
+" Diff mode ---
+set diffopt=filler
+set diffopt+=context:4
+set diffopt+=iwhite
+set diffopt+=vertical
 
 
-" Prettiness ---
+"-----------------------------------------------------------------------------
+" User-interface
+"-----------------------------------------------------------------------------
 syntax on
 
 filetype on
-filetype plugin on 
+filetype plugin on
 filetype indent on
 
-set number nuw=3
-set nonumber
+set number
+set cursorline
+set relativenumber
+set numberwidth=3
+
+set ruler
+set rulerformat=%=%h%m%r%w\ %(%c%V%),%l/%L\ %P
+
 if has('gui_running')
     set guioptions=aic
-    " set guifont=Monospace\ 10
-    " set guifont=DejaVu\ Sans\ Mono\ 9
-    " set guifont=Mensch\ 9
-    " set guifont=Droid\ Sans\ Mono\ 10
     set guifont=Inconsolata\ 10
-    " set guifont=Monaco\ Bold\ 9
-
-    "colorscheme wombat
-    " colorscheme ir_black
-    colorscheme Tomorrow-Night-Eighties
-    "colorscheme zenburn
-    "colorscheme solarized
-    "colorscheme blackboard
+    colors zenburn
     set background=dark
-
     set ballooneval
 else
     set t_Co=256
-    colorscheme wombat
-    "colorscheme solarized
-    "colorscheme ir_black
-    set background=dark 
+    colors zenburn
+    set background=dark
 endif
 
 
-" Backups ---
+"-----------------------------------------------------------------------------
+" Backups and swap-files
+"-----------------------------------------------------------------------------
 set backupdir=/var/tmp
 set directory=/var/tmp
 "set noswapfile
@@ -144,7 +128,14 @@ set mousemodel=popup "todo: preserve search word
 
 " Wrapping ---
 set nowrap
-"set textwidth=80
+" t: autowrap text using textwidth
+" l: long lines are not broken in insert mode
+" c: autowrap comments using textwidth, inserting leader
+" r: insert comment leader after <CR>
+" o: insert comment leader after o or O
+set formatoptions-=t
+set formatoptions+=lcro
+set textwidth=120
 "set linebreak
 "set showbreak='+++ '
 "let &showbreak = '↳ '
@@ -158,6 +149,7 @@ set shiftwidth=4
 set softtabstop=4
 set smartindent
 set autoindent
+set smarttab
 set backspace=start,indent,eol
 
 
@@ -171,12 +163,13 @@ iabbrev isodate <c-r>=strftime("%Y-%m-%d %H:%M:%S")<cr>
 cabbr <expr> %% expand ('%:p:h')
 
 
-" Global map leader
+"-----------------------------------------------------------------------------
+" Shortcuts (includes plugin shortcuts)
+"-----------------------------------------------------------------------------
+
 let mapleader   = ','
 let g:mapleader = ','
 
-
-" Shortcuts (includes plugin shortcuts) ---
 map <leader>w :w!<cr>
 map <leader>q :q<cr>
 map <leader>Q :q!<cr>
@@ -188,8 +181,8 @@ map <F2> <Esc>:%retab<cr>
 map <C-Space> <C-x><C-o>
 
 " scroll the viewport faster
-nnoremap <C-e> 5<C-e>
-nnoremap <C-y> 5<C-y>
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
 
 nnoremap <space>     5<c-e>10j
 nnoremap <backspace> 5<c-y>10k
@@ -205,9 +198,6 @@ nnoremap gp `[v`]
 " toggle hidden characters
 map <F12> :set invlist<CR>
 
-" switch to the cwd of the open buffer
-map <leader>cd :cd %:p:h<cr>
-
 " tab indent/dedent (though I'm already pretty used to ><)
 vmap <tab> >gv
 vmap <S-tab> <gv
@@ -219,13 +209,11 @@ nnoremap <leader>rt :tabnew ~/.vimrc<CR>
 " quickly clear the current search
 nmap <silent> <leader>/ :nohlsearch<CR>
 
-nnoremap <silent> ,cf :let @* = expand("%:p")<CR>
-
 " buffer to html
 map <silent> <leader>2h :runtime! syntax/2html.vim<CR>
 
 " join line (opposite of S-j)
-nnoremap <silent> <C-J> gEa<CR><ESC>ew 
+nnoremap <silent> <C-J> gEa<CR><ESC>ew
 
 " Taglist & Tagbar
 nnoremap <silent> <F8> :TlistToggle<CR>
@@ -235,155 +223,92 @@ nnoremap <silent> <F4> :TagbarToggle<CR>
 vnoremap <silent> * :call VisualSearch('f')<CR>
 vnoremap <silent> # :call VisualSearch('b')<CR>
 
+" common typos
 ca WQ wq
 ca Q q
 
-
-" Emacs compatibility ---
+" compatibility with other editors/IDEs with which I'm used to.
 inoremap <C-g> <Esc>
 vnoremap <C-g> <Esc>
 onoremap <C-g> <Esc>
 nnoremap <C-g> <Esc>
 nnoremap <M-g> n :cnext<CR>
-nnoremap <M-;> :TComment<CR> 
+nnoremap <M-;> :TComment<CR>
 vnoremap <M-;> :TCommentBlock<CR>
 onoremap <M-;> :TComment<CR>
 inoremap <M-;> :TComment<CR>
+nnoremap <C-/> :TComment<CR>
+vnoremap <C-/> :TCommentBlock<CR>
+onoremap <C-/> :TComment<CR>
+inoremap <C-/> :TComment<CR>
 
-" Tabs ---
+" tabs
 map <leader>tn :tabnew<cr>
 map <leader>te :tabedit<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 
-map <silent> <m-1> :tabn 1<cr>
-map <silent> <m-2> :tabn 2<cr>
-map <silent> <m-3> :tabn 3<cr>
-map <silent> <m-4> :tabn 4<cr>
-map <silent> <m-5> :tabn 5<cr>
-map <silent> <m-6> :tabn 6<cr>
-map <silent> <m-7> :tabn 7<cr>
-map <silent> <m-8> :tabn 8<cr>
-map <silent> <m-9> :tabn 9<cr>
+
+"-----------------------------------------------------------------------------
+" Plugins
+"-----------------------------------------------------------------------------
+ 
+call plug#begin('~/.vim/bundles')
+Plug 'mileszs/ack.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sleuth'
+Plug 'vim-scripts/ZoomWin'
+Plug 'vim-scripts/tComment'
+Plug 'junegunn/vim-easy-align'
+call plug#end()
 
 
-" Plugin config ---
-
-" nerdstuff
-let NERDTreeDirArrows = 1
-let NERDTreeMinimalUI = 1
-let NERDSpaceDelims = 1
-let NERDTreeShowBookmarks = 1
-let NERDTreeMapActivateNode = ''
-let NERDTreeChDirMode = 2
-let NERDTreeIgnore = ['\.pyc$', '\.pyo$', '\.swp$', '\~$',]
-let NERDTreeSortOrder = ['\.py$', '*']
-map <F3> <Esc>:NERDTreeToggle<cr>
-
-" fuf
-let g:fuf_modesDisable = []
-let g:fuf_mrufile_maxItem = 400
-let g:fuf_mrucmd_maxItem = 400
-
-nnoremap <silent> ,b         :FufBuffer<CR>
-nnoremap <silent> <C-x><C-b> :FufBuffer<CR>
-
-nnoremap <silent> ,f         :FufFileWithFullCwd<CR>
-nnoremap <silent> <C-x><C-f> :FufFileWithFullCwd<CR>
-
-nnoremap <silent> ,c     :FufCoverageFile<CR>
-nnoremap <silent> sC     :FufCoverageFileChange<CR>
-nnoremap <silent> s<C-c> :FufCoverageFileRegister<CR>
-nnoremap <silent> sd     :FufDirWithCurrentBufferDir<CR>
-nnoremap <silent> sD     :FufDirWithFullCwd<CR>
-nnoremap <silent> s<C-d> :FufDir<CR>
-nnoremap <silent> sr     :FufMruCmd<CR>
-nnoremap <silent> ,m     :FufMruFile<CR>
-cnoremap <silent> ,M     :FufMruFileInCwd<CR>
-nnoremap <silent> su     :FufBookmarkFile<CR>
-nnoremap <silent> s<C-u> :FufBookmarkFileAdd<CR>
-vnoremap <silent> s<C-u> :FufBookmarkFileCddAsSelectedText<CR>
-nnoremap <silent> si     :FufBookmarkDir<CR>
-nnoremap <silent> s<C-i> :FufBookmarkDirAdd<CR>
-nnoremap <silent> st     :FufTag<CR>
-nnoremap <silent> sT     :FufTag!<CR>
-
-" thesaurus
-let g:thesaurus_file = "/usr/share/mythes/th_en_US_v2"
-
-" easymotion (not sure if I like this yet)
-let g:EasyMotion_keys = 'fjdkslewio' 
-
-" lustyjuggler 
-let g:LustyJugglerShowKeys = 'a'
-nmap <silent> <Leader>j :LustyJuggler<CR>
+"-----------------------------------------------------------------------------
+" Plugin configuration.
+"-----------------------------------------------------------------------------
 
 " syntastic
 let g:syntastic_enable_signs = 1
 let g:syntastic_quiet_warnings = 1
 let g:syntastic_auto_loc_list = 0
-let g:syntastic_auto_jump = 0 
-
-" clojure
-let g:vimclojure#HighlightBuiltins = 1
-let g:vimclojure#ParenRainbow = 1
+let g:syntastic_auto_jump = 0
 
 " zenburn
-let g:zenburn_high_Contrast = 1
+let g:zenburn_high_Contrast = 0
 let g:zenburn_color_also_Ignore = 1
 " let g:zenburn_alternate_Error = 1
 " let g:zenburn_unified_CursorColumn = 1
 
-" remove fugitive buffers
-autocmd BufReadPost fugitive://* set bufhidden=delete
-
 " python syntax
 let python_highlight_all = 0
 
-" delimit mate
-let delimitMate_smart_quotes = 0
-" let delimitMate_autoclose = 0
 
-" Commands ---
-" Better use SudoWrite from vim-eunuch
-"comm! W exec 'w !sudo tee % > /dev/null' | e!  
-comm! W SudoWrite
-
-
-" Status line ---
+"-----------------------------------------------------------------------------
+" Status line
+"-----------------------------------------------------------------------------
 set laststatus=2
-set statusline=%!StatusLine01()
+set statusline=%f\ %2*%m\ %1*%h%r%=[%{&encoding}\ %{&fileformat}\ %{strlen(&ft)?&ft:'none'}\ %{getfperm(@%)}]\ 0x%B\ %12.(%c:%l/%L%)
+set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 
 
-" Viminfo ---
-" http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
-"  '10  :  marks will be remembered for up to 10 previously edited files
-"  "100 :  will save up to 100 lines for each register
-"  :20  :  up to 20 lines of command-line history will be remembered
-"  %    :  saves and restores the buffer list
-"  n... :  where to save the viminfo files
-set viminfo='30,\"100,:40,%,n~/.viminfo
+"-----------------------------------------------------------------------------
+" Viminfo
+"-----------------------------------------------------------------------------
+" 'n :  marks will be remembered for up to n previously edited files
+" "n :  will save up to n lines for each register
+" :n :  up to n lines of command-line history will be remembered
+" %  :  saves and restores the buffer list
+" n  :  where to save the viminfo files
+set viminfo='100,\"100,:100,%,n~/.viminfo
 
-" autocmd BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/bash" | execute 'silent !chmod u+x <afile>' | endif | end
 
-
-" Auto commands ---
-augroup resCur
-  autocmd!
-  autocmd BufWinEnter * call ResCur()
-augroup END
-
+"-----------------------------------------------------------------------------
+" Auto commands
+"-----------------------------------------------------------------------------
 au InsertLeave * set nocul
 au InsertEnter * set cul
-
-au BufNewFile,BufWritePre * call AutoMkDir()
-
-
-" File templates ---
-au BufNewFile **/setup.py  silent! 0r ~/.vim/templates/setup.py
-au BufNewFile **/build.xml silent! 0r ~/.vim/templates/build.xml
-"au BufNewFile **/Makefile  silent! 0r ~/.vim/templates/Makefile
-
-au FileType python set listchars=tab:>.,trail:.,extends:#,nbsp:.
-
-
