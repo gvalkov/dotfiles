@@ -27,6 +27,9 @@ ln -snvf `c Xmodmap`        ~/.Xmodmap
 mkdir -p ~/.config/rofi
 ln -snvf `c rofi`           ~/.config/rofi/config
 
+mkdir -p ~/.config/qxkb
+ln -snvf `c qxkb.cfg`       ~/.config/qxkb/config
+
 # ln -svnf `c xinitrc`        ~/.xinitrc
 # ln -svnf `c stalonetrayrc`  ~/.stalonetrayrc
 # ln -snvf `c bspwm`          ~/.config/bspwm

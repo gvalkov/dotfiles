@@ -134,12 +134,12 @@ fi
 #-----------------------------------------------------------------------------
 # yum/dnf aliases
 if (( $+commands[yum] )); then
-  alias ayi='sudo yum install'
+  alias ayi='sudo yum install -y'
   alias ays='sudo yum --noplugins -C search'
 fi
 
 if (( $+commands[dnf] )); then
-  alias ayi='sudo dnf install'
+  alias ayi='sudo dnf install -y'
   alias ays='dnf search'
 fi
 #-----------------------------------------------------------------------------
