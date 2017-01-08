@@ -4,8 +4,8 @@
 # preferred programs
 export EDITOR="vim"
 export PAGER="less"
-# (( $+commands[most] ))    && export PAGER="most"
 (( $+commands[google-chrome] )) && export BROWSER="google-chrome"
+#(( $+commands[firefox] )) && export BROWSER="firefox"
 
 #-----------------------------------------------------------------------------
 # pager config
@@ -43,6 +43,12 @@ export WORKON_HOME=$HOME/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 export VIRTUALENVWRAPPER_SCRIPT=$HOME/.local/bin/virtualenvwrapper.sh
 source $HOME/.local/bin/virtualenvwrapper_lazy.sh
+[ -f "$HOME/.config/pythonstartup" ] && export PYTHONSTARTUP=$HOME/.config/pythonstartup
+
+# gui workarounds
+export QT_QPA_PLATFORMTHEME="qt5ct"
+#export SAL_USE_VCLPLUGIN="gen"
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 #-----------------------------------------------------------------------------
 # zsh load path

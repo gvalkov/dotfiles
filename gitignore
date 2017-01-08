@@ -71,3 +71,4 @@ local.properties
 # -- Win --
 Thumbs.db
 Desktop.ini
+~$*.xls*

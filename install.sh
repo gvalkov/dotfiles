@@ -17,6 +17,7 @@ ln -snvf `c vimperatorrc`   ~/.vimperatorrc
 ln -snvf `c mostrc`         ~/.mostrc
 ln -snvf `c lessrc`         ~/.lessrc
 ln -snvf `c flake8rc`       ~/.config/flake8
+ln -snvf `c pythonstartup`  ~/.config/pythonstartup
 
 ln -snvf `c flake8rc`       ~/.config/flake8
 ln -snvf `c i3`             ~/.config/i3
