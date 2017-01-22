@@ -12,13 +12,17 @@ values."
 
    dotspacemacs-configuration-layers
    '(
+     nginx
      better-defaults
      markdown
      emacs-lisp
+     spell-checking
      lua
      git
      org
+     go
      yaml
+     html
      ruby
      (ibuffer :variables ibuffer-group-buffers-by 'projects)
      syntax-checking
@@ -34,8 +38,10 @@ values."
    '(visual-regexp
      mark-multiple
      ibuffer-tramp
+     ag
      dtrt-indent
      cmake-mode
+     typescript-mode
      dedicated)
 
    dotspacemacs-excluded-packages
@@ -381,3 +387,19 @@ layers configuration. You are free to put any user code."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol t)
+ '(package-selected-packages
+   (quote
+    (memory-usage nginx-mode yapfify uuidgen rake py-isort pug-mode org-projectile pcache org org-download mwim minitest live-py-mode link-hint hide-comnt go-guru git-link flyspell-correct-helm flyspell-correct eyebrowse evil-visual-mark-mode evil-unimpaired evil-ediff goto-chg undo-tree dumb-jump diminish column-enforce-mode go-eldoc company-go go-mode helm-flyspell auto-dictionary typescript-mode rpm-spec-mode ag web-mode tagedit slim-mode scss-mode sass-mode less-css-mode jade-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data yaml-mode ws-butler window-numbering volatile-highlights visual-regexp vi-tilde-fringe toc-org spacemacs-theme spaceline powerline smooth-scrolling smeargle rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters pyvenv pytest pyenv-mode py-yapf popwin pip-requirements persp-mode pcre2el paradox hydra spinner page-break-lines orgit org-repo-todo org-present org-pomodoro alert log4e gntp org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode mark-multiple magit-gitflow macrostep lua-mode lorem-ipsum linum-relative leuven-theme info+ indent-guide ido-vertical-mode ibuffer-tramp ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger gh-md flycheck-pos-tip flycheck pkg-info epl flx-ido flx fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-args evil-anzu anzu eval-sexp-fu highlight elisp-slime-nav dtrt-indent define-word dedicated cython-mode company-statistics company-quickhelp pos-tip company-anaconda company cmake-mode clean-aindent-mode chruby bundler inf-ruby buffer-move bracketed-paste auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed anaconda-mode pythonic f dash s aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build use-package which-key bind-key bind-map evil zenburn-theme))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))

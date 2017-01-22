@@ -225,7 +225,7 @@ kill ring."
   (interactive)
   (my/change-buffer 'previous-buffer))
 
-;-----------------------------------------------------------------------------
+;;-----------------------------------------------------------------------------
 (defun delete-file-and-buffer ()
   "Kill the current buffer and deletes the file it is visiting."
   (interactive)
@@ -237,6 +237,11 @@ kill ring."
           (delete-file filename)
           (message "Deleted file %s" filename)
           (kill-buffer))))))
+
+;;-----------------------------------------------------------------------------
+(defun insert-current-date ()
+  (interactive)
+  (insert (shell-command-to-string "echo -n $(date +%Y-%m-%d)")))
 
 ;-----------------------------------------------------------------------------
 ; Org mode
