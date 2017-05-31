@@ -9,6 +9,7 @@ ln -svnf `c gitconfig`      ~/.gitconfig
 ln -svnf `c gitignore`      ~/.gitignore
 ln -svnf `c hgrc`           ~/.hgrc
 
+ln -svnf `c ideavimrc`      ~/.ideavimrc
 ln -svnf `c bashrc`         ~/.bashrc
 ln -svnf `c tidyrc`         ~/.tidyrc
 ln -svnf `c tmux.conf`      ~/.tmux.conf
