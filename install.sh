@@ -2,35 +2,36 @@
 set -x
 
 c () { readlink -f $1 ; }
+lns () { ln -svnf $(c "$1") "$2" ; }
 
 [ -x zsh/install.sh ] && zsh/install.sh
 
-ln -svnf `c gitconfig`      ~/.gitconfig
-ln -svnf `c gitignore`      ~/.gitignore
-ln -svnf `c hgrc`           ~/.hgrc
+lns gitconfig      ~/.gitconfig
+lns gitignore      ~/.gitignore
+lns hgrc           ~/.hgrc
 
-ln -svnf `c ideavimrc`      ~/.ideavimrc
-ln -svnf `c bashrc`         ~/.bashrc
-ln -svnf `c tidyrc`         ~/.tidyrc
-ln -svnf `c tmux.conf`      ~/.tmux.conf
-ln -snvf `c user-dirs.dirs` ~/.config/user-dirs.dirs
-ln -snvf `c vimperatorrc`   ~/.vimperatorrc
-ln -snvf `c mostrc`         ~/.mostrc
-ln -snvf `c lessrc`         ~/.lessrc
-ln -snvf `c flake8rc`       ~/.config/flake8
-ln -snvf `c pythonstartup`  ~/.config/pythonstartup
+lns ideavimrc      ~/.ideavimrc
+lns bashrc         ~/.bashrc
+lns tidyrc         ~/.tidyrc
+lns tmux.conf      ~/.tmux.conf
+lns user-dirs.dirs ~/.config/user-dirs.dirs
 
-ln -snvf `c flake8rc`       ~/.config/flake8
-ln -snvf `c i3`             ~/.config/i3
-ln -snvf `c i3status`       ~/.config/i3status
+lns mostrc         ~/.mostrc
+lns lessrc         ~/.lessrc
+lns flake8rc       ~/.config/flake8
+lns pythonstartup  ~/.config/pythonstartup
 
-ln -snvf `c Xmodmap`        ~/.Xmodmap
+lns flake8rc       ~/.config/flake8
+lns i3             ~/.config/i3
+lns i3status       ~/.config/i3status
+
+lns Xmodmap        ~/.Xmodmap
 
 mkdir -p ~/.config/rofi
-ln -snvf `c rofi`           ~/.config/rofi/config
+lns rofi           ~/.config/rofi/config
 
 mkdir -p ~/.config/qxkb
-ln -snvf `c qxkb.cfg`       ~/.config/qxkb/config
+lns qxkb.cfg       ~/.config/qxkb/config
 
 # ln -svnf `c xinitrc`        ~/.xinitrc
 # ln -svnf `c stalonetrayrc`  ~/.stalonetrayrc

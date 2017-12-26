@@ -1,38 +1,134 @@
-! rofi.background: #073642
-! rofi.foreground: #657b83
-! rofi.highlightbg: #859900
-! rofi.highlightfg: #073642
-! rofi.bordercolor: #678698
-! rofi.padding: 1
-! rofi.lines: 10
-! rofi.borderwidth: 1
-! rofi.opacity: 85
-! rofi.font: Terminus 12
-! rofi.location: 7
-! rofi.yoffset: 0
-! rofi.xoffset: 0
-! rofi.width: 100
-! rofi.ssh-set-title: false
-
-
 ! rofi -- dmenu clone
 rofi.opacity:  100
 rofi.width:    20
 rofi.lines:    20
-!rofi.font:     DejaVu Sans Mono 10
-rofi.font: Terminus 12
+rofi.font:     DejaVu Sans Mono 11
+!rofi.font: Terminus 12
 rofi.location: 0
 rofi.padding:  5
 rofi.threads:  2
 rofi.yoffset: -50
 rofi.scrollbar-width: 10
 rofi.terminal: gnome-terminal
-
 rofi.color-enabled: true
-rofi.color-window: #3F3F3F,#000000
-rofi.color-normal: #3F3F3F,#DCDCCC,#383838,#4F4F4F,#FFFFEF
-rofi.color-active: #4C7073,#DCDCCC,#366060,#5C888B,#FFFFEF
-rofi.color-urgent: #8C5353,#DCDCCC,#7C4343,#9C6363,#FFFFEF
+
+/**
+ * A floating box version of the paper theme.
+ *
+ * User: Qball
+ * Copyright: Dave Davenport
+ */
+* {
+    blue:  #0000FF;
+    white: #FFFFFF;
+    black: #000000;
+    grey:  #eeeeee;
+
+    spacing: 2;
+    background-color: #00000000;
+    border-color: #444444FF;
+    anchor: north;
+    location: center;
+}
+#window {
+    transparency: "screenshot";
+    background-color: #00000000;
+    border: 0;
+    padding: 0% 0% 1em 0%;
+    x-offset: 0;
+    y-offset: -10%;
+}
+#mainbox {
+    padding: 0px;
+    border: 0;
+    spacing: 1%;
+}
+#message {
+    border: 2px;
+    padding: 1em;
+    background-color: @white;
+    text-color: @back;
+}
+#textbox normal {
+    text-color: #002B36FF;
+    padding: 0;
+    border: 0;
+}
+#listview {
+    fixed-height: 1;
+    border: 2px;
+    padding: 1em;
+    reverse: false;
+
+    columns: 1;
+    background-color: @white;
+}
+#element {
+    border: 0;
+    padding: 2px;
+    highlight: bold ;
+}
+#element normal.normal {
+    text-color: #002B36FF;
+    background-color: #F5F5F500;
+}
+#element normal.urgent {
+    text-color: #D75F00FF;
+    background-color: #F5F5F5FF;
+}
+#element normal.active {
+    text-color: #005F87FF;
+    background-color: #F5F5F5FF;
+}
+#element selected.normal {
+    text-color: #F5F5F5FF;
+    background-color: #4271AEFF;
+}
+#element selected.urgent {
+    text-color: #F5F5F5FF;
+    background-color: #D75F00FF;
+}
+#element selected.active {
+    text-color: #F5F5F5FF;
+    background-color: #005F87FF;
+}
+#element alternate.normal {
+    text-color: #002B36FF;
+    background-color: #D0D0D0FF;
+}
+#element alternate.urgent {
+    text-color: #D75F00FF;
+    background-color: #D0D0D0FF;
+}
+#element alternate.active {
+    text-color: #005F87FF;
+    background-color: #D0D0D0FF;
+}
+#scrollbar {
+    border: 0;
+    padding: 0;
+}
+#inputbar {
+    spacing: 0;
+    border: 2px;
+    padding: 0.5em 1em;
+    background-color: @grey;
+    index: 0;
+}
+#inputbar normal {
+    foreground-color: #002B36FF;
+    background-color: #F5F5F500;
+}
+
+#sidebar {
+    border: 2px;
+    padding: 0.5em 1em;
+    background-color: @grey;
+    index: 10;
+}
+#button selected {
+    text-color: #4271AEFF;
+}
 
 ! Local Variables:
 ! mode: conf-xdefaults

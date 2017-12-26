@@ -19,7 +19,8 @@ startup_shared() {
     clipit &
     xmodmap ~/.Xmodmap &
     xautolock -time 60 -locker "i3lock --ignore-empty-password -c 2980b9" &
-    xss-lock -- i3lock --ignore-empty-password -c 2980b9 &
+    # xss-lock -- i3lock --ignore-empty-password -c 2980b9 &
+    ~/.config/i3/event-listener.py
 }
 
 startup_shared

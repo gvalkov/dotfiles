@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8; -*-
 
 import sys
 import i3ipc
+
 
 mark_name, match, cmd = sys.argv[1:]
 match_type, match_value = match.split(':', 1)
@@ -13,7 +13,6 @@ wn = i3.get_tree().find_marked(mark_name)
 if wn:
 	wn[-1].command('[con_mark="%s"] scratchpad show' % mark_name)
 	exit(0)
-
 
 def on_window_new(self, event):
 	con = event.container

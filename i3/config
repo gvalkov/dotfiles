@@ -11,8 +11,8 @@ client.focused_inactive #314757 #314757 #ffffff #484e50
 client.unfocused        #505050 #505050 #8A8A8A #2e9ef4
 client.urgent           #2f343a #900000 #ffffff #900000
 
-new_window pixel 2
-new_float pixel 2
+new_window pixel 4
+new_float pixel 4
 
 hide_edge_borders vertical
 focus_follows_mouse true
@@ -26,13 +26,14 @@ floating_modifier $mod
 #-----------------------------------------------------------------------------
 bindsym $mod+c kill
 
-bindsym $mod+Tab          focus right
-bindsym $mod+Shift+Tab    focus left
+bindsym $mod+Tab          exec echo "swap_focus" | nc --send-only -U "$XDG_RUNTIME_DIR/i3/event-listener.sock"
+# bindsym $mod+Tab          focus right
+# bindsym $mod+Shift+Tab    focus left
 bindsym $mod+grave        workspace back_and_forth
 bindsym $mod+Shift+grave  move container to workspace back_and_forth; workspace back_and_forth
 bindsym $mod+b            border toggle
-bindsym $mod+m            move scratchpad
-bindsym $mod+o            scratchpad show
+# bindsym $mod+m            move ccratchpad
+# bindsym $mod+o            scratchpad show
 
 #-----------------------------------------------------------------------------
 # Named scratchpads
@@ -41,7 +42,7 @@ bindsym $mod+Shift+a exec ~/.config/i3/scratchpad-exec.py \
         "gnome-terminal --role gnome-terminal-scratch"
 
 bindsym $mod+Shift+i exec ~/.config/i3/scratchpad-exec.py \
-        "scratch-ipython" "name:IPython" \
+        "scratch-ipython" "name:Jupyter QtConsole" \
         "ipython-qt"
 
 #-----------------------------------------------------------------------------
@@ -51,7 +52,23 @@ bindsym $mod+t exec "nautilus"
 bindsym $mod+f exec "google-chrome"
 bindsym $mod+e exec "emacsclient -c"
 bindsym $mod+r exec --no-startup-id "rofi -show run"
+bindsym $mod+p exec --no-startup-id "rofi-pass.py"
 bindsym $mod+Control+Shift+a exec "gnome-terminal --role gnome-terminal-floating"
+
+#-----------------------------------------------------------------------------
+# Power/Suspend
+set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot
+mode "$mode_system" {
+    bindsym l exec --no-startup-id ~/.config/i3/i3-exit.sh lock, mode "default"
+    bindsym e exec --no-startup-id ~/.config/i3/i3-exit.sh logout, mode "default"
+    bindsym s exec --no-startup-id ~/.config/i3/i3-exit.sh suspend, mode "default"
+    bindsym r exec --no-startup-id ~/.config/i3/i3-exit.sh reboot, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Pause mode "$mode_system"
 
 #-----------------------------------------------------------------------------
 # Media keys
@@ -83,13 +100,14 @@ bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
 # split in horizontal orientation
-bindsym $mod+minus split h
+bindsym $mod+v split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+n split v
 
 bindsym $mod+s fullscreen toggle
 bindsym $mod+space layout toggle
+bindsym $mod+m layout tabbed
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -133,7 +151,6 @@ bindsym $mod+Left  workspace prev
 # reload/restart/exit
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resizing controls
 bindsym $mod+Control+h resize shrink width 10 px or 10 ppt
