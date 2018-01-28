@@ -81,7 +81,7 @@ if [[ "$color_prompt" -eq 0 ]]; then
   PS1='\[\033[01;33m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\] \$ '
 fi
 
-if [ $ASCIINEMA_REC -eq 1 ]; then
+if [[ "$ASCIINEMA_REC" -eq 1 ]]; then
   PS1='> '
 fi
 

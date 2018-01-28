@@ -45,6 +45,10 @@ bindsym $mod+Shift+i exec ~/.config/i3/scratchpad-exec.py \
         "scratch-ipython" "name:Jupyter QtConsole" \
         "ipython-qt"
 
+bindsym XF86Calculator exec ~/.config/i3/scratchpad-exec.py \
+        "scratch-calc" "title:speedcrunch" \
+        "speedcrunch"
+
 #-----------------------------------------------------------------------------
 # Programs
 bindsym $mod+a exec "gnome-terminal"
@@ -78,6 +82,8 @@ bindsym XF86AudioMute         exec --no-startup-id "pactl set-sink-mute @DEFAULT
 
 bindsym XF86MonBrightnessUp   exec --no-startup-id "xbacklight -inc 20"
 bindsym XF86MonBrightnessDown exec --no-startup-id "xbacklight -dec 20"
+
+#bindsym XF86Calculator        exec --no-startup-id "qalculate-gtk"
 
 #-----------------------------------------------------------------------------
 # Layout and focus
@@ -203,6 +209,7 @@ bar {
 
 # Window rules
 for_window [window_role="gnome-terminal-floating$"] floating toggle, move position mouse
+for_window [title="Qalculate"] floating enable
 
 exec --no-startup-id ~/.config/i3/startup.sh
 # exec --no-startup-id nm-applet
