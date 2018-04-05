@@ -12,17 +12,23 @@ values."
 
    dotspacemacs-configuration-layers
    '(
+     javascript
+     vimscript
      nginx
+     ansible
      better-defaults
      markdown
      emacs-lisp
      spell-checking
+     ivy
      lua
      git
      org
      go
      yaml
      html
+     c-c++
+     puppet
      ruby
      (ibuffer :variables ibuffer-group-buffers-by 'projects)
      syntax-checking
@@ -39,10 +45,14 @@ values."
      mark-multiple
      ibuffer-tramp
      ag
+     groovy-mode
+     coffee-mode
+     ninja-mode
      dtrt-indent
      cmake-mode
      typescript-mode
-     dedicated)
+     dedicated
+     )
 
    dotspacemacs-excluded-packages
    '(;evil-jumper
@@ -76,7 +86,7 @@ values."
 
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+                               :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -90,10 +100,10 @@ values."
    dotspacemacs-auto-save-file-location 'cache
 
    ;; Helm
-   dotspacemacs-use-ido nil
-   dotspacemacs-helm-resize nil
-   dotspacemacs-helm-no-header t
-   dotspacemacs-helm-position 'bottom
+   ;; dotspacemacs-use-ido nil
+   ;; dotspacemacs-helm-resize nil
+   ;; dotspacemacs-helm-no-header t
+   ;; dotspacemacs-helm-position 'bottom
 
    ;; UI
    dotspacemacs-enable-paste-micro-state nil
@@ -180,6 +190,12 @@ layers configuration. You are free to put any user code."
   (setq mouse-wheel-follow-mouse t
         mouse-wheel-scroll-amount '(1 ((shift) . 1)))
 
+  ;; useless buffers
+  (setq spacemacs-useless-buffers-regexp '("\\*\.\+\\*" "TAGS"))
+
+  ;; useless buffers
+  (setq spacemacs-useless-buffers-regexp '("\\*\.\+\\*" "TAGS"))
+
   ;;--------------------------------------------------------------------------
   ;; editor
   (setq-default tab-width 4
@@ -190,7 +206,7 @@ layers configuration. You are free to put any user code."
   (setq require-final-newline t)
 
   ;;--------------------------------------------------------------------------
-  ;; mode customizaitons
+  ;; mode customization
   (setq recentf-max-saved-items 500)
   (setq recentf-max-menu-items 40)
 
@@ -208,6 +224,7 @@ layers configuration. You are free to put any user code."
   ;; tramp -------------------------------------------------------------------
   (setq password-cache-expiry nil)
   (setq tramp-verbose 6)
+  ;; (setq tramp-ssh-controlmaster-options nil)
   (setq tramp-ssh-controlmaster-options
         (s-join " "
                 `("-o ControlMaster=yes"
@@ -231,8 +248,8 @@ layers configuration. You are free to put any user code."
                    (ibuffer-tramp-set-filter-groups-by-tramp-connection)
                    (ibuffer-do-sort-by-alphabetic)))))
 
-  ;; flycheck ----------------------------------------------------------------
-  (setq flycheck-check-syntax-automatically '(save))
+  ;; ;; flycheck ----------------------------------------------------------------
+  ;; (setq flycheck-check-syntax-automatically '(save))
 
   ;; magit -------------------------------------------------------------------
   (spacemacs|use-package-add-hook magit
@@ -247,7 +264,7 @@ layers configuration. You are free to put any user code."
   (spacemacs|use-package-add-hook python
     :post-config
     (add-hook! 'python-mode-hook
-               (setq indent-tabs-mode t
+               (setq indent-tabs-mode nil
                      python-indent-offset 4
                      tab-width 4)))
 
@@ -335,12 +352,12 @@ layers configuration. You are free to put any user code."
 
   (bind-map-set-keys my/quick-leader-map
     ;; helm shortcuts
-    "f"  'helm-find-files
-    "m"  'helm-recentf
-    "l"  'helm-mini
-    "p"  'helm-projectile
-    "y"  'helm-show-kill-ring
-    "sw" 'helm-swoop
+    "f"  'find-file
+    "m"  'ivy-recentf
+    "l"  'ivy-switch-buffer
+    "p"  'counsel-projectile
+    "y"  'counsel-yank-pop
+    "sw" 'swiper
     "b"  'ibuffer
 
     ;; query/replace
@@ -395,11 +412,11 @@ layers configuration. You are free to put any user code."
  '(evil-want-Y-yank-to-eol t)
  '(package-selected-packages
    (quote
-    (memory-usage nginx-mode yapfify uuidgen rake py-isort pug-mode org-projectile pcache org org-download mwim minitest live-py-mode link-hint hide-comnt go-guru git-link flyspell-correct-helm flyspell-correct eyebrowse evil-visual-mark-mode evil-unimpaired evil-ediff goto-chg undo-tree dumb-jump diminish column-enforce-mode go-eldoc company-go go-mode helm-flyspell auto-dictionary typescript-mode rpm-spec-mode ag web-mode tagedit slim-mode scss-mode sass-mode less-css-mode jade-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data yaml-mode ws-butler window-numbering volatile-highlights visual-regexp vi-tilde-fringe toc-org spacemacs-theme spaceline powerline smooth-scrolling smeargle rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters pyvenv pytest pyenv-mode py-yapf popwin pip-requirements persp-mode pcre2el paradox hydra spinner page-break-lines orgit org-repo-todo org-present org-pomodoro alert log4e gntp org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode mark-multiple magit-gitflow macrostep lua-mode lorem-ipsum linum-relative leuven-theme info+ indent-guide ido-vertical-mode ibuffer-tramp ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger gh-md flycheck-pos-tip flycheck pkg-info epl flx-ido flx fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-args evil-anzu anzu eval-sexp-fu highlight elisp-slime-nav dtrt-indent define-word dedicated cython-mode company-statistics company-quickhelp pos-tip company-anaconda company cmake-mode clean-aindent-mode chruby bundler inf-ruby buffer-move bracketed-paste auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed anaconda-mode pythonic f dash s aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build use-package which-key bind-key bind-map evil zenburn-theme))))
+    (wgrep smex ivy-hydra flyspell-correct-ivy counsel-projectile counsel swiper ivy gitignore-mode epl org-mime ninja-mode groovy-mode web-beautify livid-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern tern coffee-mode dash-functional iedit flyspell-correct ghub let-alist pythonic disaster company-c-headers clang-format impatient-mode skewer-mode org-category-capture haml-mode geiser yapfify yaml-mode web-mode visual-regexp typescript-mode ruby-test-mode rubocop rspec-mode robe pyvenv orgit org-projectile nginx-mode mmm-mode markdown-toc markdown-mode magit-gitflow live-py-mode ibuffer-projectile helm-company go-guru go-eldoc git-timemachine git-link flycheck-pos-tip flycheck company-go go-mode chruby ag inf-ruby anaconda-mode company magit magit-popup git-commit with-editor yasnippet alert log4e which-key use-package toc-org spaceline restart-emacs persp-mode org-plus-contrib neotree link-hint info+ indent-guide hungry-delete highlight-indentation hide-comnt help-fns+ helm-projectile helm-make projectile helm-flx eyebrowse expand-region exec-path-from-shell evil-search-highlight-persist evil-nerd-commenter evil-mc evil-exchange dumb-jump diminish aggressive-indent adaptive-wrap ace-window ace-link avy packed highlight smartparens f s dash evil helm helm-core async hydra zenburn-theme ws-butler winum volatile-highlights vimrc-mode vi-tilde-fringe uuidgen unfill undo-tree tagedit smeargle slim-mode scss-mode sass-mode rvm ruby-tools rbenv rake rainbow-delimiters pytest pyenv-mode py-isort puppet-mode pug-mode powerline pos-tip popwin pip-requirements pcre2el paradox org-present org-pomodoro org-download org-bullets open-junk-file mwim move-text minitest mark-multiple macrostep lua-mode lorem-ipsum linum-relative less-css-mode jinja2-mode ibuffer-tramp hy-mode htmlize hl-todo highlight-parentheses highlight-numbers helm-themes helm-swoop helm-pydoc helm-mode-manager helm-gitignore helm-descbinds helm-css-scss helm-c-yasnippet helm-ag goto-chg google-translate golden-ratio gnuplot gntp gitconfig-mode gitattributes-mode git-messenger gh-md fuzzy flyspell-correct-helm flx-ido fill-column-indicator fancy-battery evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav dtrt-indent define-word dedicated dactyl-mode cython-mode company-web company-statistics company-ansible company-anaconda column-enforce-mode cmake-mode clean-aindent-mode bundler bind-key auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ansible-doc ansible ace-jump-helm-line ac-ispell)))
+ '(python-shell-interpreter "python3" t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
- '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
+ '(default ((t (:foreground "#DCDCCC" :background "#3F3F3F")))))
