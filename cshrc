@@ -2,12 +2,21 @@
 
 # environment
 setenv EDITOR 'vim'
-setenv WINDEDITOR 'vim'
+setenv WINEDITOR 'vim'
 
 # aliases
 alias ll 'ls-F -lF'
 alias cp 'cp -ip'
 alias mv 'mv -i'
+
+alias f  'find-simple'
+alias r  'ranger'
+alias d  'dirs -v'
+alias ls 'ls --color=auto -F --group-directories-first'
+alias ll 'ls -F -lhF'
+alias lS 'ls -LrsS'
+alias rl 'readlink -f'
+alias emc 'emacsclient -n -c'
 
 
 # options
@@ -30,7 +39,9 @@ set savehist = (10000 merge)
 set histfile = "$HOME/.csh-histfile"
 set ignoreeof = 1
 
-# set implicitcd
+set implicitcd = verbose
+set listjobs = long
+
 if ($?prompt) then
     # keys
     stty sane
@@ -54,7 +65,8 @@ bindkey "^[[4~"  end-of-line
 bindkey -k up    history-search-backward
 bindkey -k down  history-search-forward
 bindkey "^R"     i-search-back
-bindkey "^[^_"   copy-prev-word
++bindkey "^[m"   copy-prev-word
++bindkey "^[."   insert-last-word
 
 ## vt100 sends ^? for backspace key and ^[[3~ for delete key
 # bindkey "^?" delete-char
@@ -93,6 +105,7 @@ complete gunzip 'p/*/f:*.{gz2,tgz}/'
 complete unzip  'p/*/f:*.zip/'
 complete where  'p/1/c/'
 complete which  'p/*/c/'
+complete vim    'n/*/f:^*.[oa]/'
 
 
 [ -f $HOME/.cshrc.local ] && source $HOME/.cshrc.local

@@ -157,6 +157,7 @@ bindsym $mod+Left  workspace prev
 # reload/restart/exit
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exit
 
 # resizing controls
 bindsym $mod+Control+h resize shrink width 10 px or 10 ppt
