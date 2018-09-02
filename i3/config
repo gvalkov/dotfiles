@@ -45,6 +45,10 @@ bindsym $mod+Shift+i exec ~/.config/i3/scratchpad-exec.py \
         "scratch-ipython" "name:Jupyter QtConsole" \
         "ipython-qt"
 
+bindsym $mod+Shift+z exec ~/.config/i3/scratchpad-exec.py \
+        "scratch-zeal" "name:Zeal" \
+        "zeal"
+
 bindsym XF86Calculator exec ~/.config/i3/scratchpad-exec.py \
         "scratch-calc" "title:speedcrunch" \
         "speedcrunch"
@@ -61,12 +65,13 @@ bindsym $mod+Control+Shift+a exec "gnome-terminal --role gnome-terminal-floating
 
 #-----------------------------------------------------------------------------
 # Power/Suspend
-set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot
+set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot, (o) reload
 mode "$mode_system" {
     bindsym l exec --no-startup-id ~/.config/i3/i3-exit.sh lock, mode "default"
     bindsym e exec --no-startup-id ~/.config/i3/i3-exit.sh logout, mode "default"
     bindsym s exec --no-startup-id ~/.config/i3/i3-exit.sh suspend, mode "default"
     bindsym r exec --no-startup-id ~/.config/i3/i3-exit.sh reboot, mode "default"
+    bindsym o reload
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"

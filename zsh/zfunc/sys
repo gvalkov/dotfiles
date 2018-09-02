@@ -1,0 +1,8 @@
+# -*- mode: sh -*-
+
+function sys() {
+    if [[ "$@" != *--user ]]; then
+        sudo systemctl $@
+    fi
+    systemctl $@
+}

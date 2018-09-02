@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ -d /proc/acpi/battery/BAT* ]; then
+if [[ -d /proc/acpi/battery/BAT* || -d /sys/class/power_supply/BAT* ]]; then
     is_notebook=true
 fi
 

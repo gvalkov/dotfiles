@@ -3,13 +3,14 @@
 
 import os
 from subprocess import run
+from glob import glob
 
 import netifaces
 from i3pystatus import Status
 
 terminal = 'gnome-terminal'
 
-is_notebook = os.path.isdir('/proc/acpi/battery/')
+is_notebook = os.path.isdir('/proc/acpi/battery/') or glob('/sys/class/power_supply/BAT*')
 ifaces = netifaces.interfaces()
 
 lan1 = next(( i for i in ifaces if i.startswith('enp')), None)
