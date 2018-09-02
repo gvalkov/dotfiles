@@ -12,6 +12,8 @@ rofi.scrollbar-width: 10
 rofi.terminal: gnome-terminal
 rofi.color-enabled: true
 
+rofi.ssh-command: {terminal} -- {ssh-client} {host}
+
 /**
  * A floating box version of the paper theme.
  *

@@ -30,7 +30,6 @@ alias lx='ll -XB'
 
 #-----------------------------------------------------------------------------
 # command aliases
-alias c="cats"
 alias h='history'
 alias f='find-simple'
 
@@ -67,6 +66,10 @@ fi
 
 if (( $+commands[colordiff] )); then
   alias diff='colordiff'
+fi
+
+if (( $+commands[bat] )); then
+  alias c="bat"
 fi
 #-----------------------------------------------------------------------------
 
@@ -147,7 +150,7 @@ fi
 #-----------------------------------------------------------------------------
 # systemctl/service aliases
 if (( $+commands[systemctl] )); then
-  alias sys='systemctl'
+  alias sc='systemctl'
 fi
 #-----------------------------------------------------------------------------
 
@@ -188,6 +191,7 @@ alias -g DN='/dev/null'
 # utility functions
 function mcd ()  { mkdir -p "$1" && cd "$1"; }
 function cdls () { builtin cd "$1" && ll; }
+function gcd ()  { cd (git rev-parse --show-toplevel); }
 function vw ()   { vim $(which $1); }
 function a ()    { awk "{ print \$$1 }"; }
 
@@ -217,8 +221,8 @@ autoload pkg
 #-----------------------------------------------------------------------------
 # history config
 HISTFILE=~/.histfile
-HISTSIZE=20000
-SAVEHIST=20000
+HISTSIZE=30000
+SAVEHIST=30000
 
 setopt BANG_HIST
 setopt SHARE_HISTORY
@@ -466,6 +470,14 @@ if (( $+commands[virtualenvwrapper_lazy.sh] )); then
   VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv-3
   source "$commands[virtualenvwrapper.sh]"
 fi
+
+[ -f "$HOME/.config/pythonstartup" ] && export PYTHONSTARTUP=$HOME/.config/pythonstartup
+#-----------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------
+# fzf
+source "$HOME/.zfunc/3rdparty/fzf-key-bindings.zsh" || :
 #-----------------------------------------------------------------------------
 
 

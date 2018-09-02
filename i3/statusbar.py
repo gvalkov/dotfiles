@@ -6,6 +6,8 @@ import os
 from subprocess import run
 from i3pystatus import Status
 
+terminal = 'gnome-terminal'
+
 is_notebook = os.path.isdir('/proc/acpi/battery/')
 
 status = Status(interval=1)
@@ -18,6 +20,6 @@ if is_notebook:
 	status.register('battery', format=batfmt, alert=True, alert_percentage=10, status={'DIS': '↓', 'CHR': '↑', 'FULL': ''})
 
 status.register('pulseaudio', format='♪{volume}')
-status.register('load', format='Load: {avg1} {avg5} {avg15}')
-status.register('mem', format='Mem: {percent_used_mem:.2f}%')
+status.register('load', format='Load: {avg1} {avg5} {avg15}', on_leftclick=f'{terminal} -e "htop --sort-key=PERCENT_CPU"')
+status.register('mem', format='Mem: {percent_used_mem:.2f}%', on_leftclick=f'{terminal} -e "htop --sort-key=PERCENT_MEM"')
 status.run()

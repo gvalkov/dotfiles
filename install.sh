@@ -25,6 +25,9 @@ lns flake8rc       ~/.config/flake8
 lns i3             ~/.config/i3
 lns i3status       ~/.config/i3status
 
+mkdir -p ~/.config/dunst
+lns dunstrc        ~/.config/dunst/dunstrc
+
 lns Xmodmap        ~/.Xmodmap
 
 mkdir -p ~/.config/rofi
@@ -38,6 +41,6 @@ lns qxkb.cfg       ~/.config/qxkb/config
 # ln -snvf `c bspwm`          ~/.config/bspwm
 # ln -snvf `c sxhkd`          ~/.config/sxhkd
 # ln -snvf `c ctags`          ~/.ctags
-# ln -snvf `c compton.conf`   ~/.compton.conf
+ln -snvf `c compton.conf`   ~/.compton.conf
 # ln -snvf `c xmonad`         ~/.xmonad
 # ln -svnf `c screenrc`       ~/.screenrc

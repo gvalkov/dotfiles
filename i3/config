@@ -52,7 +52,7 @@ bindsym XF86Calculator exec ~/.config/i3/scratchpad-exec.py \
 #-----------------------------------------------------------------------------
 # Programs
 bindsym $mod+a exec "gnome-terminal"
-bindsym $mod+t exec "nautilus"
+bindsym $mod+t exec "dolphin"
 bindsym $mod+f exec "google-chrome"
 bindsym $mod+e exec "emacsclient -c"
 bindsym $mod+r exec --no-startup-id "rofi -show run"
@@ -182,6 +182,9 @@ mode "resize" {
     bindsym Up resize shrink height 10 px or 10 ppt
     bindsym Right resize grow width 10 px or 10 ppt
 
+    bindsym $mod+plus exec --no-startup-id compton-trans -c +10
+    bindsym $mod+minus exec --no-startup-id compton-trans -c -10
+
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -194,7 +197,7 @@ bar {
     position top
     mode dock # dock
     # tray_output primary
-    status_command ~/.config/i3/ubook-i3pystatus.py
+    status_command ~/.config/i3/statusbar.py
     strip_workspace_numbers no
     binding_mode_indicator yes
     colors {
@@ -213,16 +216,3 @@ for_window [window_role="gnome-terminal-floating$"] floating toggle, move positi
 for_window [title="Qalculate"] floating enable
 
 exec --no-startup-id ~/.config/i3/startup.sh
-# exec --no-startup-id nm-applet
-# exec --no-startup-id redshift-gtk
-# exec --no-startup-id xsetroot -solid rgb:29/80/B9
-# exec --no-startup-id emacs --daemon
-# exec --no-startup-id qxkb
-# exec --no-startup-id clipit
-# exec --no-startup-id xmodmap ~/.Xmodmap
-# exec --no-startup-id xautolock -time 10 -locker "i3lock --ignore-empty-password -c 2980b9"
-# exec --no-startup-id xss-lock -- i3lock --ignore-empty-password -c 2980b9
-
-# exec --no-startup-id xinput set-prop "Elan Touchpad" 276 1
-# exec --no-startup-id xinput set-prop "Elan Touchpad" 286 1
-# exec --no-startup-id xinput set-prop "Elan Touchpad" 296 1

@@ -4,13 +4,14 @@
 # preferred programs
 export EDITOR="vim"
 export PAGER="less"
+export XDG_CURRENT_DESKTOP=KDE
 (( $+commands[google-chrome] )) && export BROWSER="google-chrome"
 #(( $+commands[firefox] )) && export BROWSER="firefox"
 
 #-----------------------------------------------------------------------------
 # pager config
 if [[ "$PAGER" = "less" ]]; then
-  export LESS="-egiMXRF"
+  export LESS="-giMXRF"
   export LESSCHARSET="utf-8"
 fi
 
@@ -38,11 +39,6 @@ export PERL_MM_OPT="INSTALL_BASE=/home/gv/.perl5"
 export PERL5LIB="/home/gv/.perl5/lib/perl5/x86_64-linux-thread-multi:/home/gv/.perl5/lib/perl5"
 export PATH="/home/gv/perl5/bin:$PATH"
 
-# python
-export WORKON_HOME=$HOME/.virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-export VIRTUALENVWRAPPER_SCRIPT=$HOME/.local/bin/virtualenvwrapper.sh
-[ -f "$HOME/.local/bin/virtualenvwrapper_lazy.sh" ] && source $HOME/.local/bin/virtualenvwrapper_lazy.sh 
 [ -f "$HOME/.config/pythonstartup" ] && export PYTHONSTARTUP=$HOME/.config/pythonstartup
 
 # gui workarounds

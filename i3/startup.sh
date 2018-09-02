@@ -12,10 +12,13 @@ startup_notebook() {
 
 startup_shared() {
     nm-applet &
+    dunst &
+    /usr/libexec/geoclue-2.0/demos/agent &
     redshift-gtk &
     xsetroot -solid rgb:29/80/B9 &
     emacs --daemon &
     qxkb &
+    compton &
     clipit &
     xmodmap ~/.Xmodmap &
     xautolock -time 60 -locker "i3lock --ignore-empty-password -c 2980b9" &
