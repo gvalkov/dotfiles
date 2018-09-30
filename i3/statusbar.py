@@ -13,6 +13,7 @@ terminal = 'gnome-terminal'
 is_notebook = os.path.isdir('/proc/acpi/battery/') or glob('/sys/class/power_supply/BAT*')
 ifaces = netifaces.interfaces()
 
+ifaces = sorted(ifaces, key=len)
 lan1 = next(( i for i in ifaces if i.startswith('enp')), None)
 
 status = Status(interval=1)

@@ -19,6 +19,7 @@ startup_shared() {
     emacs --daemon &
     qxkb &
     compton &
+    hsetroot -solid rgb:29/80/B9 &
     clipit &
     xmodmap ~/.Xmodmap &
     xautolock -time 60 -locker "i3lock --ignore-empty-password -c 2980b9" &
