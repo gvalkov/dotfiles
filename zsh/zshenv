@@ -30,7 +30,7 @@ export DOTREMINDERS="$HOME/org/reminders"
 #-----------------------------------------------------------------------------
 # programming environment options
 # golang
-export GOPATH="$HOME/source/go"
+export GOPATH="$HOME/go"
 
 # perl locallib
 export PERL_LOCAL_LIB_ROOT="/home/gv/.perl5"

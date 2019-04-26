@@ -11,20 +11,16 @@ startup_notebook() {
 }
 
 startup_shared() {
-    nm-applet &
     dunst &
     /usr/libexec/geoclue-2.0/demos/agent &
-    redshift-gtk &
+    redshift-gtk & # -l 51.4416:5.4697
     xsetroot -solid rgb:29/80/B9 &
-    emacs --daemon &
-    qxkb &
-    compton &
     hsetroot -solid rgb:29/80/B9 &
-    clipit &
+    emacs --daemon &
     xmodmap ~/.Xmodmap &
     xautolock -time 60 -locker "i3lock --ignore-empty-password -c 2980b9" &
     # xss-lock -- i3lock --ignore-empty-password -c 2980b9 &
-    ~/.config/i3/event-listener.py
+    #~/.config/i3/event-listener.py
 }
 
 startup_shared

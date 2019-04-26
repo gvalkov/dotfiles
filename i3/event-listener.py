@@ -9,7 +9,7 @@ events = asyncio.Queue()
 enqueue = lambda *args: events.put_nowait(args)
 window_stack = []
 
-i3 = i3ipc.Connection()
+i3 = i3ipc.Connection(auto_reconnect=True)
 i3.on('window::focus', enqueue)
 
 

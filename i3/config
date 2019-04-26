@@ -1,8 +1,16 @@
 set $mod Mod4
 
+#-----------------------------------------------------------------------------
+# Variables
+set $term gnome-terminal
+set $font pango:DejaVu Sans Mono 10
+set $nexec exec --no-startup-id
+
 workspace_layout default
 workspace_auto_back_and_forth yes
-force_display_urgency_hint 500 ms
+force_display_urgency_hint 1000 ms
+default_orientation auto
+workspace_layout tabbed
 
 #-----------------------------------------------------------------------------
 # Look and feel
@@ -14,11 +22,13 @@ client.urgent           #2f343a #900000 #ffffff #900000
 new_window pixel 4
 new_float pixel 4
 
-hide_edge_borders vertical
-focus_follows_mouse true
+hide_edge_borders smart
+focus_follows_mouse yes
+focus_on_window_activation urgent
 popup_during_fullscreen smart
+show_marks yes
 
-font pango:DejaVu Sans Mono 10
+font $font
 
 #-----------------------------------------------------------------------------
 floating_modifier $mod
@@ -26,7 +36,12 @@ floating_modifier $mod
 #-----------------------------------------------------------------------------
 bindsym $mod+c kill
 
-bindsym $mod+Tab          exec echo "swap_focus" | nc --send-only -U "$XDG_RUNTIME_DIR/i3/event-listener.sock"
+# Mouse control
+bindsym button3 kill
+bindsym button8 move left
+bindsym button9 move right
+
+bindsym $mod+Tab          exec echo "swap_focus" | ncat --send-only -U "$XDG_RUNTIME_DIR/i3/event-listener.sock"
 # bindsym $mod+Tab          focus right
 # bindsym $mod+Shift+Tab    focus left
 bindsym $mod+grave        workspace back_and_forth
@@ -43,7 +58,7 @@ bindsym $mod+Shift+a exec ~/.config/i3/scratchpad-exec.py \
 
 bindsym $mod+Shift+i exec ~/.config/i3/scratchpad-exec.py \
         "scratch-ipython" "name:Jupyter QtConsole" \
-        "ipython-qt"
+        "jupyter qtconsole"
 
 bindsym $mod+Shift+z exec ~/.config/i3/scratchpad-exec.py \
         "scratch-zeal" "name:Zeal" \
@@ -55,13 +70,14 @@ bindsym XF86Calculator exec ~/.config/i3/scratchpad-exec.py \
 
 #-----------------------------------------------------------------------------
 # Programs
-bindsym $mod+a exec "gnome-terminal"
+bindsym $mod+a exec "$term"
 bindsym $mod+t exec "dolphin"
-bindsym $mod+f exec "google-chrome"
+bindsym $mod+f exec "chromium"
 bindsym $mod+e exec "emacsclient -c"
 bindsym $mod+r exec --no-startup-id "rofi -show run"
 bindsym $mod+p exec --no-startup-id "rofi-pass.py"
-bindsym $mod+Control+Shift+a exec "gnome-terminal --role gnome-terminal-floating"
+bindsym $mod+Control+Shift+a exec "$term --role gnome-terminal-floating"
+bindcode 107 $nexec "flameshot gui"
 
 #-----------------------------------------------------------------------------
 # Power/Suspend
@@ -91,14 +107,15 @@ bindsym XF86MonBrightnessDown exec --no-startup-id "xbacklight -dec 20"
 #bindsym XF86Calculator        exec --no-startup-id "qalculate-gtk"
 
 #-----------------------------------------------------------------------------
-# Layout and focus
+# layout and focus
 bindsym $mod+u focus parent
+bindsym $mod+i focus child
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# Switching between outpus
+# switching between outpus
 bindsym $mod+q focus output left
 bindsym $mod+Shift+q move workspace to output left
 bindsym $mod+w focus output right
@@ -111,12 +128,13 @@ bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
 # split in horizontal orientation
-bindsym $mod+v split h
+bindsym $mod+z split h
 
 # split in vertical orientation
-bindsym $mod+n split v
+bindsym $mod+v split v
 
 bindsym $mod+s fullscreen toggle
+bindsym $mod+Shift+s fullscreen global
 bindsym $mod+space layout toggle
 bindsym $mod+m layout tabbed
 
@@ -132,7 +150,7 @@ bindsym $mod+Shift+space floating toggle
 # focus the child container
 #bindsym $mod+d focus child
 
-# Workspace nagivation
+# workspace nagivation
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
@@ -143,6 +161,8 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
+bindsym F11 workspace desktop
+bindsym F12 workspace status
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
@@ -199,6 +219,7 @@ bindsym $mod+d mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+    workspace_buttons yes
     position top
     mode dock # dock
     # tray_output primary

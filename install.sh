@@ -8,7 +8,7 @@ lns () { ln -svnf $(c "$1") "$2" ; }
 
 lns gitconfig      ~/.gitconfig
 lns gitignore      ~/.gitignore
-lns hgrc           ~/.hgrc
+#lns hgrc           ~/.hgrc
 
 lns ideavimrc      ~/.ideavimrc
 lns bashrc         ~/.bashrc
@@ -41,6 +41,6 @@ lns qxkb.cfg       ~/.config/qxkb/config
 # ln -snvf `c bspwm`          ~/.config/bspwm
 # ln -snvf `c sxhkd`          ~/.config/sxhkd
 # ln -snvf `c ctags`          ~/.ctags
-ln -snvf `c compton.conf`   ~/.compton.conf
+#ln -snvf `c compton.conf`   ~/.compton.conf
 # ln -snvf `c xmonad`         ~/.xmonad
 # ln -svnf `c screenrc`       ~/.screenrc

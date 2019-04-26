@@ -15,9 +15,9 @@ case "$1" in
 		lock && systemctl suspend
 		;;
 	reboot)
-		systemctl reboot
+		sudo systemctl reboot
 		;;
 	shutdown)
-		systemctl poweroff
+		sudo systemctl poweroff
 		;;
 esac
