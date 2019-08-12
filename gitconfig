@@ -19,6 +19,9 @@
     branch = auto
     diff = true
 
+[status]
+    submoduleSummary = true
+
 [core]
     warnambiguousrefs = true
     editor = vim
@@ -28,6 +31,7 @@
 
 [diff]
     tool = meld
+    submodule = log
     mnemonicprefix = true
 
 [difftool]
@@ -93,6 +97,11 @@
     fa = fetch --all
     rh = reset --hard
     #-----------------------------------------------------------
+    
+    #-----------------------------------------------------------
+    sdiff = !git diff && git submodule foreach 'git diff'
+    spush = push --recurse-submodules=on-demand
+    supdate = submodule update --remote --merge
 
     #-----------------------------------------------------------
     edit-last-commit = !vim `git diff-tree -r --name-only HEAD HEAD~1`

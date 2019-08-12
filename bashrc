@@ -74,8 +74,9 @@ case "$TERM" in
 esac
 
 if [[ "$color_prompt" -eq 0 ]]; then
-  PS1='\[\033[01;33m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\] \$ '
+  export PS1="\[\e[1m\]\[\e[31m\]\u.\[\e[m\]\[\e[1m\]\[\e[34m\]\H\[\e[m\] \[\e[1m\]\w\[\e[1m\] \$ "
 fi
+
 
 if [[ "$ASCIINEMA_REC" -eq 1 ]]; then
   PS1='> '

@@ -44,6 +44,9 @@ alias tmuxl='tmux list-sessions'
 alias jobs='jobs -l'
 alias tree='tree -F -C --charset unicode'
 
+alias ap='ansible-playbook'
+alias dap='ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -v'
+
 _rsync="rsync -v --progress --human-readable --compress --archive"
 alias rsync-copy="${_rsync}"
 alias rsync-move="${_rsync} --remove-source-files"

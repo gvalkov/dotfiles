@@ -42,6 +42,7 @@ bindsym button8 move left
 bindsym button9 move right
 
 bindsym $mod+Tab          exec echo "swap_focus" | ncat --send-only -U "$XDG_RUNTIME_DIR/i3/event-listener.sock"
+bindsym $mod+Shift+Tab          exec echo "cycle_workspace" | ncat --send-only -U "$XDG_RUNTIME_DIR/i3/event-listener.sock"
 # bindsym $mod+Tab          focus right
 # bindsym $mod+Shift+Tab    focus left
 bindsym $mod+grave        workspace back_and_forth
@@ -72,20 +73,22 @@ bindsym XF86Calculator exec ~/.config/i3/scratchpad-exec.py \
 # Programs
 bindsym $mod+a exec "$term"
 bindsym $mod+t exec "dolphin"
-bindsym $mod+f exec "chromium"
+bindsym $mod+f exec "firefox"
 bindsym $mod+e exec "emacsclient -c"
 bindsym $mod+r exec --no-startup-id "rofi -show run"
 bindsym $mod+p exec --no-startup-id "rofi-pass.py"
 bindsym $mod+Control+Shift+a exec "$term --role gnome-terminal-floating"
 bindcode 107 $nexec "flameshot gui"
+#bindexec --no-startup-id setxkbmap gb,us -option 'grp:alt_shift_toggle'
 
 #-----------------------------------------------------------------------------
 # Power/Suspend
-set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot, (o) reload
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (o) reload
 mode "$mode_system" {
     bindsym l exec --no-startup-id ~/.config/i3/i3-exit.sh lock, mode "default"
     bindsym e exec --no-startup-id ~/.config/i3/i3-exit.sh logout, mode "default"
     bindsym s exec --no-startup-id ~/.config/i3/i3-exit.sh suspend, mode "default"
+    bindsym h exec --no-startup-id ~/.config/i3/i3-exit.sh hibernate, mode "default"
     bindsym r exec --no-startup-id ~/.config/i3/i3-exit.sh reboot, mode "default"
     bindsym o reload
 
@@ -161,8 +164,8 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
+bindsym F1  workspace im
 bindsym F11 workspace desktop
-bindsym F12 workspace status
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
@@ -175,6 +178,7 @@ bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+F1 move container to workspace im
 
 bindsym $mod+Right workspace next
 bindsym $mod+Left  workspace prev
@@ -240,5 +244,6 @@ bar {
 # Window rules
 for_window [window_role="gnome-terminal-floating$"] floating toggle, move position mouse
 for_window [title="Qalculate"] floating enable
+assign [class="Slack"] im
 
 exec --no-startup-id ~/.config/i3/startup.sh

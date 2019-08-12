@@ -4,7 +4,7 @@
 # preferred programs
 export EDITOR="vim"
 export PAGER="less"
-export XDG_CURRENT_DESKTOP=KDE
+export XDG_CURRENT_DESKTOP=X-Generic
 (( $+commands[google-chrome] )) && export BROWSER="google-chrome"
 #(( $+commands[firefox] )) && export BROWSER="firefox"
 

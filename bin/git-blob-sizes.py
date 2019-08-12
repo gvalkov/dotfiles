@@ -60,5 +60,5 @@ except StopIteration:
     pass
 
 for size, blob, fn in reversed(sorted(sizes)):
-    res = '{blob!s} {size}\n  - {fn}'.format_map(vars())
+    res = '{blob!s} {size}\t\n{fn}'.format_map(vars())
     print(res)

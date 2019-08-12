@@ -27,11 +27,12 @@ status.register('mem', format='Mem: {percent_used_mem:.2f}%', on_leftclick=f'{te
 ifaces = netifaces.interfaces()
 ifaces = sorted(ifaces, key=len)
 lan1 = next(( i for i in ifaces if i.startswith('enp')), None)
+wlan1 = next(( i for i in ifaces if i.startswith('wlp')), None)
+
+netkw = dict(dynamic_color=False, graph_width=5, format_up=u'{interface} {kbs}KB/s')
 if lan1:
-    status.register('network', interface=lan1,
-                    format_up=u'{interface} {kbs}KB/s',
-                    format_down='wired is down',
-                    dynamic_color=False, graph_width=5,
-    )
+    status.register('network', interface=lan1, format_down='wired is down', **netkw)
+if wlan1:
+    status.register('network', interface=wlan1, format_down='wifi is down', **netkw)
 
 status.run()

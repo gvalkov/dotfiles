@@ -35,6 +35,23 @@ async def on_unix_connect(reader, writer):
             i3.command(cmd)
             # print(window_stack)
 
+        elif cmd == b'cycle_workspace':
+            focused_ws = [ws for ws in i3.get_workspaces() if ws['focused']][-1]
+            outputs = [o for o in i3.get_outputs() if o['active']]
+
+            cur_ws_idx = 0
+            for i, output in enumerate(outputs):
+                if output['name'] == focused_ws['output']:
+                    cur_ws_idx = i
+                    break
+
+            next_ws_idx = cur_ws_idx + 1
+            if next_ws_idx >= len(outputs):
+                next_ws_idx = 0
+            other_ws = outputs[next_ws_idx]
+
+            i3.command(f'move workspace to output {other_ws["name"]}')
+
 
 async def main():
     if os.path.exists(socket):
