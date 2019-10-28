@@ -24,6 +24,7 @@ lns pythonstartup  ~/.config/pythonstartup
 lns flake8rc       ~/.config/flake8
 lns i3             ~/.config/i3
 lns i3status       ~/.config/i3status
+lns kitty          ~/.config/kitty
 
 mkdir -p ~/.config/dunst
 lns dunstrc        ~/.config/dunst/dunstrc

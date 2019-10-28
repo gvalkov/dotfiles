@@ -1,0 +1,11 @@
+{
+    "menu": "rofi -dmenu -p 'quickterm: ' -no-custom -auto-select",
+    "term": "kitty",
+    "history": "{$HOME}/.cache/i3/i3-quickterm.order",
+    "ratio": 0.50,
+    "pos": "top",
+    "shells": {
+        "python": "ipython3 --no-banner",
+        "shell": "{$SHELL}"
+    }
+}

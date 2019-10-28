@@ -25,5 +25,5 @@ conv () {
 printf "%-5s %-5s %-5s %-5s\n" dec oct hex bin
 for i in "$@"; do
   res=$(for base in 10 8 16 2; do conv $base $i; done)
-  printf "%-5s %-5s %-5s %-5s\n" $(echo "$res" | gpaste -s)
+  printf "%-5s %-5s %-5s %-5s\n" $(echo "$res" | $paste_cmd -s)
 done

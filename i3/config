@@ -1,8 +1,9 @@
 set $mod Mod4
+set $i3bin ~/.config/i3/bin
 
 #-----------------------------------------------------------------------------
 # Variables
-set $term gnome-terminal
+set $term kitty
 set $font pango:DejaVu Sans Mono 10
 set $nexec exec --no-startup-id
 
@@ -42,7 +43,7 @@ bindsym button8 move left
 bindsym button9 move right
 
 bindsym $mod+Tab          exec echo "swap_focus" | ncat --send-only -U "$XDG_RUNTIME_DIR/i3/event-listener.sock"
-bindsym $mod+Shift+Tab          exec echo "cycle_workspace" | ncat --send-only -U "$XDG_RUNTIME_DIR/i3/event-listener.sock"
+bindsym $mod+Shift+Tab    exec echo "cycle_workspace" | ncat --send-only -U "$XDG_RUNTIME_DIR/i3/event-listener.sock"
 # bindsym $mod+Tab          focus right
 # bindsym $mod+Shift+Tab    focus left
 bindsym $mod+grave        workspace back_and_forth
@@ -51,23 +52,20 @@ bindsym $mod+b            border toggle
 # bindsym $mod+m            move ccratchpad
 # bindsym $mod+o            scratchpad show
 
+
 #-----------------------------------------------------------------------------
-# Named scratchpads
-bindsym $mod+Shift+a exec ~/.config/i3/scratchpad-exec.py \
-        "scratch-term" "role:gnome-terminal-scratch" \
-        "gnome-terminal --role gnome-terminal-scratch"
+#
 
-bindsym $mod+Shift+i exec ~/.config/i3/scratchpad-exec.py \
-        "scratch-ipython" "name:Jupyter QtConsole" \
-        "jupyter qtconsole"
 
-bindsym $mod+Shift+z exec ~/.config/i3/scratchpad-exec.py \
-        "scratch-zeal" "name:Zeal" \
-        "zeal"
+#-----------------------------------------------------------------------------
+# Named scratchpads and drop-downs
+bindsym $mod+p exec $i3bin/i3-quickterm
+bindsym $mod+Shift+a exec $i3bin/i3-quickterm shell
+bindsym $mod+Shift+i exec $i3bin/i3-quickterm python
 
-bindsym XF86Calculator exec ~/.config/i3/scratchpad-exec.py \
-        "scratch-calc" "title:speedcrunch" \
-        "speedcrunch"
+bindsym $mod+Shift+z exec $i3bin/scratchpad.py "scratch-zeal" "class:zeal" zeal
+bindsym $mod+Shift+s exec $i3bin/scratchpad.py "scratch-calc" "title:speedcrunch" speedcrunch
+bindsym $mod+Shift+o exec $i3bin/scratchpad.py "scratch-org"  "name:org-protocol-capture" emacsclient -c -F '(quote (name . "org-protocol-capture"))' -e '(org-capture)'
 
 #-----------------------------------------------------------------------------
 # Programs
@@ -76,20 +74,20 @@ bindsym $mod+t exec "dolphin"
 bindsym $mod+f exec "firefox"
 bindsym $mod+e exec "emacsclient -c"
 bindsym $mod+r exec --no-startup-id "rofi -show run"
-bindsym $mod+p exec --no-startup-id "rofi-pass.py"
-bindsym $mod+Control+Shift+a exec "$term --role gnome-terminal-floating"
+#bindsym $mod+r exec --no-startup-id "rofi -show run"
+#bindsym $mod+p exec --no-startup-id "rofi-pass.py"
 bindcode 107 $nexec "flameshot gui"
-#bindexec --no-startup-id setxkbmap gb,us -option 'grp:alt_shift_toggle'
+# byzanz-record
 
 #-----------------------------------------------------------------------------
 # Power/Suspend
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (o) reload
 mode "$mode_system" {
-    bindsym l exec --no-startup-id ~/.config/i3/i3-exit.sh lock, mode "default"
-    bindsym e exec --no-startup-id ~/.config/i3/i3-exit.sh logout, mode "default"
-    bindsym s exec --no-startup-id ~/.config/i3/i3-exit.sh suspend, mode "default"
-    bindsym h exec --no-startup-id ~/.config/i3/i3-exit.sh hibernate, mode "default"
-    bindsym r exec --no-startup-id ~/.config/i3/i3-exit.sh reboot, mode "default"
+    bindsym l exec --no-startup-id ~/.config/i3/bin/i3-exit.sh lock, mode "default"
+    bindsym e exec --no-startup-id ~/.config/i3/bin/i3-exit.sh logout, mode "default"
+    bindsym s exec --no-startup-id ~/.config/i3/bin/i3-exit.sh suspend, mode "default"
+    bindsym h exec --no-startup-id ~/.config/i3/bin/i3-exit.sh hibernate, mode "default"
+    bindsym r exec --no-startup-id ~/.config/i3/bin/i3-exit.sh reboot, mode "default"
     bindsym o reload
 
     # back to normal: Enter or Escape
@@ -103,11 +101,9 @@ bindsym $mod+Pause mode "$mode_system"
 bindsym XF86AudioRaiseVolume  exec --no-startup-id "pactl set-sink-volume @DEFAULT_SINK@ +5%"
 bindsym XF86AudioLowerVolume  exec --no-startup-id "pactl set-sink-volume @DEFAULT_SINK@ -5%"
 bindsym XF86AudioMute         exec --no-startup-id "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-
 bindsym XF86MonBrightnessUp   exec --no-startup-id "xbacklight -inc 20"
 bindsym XF86MonBrightnessDown exec --no-startup-id "xbacklight -dec 20"
 
-#bindsym XF86Calculator        exec --no-startup-id "qalculate-gtk"
 
 #-----------------------------------------------------------------------------
 # layout and focus
@@ -129,23 +125,16 @@ bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
-
-# split in horizontal orientation
-bindsym $mod+z split h
-
-# split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+Shift+t split toggle
 
 bindsym $mod+s fullscreen toggle
-bindsym $mod+Shift+s fullscreen global
-bindsym $mod+space layout toggle
-bindsym $mod+m layout tabbed
+bindsym $mod+m layout toggle
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-#bindsym $mod+space focus mode_toggle
+bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 #bindsym $mod+a focus parent
@@ -186,33 +175,24 @@ bindsym $mod+Left  workspace prev
 # reload/restart/exit
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
-bindsym $mod+Shift+e exit
+#bindsym $mod+Shift+e exit
 
 # resizing controls
-bindsym $mod+Control+h resize shrink width 10 px or 10 ppt
-bindsym $mod+Control+j resize grow height 10 px or 10 ppt
-bindsym $mod+Control+k resize shrink height 10 px or 10 ppt
-bindsym $mod+Control+l resize grow width 10 px or 10 ppt
-
-bindsym $mod+Control+Left  resize shrink width 10 px or 10 ppt
-bindsym $mod+Control+Down  resize grow height 10 px or 10 ppt
-bindsym $mod+Control+Up    resize shrink height 10 px or 10 ppt
-bindsym $mod+Control+Right resize grow width 10 px or 10 ppt
+bindsym $mod+Control+Left   $i3bin/i3-resize.sh left
+bindsym $mod+Control+Right  $i3bin/i3-resize.sh right
+bindsym $mod+Control+Up     $i3bin/i3-resize.sh up
+bindsym $mod+Control+Down   $i3bin/i3-resize.sh down
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-    bindsym h resize shrink width 10 px or 10 ppt
-    bindsym j resize grow height 10 px or 10 ppt
-    bindsym k resize shrink height 10 px or 10 ppt
-    bindsym l resize grow width 10 px or 10 ppt
 
-    bindsym Left resize shrink width 10 px or 10 ppt
-    bindsym Down resize grow height 10 px or 10 ppt
-    bindsym Up resize shrink height 10 px or 10 ppt
-    bindsym Right resize grow width 10 px or 10 ppt
+    bindsym h exec $i3bin/i3-resize.sh left
+    bindsym l exec $i3bin/i3-resize.sh right
+    bindsym j exec $i3bin/i3-resize.sh up
+    bindsym k exec $i3bin/i3-resize.sh down
 
-    bindsym $mod+plus exec --no-startup-id compton-trans -c +10
-    bindsym $mod+minus exec --no-startup-id compton-trans -c -10
+    bindsym plus  exec --no-startup-id compton-trans -c +10
+    bindsym minus exec --no-startup-id compton-trans -c -10
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -227,7 +207,7 @@ bar {
     position top
     mode dock # dock
     # tray_output primary
-    status_command ~/.config/i3/statusbar.py
+    status_command ~/.config/i3/bin/statusbar.py
     strip_workspace_numbers no
     binding_mode_indicator yes
     colors {
@@ -242,8 +222,9 @@ bar {
 }
 
 # Window rules
+for_window [class="Pinentry"] sticky enable
 for_window [window_role="gnome-terminal-floating$"] floating toggle, move position mouse
 for_window [title="Qalculate"] floating enable
 assign [class="Slack"] im
 
-exec --no-startup-id ~/.config/i3/startup.sh
+exec --no-startup-id ~/.config/i3/bin/startup.sh

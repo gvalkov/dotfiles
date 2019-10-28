@@ -1,6 +1,0 @@
-#!/bin/sh
-# shim around emacsclient that's needed by vimperatorrc
-
-set -eu
-export TMPDIR=/tmp
-exec emacsclient -c "$@"

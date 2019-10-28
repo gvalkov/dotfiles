@@ -4,7 +4,7 @@ import sys
 import i3ipc
 
 
-mark_name, match, cmd = sys.argv[1:]
+mark_name, match, *cmd = sys.argv[1:]
 match_type, match_value = match.split(':', 1)
 
 i3 = i3ipc.Connection()
@@ -21,6 +21,8 @@ def on_window_new(self, event):
 		return
 	elif match_type == 'name' and con.name != match_value:
 		return
+	elif match_type == 'class' and con.window_class != match_value:
+		return
 
 	con.command('mark %s' % mark_name)
 	con.command('move scratchpad')
@@ -28,5 +30,5 @@ def on_window_new(self, event):
 	exit(0)
 
 i3.on('window::new', on_window_new)
-i3.command('exec %s' % cmd)
+i3.command('exec %s' % ' '.join(cmd))
 i3.main()
