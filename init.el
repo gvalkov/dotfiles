@@ -90,8 +90,8 @@ values."
 
    dotspacemacs-mode-line-theme 'spacemacs
    dotspacemacs-colorize-cursor-according-to-state t
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 14
+   dotspacemacs-default-font '("Input Mono"
+                               :size 18
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -103,6 +103,8 @@ values."
 
    dotspacemacs-remap-Y-to-y$ t
    dotspacemacs-auto-save-file-location 'cache
+
+   dotspacemacs-elpa-timeout 20
 
    ;; Helm
    ;; dotspacemacs-use-ido nil
@@ -260,8 +262,9 @@ layers configuration. You are free to put any user code."
                    (ibuffer-tramp-set-filter-groups-by-tramp-connection)
                    (ibuffer-do-sort-by-alphabetic)))))
 
-  ;; ;; flycheck ----------------------------------------------------------------
-  ;; (setq flycheck-check-syntax-automatically '(save))
+  ;; flycheck ----------------------------------------------------------------
+  (setq flycheck-check-syntax-automatically '(save idle-change new-line mode-enabled)
+        flycheck-python-pycompile-executable "python3")
 
   ;; magit -------------------------------------------------------------------
   (spacemacs|use-package-add-hook magit
@@ -279,6 +282,9 @@ layers configuration. You are free to put any user code."
                (setq indent-tabs-mode nil
                      python-indent-offset 4
                      tab-width 4)))
+
+  ;; dns ---------------------------------------------------------------------
+  (setq dns-mode-soa-auto-increment-serial nil)
 
   ;; helm --------------------------------------------------------------------
   ;; (eval-after-load 'helm
@@ -315,6 +321,17 @@ layers configuration. You are free to put any user code."
         (propertize "Wk" 'font-lock-face 'font-lock-keyword-face))
 
   ;; org ----------------------------------------------------------------------
+  (defadvice org-switch-to-buffer-other-window
+      (after supress-window-splitting activate)
+    "Delete the extra window if we're in a capture frame"
+    (if (equal "org-protocol-capture" (frame-parameter nil 'name))
+        (delete-other-windows)))
+
+  (defun tl/post-capture ()
+    (if (equal "org-protocol-capture" (frame-parameter nil 'name))
+        (delete-frame)))
+  (add-hook 'org-capture-after-finalize-hook 'tl/post-capture)
+
   (with-eval-after-load 'org
     (setq org-startup-folded 0
           org-cycle-separator-lines 2))
@@ -406,6 +423,8 @@ layers configuration. You are free to put any user code."
   ;; (add-hook 'before-save-hook 'whitespace-cleanup)
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (add-hook 'text-mode-hook 'enable-hard-wrap)
+  (add-hook 'text-mode-hook 'spacemacs/toggle-auto-fill-mode-off)
+  (add-hook 'text-mode-hook 'spacemacs/toggle-truncate-lines-off)
   (add-hook 'prog-mode-hook 'enable-comment-hard-wrap)
 
   ;;--------------------------------------------------------------------------
@@ -437,6 +456,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(cmake-tab-width 4)
  '(evil-want-Y-yank-to-eol t)
  '(package-selected-packages
    (quote
