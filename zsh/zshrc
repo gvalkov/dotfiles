@@ -59,6 +59,7 @@ alias pyclean='rm -r **/*.(pyc|pyo) **/__pycache__'
 alias ctags="ctags --fields=+l --c-kinds=+p --c++-kinds=+p"
 
 alias py-http-serve='python3 -m http.server'
+alias ssh-force-passwd='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
 
 if (( $+commands[realpath] )); then
   alias rl='realpath'
@@ -146,7 +147,7 @@ fi
 
 if (( $+commands[dnf] )); then
   alias ayi='sudo dnf install -y'
-  alias ays='dnf search'
+  alias ays='sudo dnf search'
 fi
 #-----------------------------------------------------------------------------
 
@@ -580,3 +581,19 @@ tabs 4,9,13,17,21,25,29,33,37,41 &> /dev/null
 
 #-----------------------------------------------------------------------------
 [[ -f $HOME/.zshrc.local ]] && . $HOME/.zshrc.local
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/gvalkov/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/gvalkov/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/gvalkov/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/gvalkov/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

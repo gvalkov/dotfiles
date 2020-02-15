@@ -19,6 +19,7 @@ startup_shared() {
     emacs --daemon &
     xmodmap ~/.Xmodmap &
     xautolock -time 60 -locker "i3lock --ignore-empty-password -c 2980b9" &
+    polybar main -q -r &
     # xss-lock -- i3lock --ignore-empty-password -c 2980b9 &
     #~/.config/i3/event-listener.py
 }

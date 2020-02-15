@@ -11,7 +11,7 @@ workspace_layout default
 workspace_auto_back_and_forth yes
 force_display_urgency_hint 1000 ms
 default_orientation auto
-workspace_layout tabbed
+workspace_layout stacking
 
 #-----------------------------------------------------------------------------
 # Look and feel
@@ -50,7 +50,7 @@ bindsym $mod+grave        workspace back_and_forth
 bindsym $mod+Shift+grave  move container to workspace back_and_forth; workspace back_and_forth
 bindsym $mod+b            border toggle
 # bindsym $mod+m            move ccratchpad
-# bindsym $mod+o            scratchpad show
+bindsym $mod+o            scratchpad show
 
 
 #-----------------------------------------------------------------------------
@@ -63,9 +63,9 @@ bindsym $mod+p exec $i3bin/i3-quickterm
 bindsym $mod+Shift+a exec $i3bin/i3-quickterm shell
 bindsym $mod+Shift+i exec $i3bin/i3-quickterm python
 
-bindsym $mod+Shift+z exec $i3bin/scratchpad.py "scratch-zeal" "class:zeal" zeal
-bindsym $mod+Shift+s exec $i3bin/scratchpad.py "scratch-calc" "title:speedcrunch" speedcrunch
-bindsym $mod+Shift+o exec $i3bin/scratchpad.py "scratch-org"  "name:org-protocol-capture" emacsclient -c -F '(quote (name . "org-protocol-capture"))' -e '(org-capture)'
+bindsym $mod+Shift+z exec $i3bin/scratchpad.py 1.0 0.5 "scratch-zeal" "class:Zeal" zeal
+bindsym $mod+Shift+s exec $i3bin/scratchpad.py 1.0 0.5 "scratch-calc" "title:speedcrunch" speedcrunch
+bindsym $mod+Shift+o exec $i3bin/scratchpad.py 1.0 0.5 "scratch-org" "name:org-protocol-capture" emacsclient -c -F '(quote (name . "org-protocol-capture"))' -e '(org-capture)'
 
 #-----------------------------------------------------------------------------
 # Programs
@@ -202,29 +202,38 @@ bindsym $mod+d mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-    workspace_buttons yes
-    position top
-    mode dock # dock
-    # tray_output primary
-    status_command ~/.config/i3/bin/statusbar.py
-    strip_workspace_numbers no
-    binding_mode_indicator yes
-    colors {
-        background #303030
-        statusline #ffffff
+# bar {
+#     workspace_buttons yes
+#     position top
+#     mode dock # dock
+#     # tray_output primary
+#     status_command ~/.config/i3/bin/statusbar.py
+#     strip_workspace_numbers no
+#     binding_mode_indicator yes
+#     colors {
+#         background #303030
+#         statusline #ffffff
 
-        focused_workspace  #4c7899 #285577 #ffffff
-        active_workspace   #333333 #5f676a #ffffff
-        inactive_workspace #333333 #222222 #888888
-        urgent_workspace   #2f343a #900000 #ffffff
-    }
-}
+#         focused_workspace  #4c7899 #285577 #ffffff
+#         active_workspace   #333333 #5f676a #ffffff
+#         inactive_workspace #333333 #222222 #888888
+#         urgent_workspace   #2f343a #900000 #ffffff
+#     }
+# }
 
 # Window rules
 for_window [class="Pinentry"] sticky enable
 for_window [window_role="gnome-terminal-floating$"] floating toggle, move position mouse
 for_window [title="Qalculate"] floating enable
 assign [class="Slack"] im
+
+#for_window [instance=pavucontrol] floating enable
+#for_window [instance=pavucontrol] move scratchpad
+#for_window [instance=pavucontrol] resize set 800 600
+
+# for_window [instance="org-protocol-capture"] floating enable
+# for_window [instance="org-protocol-capture"] move scratchpad
+# for_window [instance="org-protocol-capture"] resize set 800 600
+# bindsym    $mod+Shift+o [instance="org-protocol-capture"] scratchpad show
 
 exec --no-startup-id ~/.config/i3/bin/startup.sh
