@@ -70,7 +70,7 @@ bindsym $mod+Shift+o exec $i3bin/scratchpad.py 1.0 0.5 "scratch-org" "name:org-p
 #-----------------------------------------------------------------------------
 # Programs
 bindsym $mod+a exec "$term"
-bindsym $mod+t exec "dolphin"
+bindsym $mod+t exec "dolphin --platformtheme kde"
 bindsym $mod+f exec "firefox"
 bindsym $mod+e exec "emacsclient -c"
 bindsym $mod+r exec --no-startup-id "rofi -show run"
