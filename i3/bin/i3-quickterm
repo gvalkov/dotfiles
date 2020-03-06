@@ -6,6 +6,7 @@ import fcntl
 import json
 import os
 import shlex
+import textwrap
 import subprocess
 import sys
 
@@ -15,15 +16,13 @@ from pathlib import Path
 import i3ipc
 
 
-DEFAULT_CONF = {
+CONFIG = {
     "menu": "rofi -dmenu -p 'quickterm: ' -no-custom -auto-select",
-    "term": "urxvt",
+    "term": "kitty",
     "history": "{$HOME}/.cache/i3/i3-quickterm.order",
-    "ratio": 0.25,
+    "ratio": 0.50,
     "pos": "top",
     "shells": {
-        "haskell": "ghci",
-        "js": "node",
         "python": "ipython3 --no-banner",
         "shell": "{$SHELL}"
     }
@@ -61,13 +60,6 @@ TERMS = {
     'xfce4-terminal': TERM('xfce4-terminal', execfmt='string'),
     'xterm': TERM('xterm'),
 }
-
-
-def conf_path():
-    home_dir = os.environ['HOME']
-    xdg_dir = os.environ.get('XDG_CONFIG_DIR', '{}/.config'.format(home_dir))
-
-    return xdg_dir + '/i3/i3-quickterm.json'
 
 
 def read_conf(fn):
@@ -128,13 +120,14 @@ def pop_it(conn, mark_name, pos='top', ratio=0.25):
     else:  # pos == 'top'
         posy = wy
 
-    conn.command('[con_mark={mark}],'
-                 'resize set {width} px {height} px,'
-                 'move absolute position {posx}px {posy}px,'
-                 'move scratchpad,'
-                 'scratchpad show'
-                 ''.format(mark=mark_name, posx=posx, posy=posy,
-                           width=width, height=height))
+    cmd = '''
+    [con_mark={mark}],
+    resize set {width} px {height} px,
+    scratchpad show
+    move absolute position {posx}px {posy}px,
+    '''.format(mark=mark_name, posx=posx, posy=posy,width=width, height=height)
+
+    conn.command(textwrap.dedent(cmd))
 
 
 def get_current_workspace(conn):
@@ -237,8 +230,7 @@ if __name__ == '__main__':
     parser.add_argument('shell', metavar='SHELL', nargs='?')
     args = parser.parse_args()
 
-    conf = copy.deepcopy(DEFAULT_CONF)
-    conf.update(read_conf(conf_path()))
+    conf = copy.deepcopy(CONFIG)
 
     if args.shell is None:
         toggle_quickterm_select(conf)
