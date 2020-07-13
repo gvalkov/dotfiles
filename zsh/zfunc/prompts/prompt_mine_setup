@@ -4,7 +4,7 @@ prompt_mine_help () {
 
 prompt_mine_setup () {
     local -A pc
-  
+
     pc['user']=${1:-'red'}
     pc['host']=${2:-'yellow'}
     pc['vc']=${3:-'vc:0'}
@@ -47,7 +47,7 @@ ${white}(${repo_rev})${reset} \
 ${prompt_add_tracked} \
 ${white}${repo_staged_count}${reset}:\
 ${white}${repo_untracked_count}${reset}:\
-${white}${repo_modified_count}${reset} 
+${white}${repo_modified_count}${reset}
 ${BASE_PROMPT}"
     else
         PROMPT=$BASE_PROMPT

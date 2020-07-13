@@ -36,6 +36,7 @@ alias f='find-simple'
 alias ct='cleartool'
 alias v='vim'
 alias r='ranger'
+alias td='date +%Y-%m-%d'
 
 alias tmux='tmux -2'
 alias tmuxa='tmux attach-session -t'
@@ -66,7 +67,6 @@ if (( $+commands[realpath] )); then
 else
   alias rl='readlink -f'
 fi
-
 
 if (( $+commands[colordiff] )); then
   alias diff='colordiff'
@@ -155,6 +155,7 @@ fi
 # systemctl/service aliases
 if (( $+commands[systemctl] )); then
   alias sc='systemctl'
+  alias jc='journalctl'
 fi
 #-----------------------------------------------------------------------------
 
@@ -384,13 +385,11 @@ unsetopt NULL_GLOB
 #-----------------------------------------------------------------------------
 # prompt config
 autoload -Uz promptinit
+promptinit
 setopt PROMPT_SUBST
-#promptinit
+
+prompt mine2
 #prompt mine red yellow vc:0
-PROMPT="%{$fg_bold[red]%}%n%{$reset_color%}" # username
-PROMPT="${PROMPT}.%{$fg_bold[yellow]%}%m "   # hostname
-PROMPT="${PROMPT}%{$fg_bold[white]%}%~ %{$reset_color%}" # directory
-PROMPT="${PROMPT}$ "
 #-----------------------------------------------------------------------------
 
 
@@ -420,8 +419,8 @@ if [[ -f $HOME/.zfunc/plugins/zsh-history-substring-search.zsh ]]; then
   bindkey -M emacs '^N' history-substring-search-down
 fi
 
-if [[ -f $HOME/.zfunc/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
-  source $HOME/.zfunc/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
   ZSH_HIGHLIGHT_HIGHLIGHTERS=(brackets main)
   ZSH_HIGHLIGHT_STYLES[default]=none
   ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold
@@ -489,8 +488,8 @@ fi
 
 #-----------------------------------------------------------------------------
 # fzf
-source "$HOME/.zfunc/3rdparty/fzf-completion.zsh" || :
-source "$HOME/.zfunc/3rdparty/fzf-key-bindings.zsh" || :
+source /usr/share/zsh/site-functions/fzf || :
+source /usr/share/fzf/shell/key-bindings.zsh || :
 #-----------------------------------------------------------------------------
 
 

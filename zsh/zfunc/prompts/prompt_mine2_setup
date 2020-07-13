@@ -1,0 +1,45 @@
+fmt-duration() {
+    local d=$(( $1 / 60 / 60 / 24 ))
+    local h=$(( $1 / 60 / 60 % 24 ))
+    local m=$(( $1 / 60 % 60 ))
+
+    local res
+    (( d > 0 )) && res+="${d}d "
+    (( h > 0 )) && res+="${h}h "
+    (( m > 0 )) && res+="${m}m "
+    res+="$(( $1 % 60 ))s"
+
+    typeset -g "$2"="$res"
+}
+
+prompt_mine2_setup () {
+    local -A config
+
+    setopt localoptions nowarncreateglobal
+    zmodload zsh/datetime
+    autoload -Uz colors && colors
+
+    add-zsh-hook precmd prompt_mine2_precmd
+    add-zsh-hook preexec prompt_mine2_preexec
+
+    PROMPT="%B%F{red}%n%f.%F{yellow}%m%f %~ ${prompt_newline}$ "
+    RPROMPT="[%D{%f/%m/%y} %@"
+    RPROMPT="${RPROMPT} %(?.%F{green}.%F{red})\$?%f "
+    RPROMPT="${RPROMPT}\${_prompt_cmd_wallclock}"
+    RPROMPT="${RPROMPT}]"
+}
+
+prompt_mine2_preexec () {
+    typeset -g _prompt_timestamp=$EPOCHSECONDS
+}
+
+prompt_mine2_precmd () {
+    integer elapsed
+    (( elapsed = EPOCHSECONDS - ${_prompt_timestamp:-$EPOCHSECONDS} ))
+
+    typeset -g _prompt_cmd_wallclock=
+    fmt-duration $elapsed _prompt_cmd_wallclock
+
+}
+
+prompt_mine2_setup "$@"
