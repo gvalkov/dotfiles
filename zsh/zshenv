@@ -25,7 +25,6 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 #-----------------------------------------------------------------------------
 # user program options
-export DOTREMINDERS="$HOME/org/reminders"
 
 #-----------------------------------------------------------------------------
 # programming environment options

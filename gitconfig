@@ -27,10 +27,13 @@
     editor = vim
     #editor = emacsclient
     autocrlf = false
+	quotepath = false
+	commitGraph = true
     #excludesfile = ~/.gitignore
 
 [diff]
     tool = meld
+    algorithm = histogram
     submodule = log
     mnemonicprefix = true
 
@@ -136,3 +139,7 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[gc]
+	writeCommitGraph = true
+[pull]
+	rebase = true

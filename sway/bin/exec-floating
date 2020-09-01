@@ -1,0 +1,12 @@
+#!/bin/sh
+
+$@ &
+proc_pid=$!
+
+swaymsg -t subscribe -m '[ "window" ]' \
+    | jq --unbuffered --argjson pid $proc_pid '.container | select(.pid == $pid) | .id' \
+    | xargs -I '@' -- swaymsg '[ con_id=@ ] floating enable' &
+
+swaymsg_pid=$!
+tail --pid=$proc_pid -f /dev/null
+kill $swaymsg_pid

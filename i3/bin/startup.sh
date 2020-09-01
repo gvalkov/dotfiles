@@ -18,11 +18,11 @@ startup_shared() {
     hsetroot -solid rgb:29/80/B9 &
     emacs --daemon &
     xmodmap ~/.Xmodmap &
-    xautolock -time 60 -locker "i3lock --ignore-empty-password -c 2980b9" &
-    setxkbmap -option 'grp:rctrl_rshift_toggle' -layout us,bg -variant ,phonetic
+    #xautolock -time 60 -locker "i3lock --ignore-empty-password -c 2980b9" &
+    #setxkbmap -option 'grp:rctrl_rshift_toggle' -layout us,bg -variant ,phonetic
 
     for m in $(polybar --list-monitors | cut -d":" -f1); do
-        MONITOR=$m polybar --reload main &
+       MONITOR=$m polybar --reload main &
     done
 
     # xss-lock -- i3lock --ignore-empty-password -c 2980b9 &

@@ -1,26 +1,42 @@
-set $mod Mod4
-set $i3bin ~/.config/i3/bin
-
 #-----------------------------------------------------------------------------
 # Variables
+#-----------------------------------------------------------------------------
+set $mod Mod4
+set $swaybin ~/.config/sway/bin
+
 set $term kitty
 set $font pango:DejaVu Sans Mono 10
-set $nexec exec --no-startup-id
 
+#-----------------------------------------------------------------------------
+# Inputs & Outputs
+#-----------------------------------------------------------------------------
+input "type:keyboard" {
+    xkb_layout us,bg
+    xkb_variant ,phonetic
+    xkb_options grp:rctrl_rshift_toggle
+    repeat_delay 500
+    repeat_rate 30
+    xkb_numlock enable
+}
+
+output eDP-1 pos 0 0 res 2560x1440
+output eDP-1 scale 1
+
+#-----------------------------------------------------------------------------
+# Look and feel
+#-----------------------------------------------------------------------------
 workspace_layout tabbed
 workspace_auto_back_and_forth yes
 force_display_urgency_hint 1000 ms
 default_orientation auto
 
-#-----------------------------------------------------------------------------
-# Look and feel
 client.focused          #283E4E #285577 #FFFFFF #49BBD2
 client.focused_inactive #314757 #314757 #ffffff #484e50
 client.unfocused        #505050 #505050 #8A8A8A #2e9ef4
 client.urgent           #2f343a #900000 #ffffff #900000
 
-new_window pixel 4
-new_float pixel 4
+default_border pixel 4
+default_floating_border pixel 4
 
 hide_edge_borders smart
 focus_follows_mouse yes
@@ -48,23 +64,20 @@ bindsym $mod+Shift+Tab    exec echo "cycle_workspace" | ncat --send-only -U "$XD
 bindsym $mod+grave        workspace back_and_forth
 bindsym $mod+Shift+grave  move container to workspace back_and_forth; workspace back_and_forth
 bindsym $mod+b            border toggle
-# bindsym $mod+m            move ccratchpad
+bindsym $mod+Shift+o      move scratchpad
 bindsym $mod+o            scratchpad show
 
 
 #-----------------------------------------------------------------------------
-#
-
-
-#-----------------------------------------------------------------------------
 # Named scratchpads and drop-downs
-bindsym $mod+p exec $i3bin/i3-quickterm
-bindsym $mod+Shift+a exec $i3bin/i3-quickterm shell
-bindsym $mod+Shift+i exec $i3bin/i3-quickterm python
+bindsym $mod+p exec $swaybin/i3-quickterm
+bindsym $mod+Shift+a exec $swaybin/i3-quickterm shell
+bindsym $mod+Shift+i exec $swaybin/i3-quickterm python
 
-bindsym $mod+Shift+z exec $i3bin/scratchpad.py 1.0 0.5 "scratch-zeal" "class:Zeal" zeal
-bindsym $mod+Shift+s exec $i3bin/scratchpad.py 1.0 0.5 "scratch-calc" "title:speedcrunch" speedcrunch
-bindsym $mod+Shift+o exec $i3bin/scratchpad.py 1.0 0.5 "scratch-org" "name:org-protocol-capture" emacsclient -c -F '(quote (name . "org-protocol-capture"))' -e '(org-capture)'
+# bindsym $mod+Shift+z exec $swaybin/scratchpad.py 1.0 0.5 "scratch-zeal" "class:Zeal" zeal
+# bindsym $mod+Shift+s exec $swaybin/scratchpad.py 1.0 0.5 "scratch-calc" "app_id:org.speedcrunch.speedcrunch" speedcrunch
+bindsym $mod+Shift+z exec zeal
+bindsym $mod+Shift+s exec speedcrunch
 
 #-----------------------------------------------------------------------------
 # Programs
@@ -72,23 +85,20 @@ bindsym $mod+a exec "$term"
 bindsym $mod+t exec "dolphin --platformtheme kde"
 bindsym $mod+f exec "firefox"
 bindsym $mod+e exec "emacsclient -c"
-bindsym $mod+r exec --no-startup-id "rofi -show run"
-#bindsym $mod+r exec --no-startup-id "rofi -show run"
-#bindsym $mod+p exec --no-startup-id "rofi-pass.py"
-bindcode 107 $nexec "flameshot gui"
-# byzanz-record
+bindsym $mod+r exec "rofi -show run"
+bindsym $mod+d exec emacsclient -c -F '(quote (name . "org-protocol-capture"))' -e '(org-capture)'
+bindcode 107 exec grim -g "$(slurp -d)" - | wl-copy -t image/png
 
 #-----------------------------------------------------------------------------
 # Power/Suspend
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (o) reload
 mode "$mode_system" {
-    bindsym l exec --no-startup-id ~/.config/i3/bin/i3-exit.sh lock, mode "default"
-    bindsym e exec --no-startup-id ~/.config/i3/bin/i3-exit.sh logout, mode "default"
-    bindsym s exec --no-startup-id ~/.config/i3/bin/i3-exit.sh suspend, mode "default"
-    bindsym h exec --no-startup-id ~/.config/i3/bin/i3-exit.sh hibernate, mode "default"
-    bindsym r exec --no-startup-id ~/.config/i3/bin/i3-exit.sh reboot, mode "default"
+    bindsym l exec  swaylock -c '000000'
+    bindsym e exec  $swaybin/i3-exit.sh logout, mode "default"
+    bindsym s exec  $swaybin/i3-exit.sh suspend, mode "default"
+    bindsym h exec  $swaybin/i3-exit.sh hibernate, mode "default"
+    bindsym r exec  $swaybin/i3-exit.sh reboot, mode "default"
     bindsym o reload
-    bindsym x exit
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -103,11 +113,11 @@ bindsym $mod+F12 mode "Passthrough Mode - Press Alt+F12 to exit"
 
 #-----------------------------------------------------------------------------
 # Media keys
-bindsym XF86AudioRaiseVolume  exec --no-startup-id "pactl set-sink-volume @DEFAULT_SINK@ +5%"
-bindsym XF86AudioLowerVolume  exec --no-startup-id "pactl set-sink-volume @DEFAULT_SINK@ -5%"
-bindsym XF86AudioMute         exec --no-startup-id "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-bindsym XF86MonBrightnessUp   exec --no-startup-id "xbacklight -inc 20"
-bindsym XF86MonBrightnessDown exec --no-startup-id "xbacklight -dec 20"
+bindsym XF86AudioRaiseVolume  exec  "pactl set-sink-volume @DEFAULT_SINK@ +5%"
+bindsym XF86AudioLowerVolume  exec  "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+bindsym XF86AudioMute         exec  "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+bindsym XF86MonBrightnessUp   exec  "xbacklight -inc 20"
+bindsym XF86MonBrightnessDown exec  "xbacklight -dec 20"
 
 
 #-----------------------------------------------------------------------------
@@ -183,10 +193,10 @@ bindsym $mod+Shift+r restart
 #bindsym $mod+Shift+e exit
 
 # resizing controls
-bindsym $mod+Control+Left   $i3bin/i3-resize.sh left
-bindsym $mod+Control+Right  $i3bin/i3-resize.sh right
-bindsym $mod+Control+Up     $i3bin/i3-resize.sh up
-bindsym $mod+Control+Down   $i3bin/i3-resize.sh down
+bindsym $mod+Control+Left   $swaybin/i3-resize.sh left
+bindsym $mod+Control+Right  $swaybin/i3-resize.sh right
+bindsym $mod+Control+Up     $swaybin/i3-resize.sh up
+bindsym $mod+Control+Down   $swaybin/i3-resize.sh down
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -195,51 +205,42 @@ mode "resize" {
     bindsym j exec $i3bin/i3-resize.sh up
     bindsym k exec $i3bin/i3-resize.sh down
 
-    bindsym plus  exec --no-startup-id compton-trans -c +10
-    bindsym minus exec --no-startup-id compton-trans -c -10
+    bindsym plus  exec  compton-trans -c +10
+    bindsym minus exec  compton-trans -c -10
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
-bindsym $mod+d mode "resize"
+bindsym $mod+Shift+d mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-# bar {
-#     workspace_buttons yes
-#     position top
-#     mode dock # dock
-#     # tray_output primary
-#     status_command ~/.config/i3/bin/statusbar.py
-#     strip_workspace_numbers no
-#     binding_mode_indicator yes
-#     colors {
-#         background #303030
-#         statusline #ffffff
+bar {
+    workspace_buttons yes
+    position top
+    status_command $swaybin/statusbar.py
+    strip_workspace_numbers no
+    binding_mode_indicator yes
 
-#         focused_workspace  #4c7899 #285577 #ffffff
-#         active_workspace   #333333 #5f676a #ffffff
-#         inactive_workspace #333333 #222222 #888888
-#         urgent_workspace   #2f343a #900000 #ffffff
-#     }
-# }
+    mode dock
+
+    colors {
+        background #303030
+        statusline #ffffff
+
+        focused_workspace  #4c7899 #285577 #ffffff
+        active_workspace   #333333 #5f676a #ffffff
+        inactive_workspace #333333 #222222 #888888
+        urgent_workspace   #2f343a #900000 #ffffff
+    }
+}
 
 # Window rules
 for_window [class="Pinentry"] sticky enable
-for_window [title="Microsoft Teams Notification"] floating enable
 for_window [window_role="gnome-terminal-floating$"] floating toggle, move position mouse
-for_window [title="Qalculate"] floating enable
 for_window [title="Microsoft Teams Notification"] floating enable
-assign [class="Slack"] im
+for_window [title="org-protocol-capture"] floating enable; resize set 1000 600
 
-#for_window [instance=pavucontrol] floating enable
-#for_window [instance=pavucontrol] move scratchpad
-#for_window [instance=pavucontrol] resize set 800 600
+for_window [app_id="pavucontrol"] floating enable
+for_window [app_id="pavucontrol"] resize set width 800 height 600
 
-# for_window [instance="org-protocol-capture"] floating enable
-# for_window [instance="org-protocol-capture"] move scratchpad
-# for_window [instance="org-protocol-capture"] resize set 800 600
-# bindsym    $mod+Shift+o [instance="org-protocol-capture"] scratchpad show
-
-exec --no-startup-id ~/.config/i3/bin/startup.sh
+exec $swaybin/startup.sh

@@ -48,7 +48,7 @@ alias tree='tree -F -C --charset unicode'
 alias ap='ansible-playbook'
 alias dap='ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -v'
 
-_rsync="rsync -v --progress --human-readable --compress --archive"
+_rsync="rsync -v --info=progress2 --human-readable --compress --archive"
 alias rsync-copy="${_rsync}"
 alias rsync-move="${_rsync} --remove-source-files"
 alias rsync-update="${_rsync} --update"
@@ -96,7 +96,7 @@ fi
 if [[ "$OSTYPE" =~ "freebsd" ]]; then
   export LSCOLORS='exfxcxdxbxGxDxabagacad'
 fi
-if [[ -f "$HOME/.dotfiles/solarized-dircolors.256dark" ]]; then
+if [ -f "$HOME/.dotfiles/solarized-dircolors.256dark" ]; then
   (( $+commands[dircolors] )) && eval $(dircolors "$HOME/.dotfiles/solarized-dircolors.256dark")
 fi
 #-----------------------------------------------------------------------------
@@ -482,7 +482,6 @@ if (( $+commands[virtualenvwrapper_lazy.sh] )); then
   source "$commands[virtualenvwrapper.sh]"
 fi
 
-[ -f "$HOME/.config/pythonstartup" ] && export PYTHONSTARTUP=$HOME/.config/pythonstartup
 #-----------------------------------------------------------------------------
 
 
