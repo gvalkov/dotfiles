@@ -243,6 +243,10 @@ kill ring."
   (interactive)
   (insert (shell-command-to-string "echo -n $(date +%Y-%m-%d)")))
 
+(defun git-amend-force-push ()
+  (interactive)
+  (shell-command "git add -u && git commit --amend --no-edit && git push origin HEAD --force"))
+
 ;-----------------------------------------------------------------------------
 ; Org mode
 
