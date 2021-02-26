@@ -22,7 +22,7 @@ prompt_mine2_setup () {
     add-zsh-hook precmd prompt_mine2_precmd
     add-zsh-hook preexec prompt_mine2_preexec
 
-    PROMPT="%B%F{red}%n%f.%F{yellow}%m%f %~ ${prompt_newline}$ "
+    PROMPT="%B%F{red}%n%f%b.%F{yellow}%m%f %~ ${prompt_newline}$ "
     RPROMPT="[%D{%f/%m/%y} %@"
     RPROMPT="${RPROMPT} %(?.%F{green}.%F{red})\$?%f "
     RPROMPT="${RPROMPT}\${_prompt_cmd_wallclock}"

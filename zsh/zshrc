@@ -2,48 +2,47 @@
 
 #-----------------------------------------------------------------------------
 # movement aliases
+#-----------------------------------------------------------------------------
 alias   ..='cd ..'
 alias cd..='cd ..'
-alias cd...='cd ../../'
-alias cd....='cd ../../../'
 alias cd/='cd /'
 alias cd-='cd -'
 alias po='popd'
 alias pu='pushd'
 alias d='dirs -v' # dirstack
-for i in {1..9}; do alias "$i"="cd +${i}"; done; unset i
-#-----------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------
 # ls aliases
-alias ls="ls --color=auto -F --group-directories-first"
-alias le="ls --quoting-style=escape"
-alias lS="ls -LrsS"
-alias ll="ls -lsh"
-alias lla="ll -ld *(-/DN)"
-alias l='ls -1A'
+#-----------------------------------------------------------------------------
+alias l='ls -lFh'
+alias ls='ls --color=auto -F --group-directories-first'
+alias le='ls --quoting-style=escape'
+alias lS='ls -LrsS'
+alias ll='ls -ls'
+alias lla='ll -ld *(-/DN)'
 alias lr='ll -R'
 alias lx='ll -XB'
-#-----------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------
 # command aliases
+#-----------------------------------------------------------------------------
 alias h='history'
 alias f='find-simple'
 
-alias ct='cleartool'
 alias v='vim'
 alias r='ranger'
 alias td='date +%Y-%m-%d'
 
-alias tmux='tmux -2'
 alias tmuxa='tmux attach-session -t'
 alias tmuxl='tmux list-sessions'
 
 alias jobs='jobs -l'
 alias tree='tree -F -C --charset unicode'
+
+alias grep='grep --color'
+alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
 
 alias ap='ansible-playbook'
 alias dap='ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook -v'
@@ -55,7 +54,6 @@ alias rsync-update="${_rsync} --update"
 alias rsync-sync="${_rsync} --update --delete"
 unset _rsync
 
-alias nautilus="nautilus --no-desktop"
 alias pyclean='rm -r **/*.(pyc|pyo) **/__pycache__'
 alias ctags="ctags --fields=+l --c-kinds=+p --c++-kinds=+p"
 
@@ -75,11 +73,11 @@ fi
 if (( $+commands[bat] )); then
   alias c="bat"
 fi
-#-----------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------
 # freebsd specific aliases
+#-----------------------------------------------------------------------------
 if [[ "$OSTYPE" =~ "freebsd" ]]; then
   if (( $+commands[gls] )); then
     alias ls="gls --color=auto -F --group-directories-first"
@@ -88,46 +86,37 @@ if [[ "$OSTYPE" =~ "freebsd" ]]; then
     alias ls="ls -G -F"
   fi
 fi
-#-----------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------
 # dircolors config
+#-----------------------------------------------------------------------------
 if [[ "$OSTYPE" =~ "freebsd" ]]; then
   export LSCOLORS='exfxcxdxbxGxDxabagacad'
 fi
 if [ -f "$HOME/.dotfiles/solarized-dircolors.256dark" ]; then
   (( $+commands[dircolors] )) && eval $(dircolors "$HOME/.dotfiles/solarized-dircolors.256dark")
 fi
-#-----------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------
 # editor aliases
+#-----------------------------------------------------------------------------
 alias gvimt='gvim --remote-tab'
 alias emc='emacsclient -n -c'
 alias gt='gvim --remote-tab'
-#-----------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------
 # git aliases
-if (( $+commands[git] )); then
-  alias g='git'
-  alias gb='git branch'
-  alias gbl='git branch -v'
-  alias gc='git commit'
-  alias gca='git commit --all'
-  alias gcs='git show'
-  alias gia='git add'
-  alias girh='git reset --hard'
-  alias gcd='cd $(git rev-parse --show-toplevel)'
-fi
 #-----------------------------------------------------------------------------
+#if (( $+commands[git] )); then
+#fi
 
 
 #-----------------------------------------------------------------------------
 # debian aliases
+#-----------------------------------------------------------------------------
 if (( $+commands[apt-get] )); then
   alias agi='sudo apt-get install'
   alias agr='sudo apt-get remove'
@@ -135,11 +124,11 @@ if (( $+commands[apt-get] )); then
   alias acss='apt-cache show'
   alias debbuild='time dpkg-buildpackage -rfakeroot -us -uc'
 fi
-#-----------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------
 # yum/dnf aliases
+#-----------------------------------------------------------------------------
 if (( $+commands[yum] )); then
   alias ayi='sudo yum install -y'
   alias ays='sudo yum --noplugins -C search'
@@ -147,61 +136,65 @@ fi
 
 if (( $+commands[dnf] )); then
   alias ayi='sudo dnf install -y'
-  alias ays='sudo dnf search'
+  alias ays='sudo dnf -C --noplugins search'
 fi
-#-----------------------------------------------------------------------------
+
 
 #-----------------------------------------------------------------------------
 # systemctl/service aliases
+#-----------------------------------------------------------------------------
 if (( $+commands[systemctl] )); then
   alias sc='systemctl'
   alias jc='journalctl'
 fi
-#-----------------------------------------------------------------------------
+
 
 #-----------------------------------------------------------------------------
 # pacman aliases
+#-----------------------------------------------------------------------------
 if (( $+commands[pacman] )); then
   alias pac='pacman'
   alias api='sudo pacman --sync'
   alias aps='pacman --sync --search'
   alias apr='sudo pacman --remove'
 fi
-#-----------------------------------------------------------------------------
 
 #-----------------------------------------------------------------------------
 # docker aliases
+#-----------------------------------------------------------------------------
 if (( $+commands[docker] )); then
   alias drmit='docker run -it --rm'
 fi
-#-----------------------------------------------------------------------------
+
 
 #-----------------------------------------------------------------------------
 # suffix aliases
+#-----------------------------------------------------------------------------
 alias -s zip='zipinfo'
 alias -s whl='zipinfo'
 alias -s mp3='mplayer'
 alias -s zip='unzip -lv'
 alias -s tar='tar tvf'
-#-----------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------
 # global aliases
-alias -g G='|& egrep -i'
-alias -g L='|& less'
-alias -g EG='|& egrep '
-alias -g EH='|& head '
-alias -g ET='|& tail -15 '
-alias -g WC='| wc -l'
+#-----------------------------------------------------------------------------
+alias -g G='| egrep -i'
+alias -g L='| less'
+alias -g GG='|& egrep -i'
+alias -g LL='|& less'
+alias -g CA='|& cat -A'
 alias -g  XC='| perl -pe "chomp if eof" | xclip -i -selection clipboard'
 alias -g XCP='| perl -pe "chomp if eof" | xclip -i -selection primary'
-alias -g DN='/dev/null'
-#-----------------------------------------------------------------------------
+alias -g DN='> /dev/null 2>&1'
+alias -g DNE='2> /dev/null'
+alias -g PYTB='|& pygmentize -l pytb'
 
 
 #-----------------------------------------------------------------------------
 # utility functions
+#-----------------------------------------------------------------------------
 function mcd ()  { mkdir -p "$1" && cd "$1"; }
 function cdls () { builtin cd "$1" && ll; }
 function gcd ()  { cd (git rev-parse --show-toplevel); }
@@ -227,12 +220,11 @@ function emcl  { _cmd_on_last "emacsclient -c"; }
 
 autoload find-simple
 autoload rpm-extract
-autoload pkg
-#-----------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------
 # history config
+#-----------------------------------------------------------------------------
 HISTFILE=~/.histfile
 HISTSIZE=30000
 SAVEHIST=30000
@@ -252,11 +244,11 @@ setopt HIST_IGNORE_SPACE
 unsetopt HIST_BEEP
 
 autoload -Uz history-beginning-search-menu
-#-----------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------
 # directory movement config
+#-----------------------------------------------------------------------------
 DIRSTACKSIZE=10
 
 setopt AUTO_CD
@@ -265,11 +257,11 @@ setopt PUSHD_SILENT
 setopt PUSHD_IGNORE_DUPS
 unsetopt AUTO_NAME_DIRS
 unsetopt CDABLE_VARS  # a=/tmp; cd a; pwd -> /tmp
-#-----------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------
 # zsh config
+#-----------------------------------------------------------------------------
 unsetopt BEEP
 unsetopt MAIL_WARNING
 setopt MULTIOS
@@ -281,12 +273,12 @@ unsetopt PRINT_EXIT_VALUE
 setopt INTERACTIVE_COMMENTS
 
 autoload -Uz colors && colors
-#-----------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------
 # bindkey config
-if [[ "$TERM" != 'dumb' ]]; then
+#-----------------------------------------------------------------------------
+if [ "$TERM" != 'dumb' ]; then
   WORDCHARS='*?_[]~&;!#$%^(){}<>'
   #WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
 
@@ -356,22 +348,22 @@ if [[ "$TERM" != 'dumb' ]]; then
   bindkey "^@"   after-first-word
 
 fi
-#-----------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------
 # job management config
+#-----------------------------------------------------------------------------
 setopt LONG_LIST_JOBS
 setopt NOTIFY
 setopt HUP
 unsetopt AUTO_RESUME
 unsetopt BG_NICE
 setopt CHECK_JOBS
-#-----------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------
 # globbing config
+#-----------------------------------------------------------------------------
 setopt EXTENDED_GLOB
 setopt CASE_GLOB
 setopt BRACE_CCL
@@ -384,6 +376,7 @@ unsetopt NULL_GLOB
 
 #-----------------------------------------------------------------------------
 # prompt config
+#-----------------------------------------------------------------------------
 autoload -Uz promptinit
 promptinit
 setopt PROMPT_SUBST
@@ -395,23 +388,24 @@ prompt mine2
 
 #-----------------------------------------------------------------------------
 # limits config
+#-----------------------------------------------------------------------------
 limit stack        8192
 limit descriptors  1024
 #limit coredumpsize 0
 limit -s
-#-----------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------
 # plugin config
+#-----------------------------------------------------------------------------
 autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic
-#-----------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------
 # third-party plugin config
-if [[ -f $HOME/.zfunc/plugins/zsh-history-substring-search.zsh ]]; then
+#-----------------------------------------------------------------------------
+if [ -f $HOME/.zfunc/plugins/zsh-history-substring-search.zsh ]; then
   source $HOME/.zfunc/plugins/zsh-history-substring-search.zsh
   bindkey "\e[1;5A" history-substring-search-up   # C-<up>
   bindkey "\e[1;5B" history-substring-search-down # C-<down>
@@ -444,11 +438,11 @@ if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=cyan
   ZSH_HIGHLIGHT_STYLES[assign]=none
 fi
-#-----------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------
 # fasd config
+#-----------------------------------------------------------------------------
 if (( $+commands[fasd] )); then
   local fasd_cache_init="$HOME/.fasd-cache-init.zsh"
   if [[ "${commands[fasd]}" -nt "$fasd_cache_init" || ! -s "$fasd_cache_init" ]]; then
@@ -461,7 +455,7 @@ if (( $+commands[fasd] )); then
 
   function fasd_cd {
     local fasd_ret="$(fasd -d "$@")"
-    if [[ -d "$fasd_ret" ]]; then
+    if [ -d "$fasd_ret" ]; then
       cd "$fasd_ret"
     else
       print "$fasd_ret"
@@ -470,11 +464,11 @@ if (( $+commands[fasd] )); then
 
   alias j='fasd_cd -i'
 fi
-#-----------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------
 # virtualenvwrapper config
+#-----------------------------------------------------------------------------
 if (( $+commands[virtualenvwrapper_lazy.sh] )); then
   export WORKON_HOME="$HOME/.virtualenvs/"
   VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
@@ -494,7 +488,8 @@ source /usr/share/fzf/shell/key-bindings.zsh || :
 
 #-----------------------------------------------------------------------------
 # completion config
-if [[ "$TERM" != 'dumb' ]]; then
+#-----------------------------------------------------------------------------
+if [ "$TERM" != 'dumb' ]; then
   autoload -Uz compinit && compinit -i
 
   setopt AUTO_MENU
@@ -571,12 +566,12 @@ if [[ "$TERM" != 'dumb' ]]; then
   zstyle ':completion:*:history-words' list false
   zstyle ':completion:*:history-words' menu yes select
 fi
-#-----------------------------------------------------------------------------
+
 
 #-----------------------------------------------------------------------------
 # set tty tabs
-tabs 4,9,13,17,21,25,29,33,37,41 &> /dev/null
 #-----------------------------------------------------------------------------
+tabs 4,9,13,17,21,25,29,33,37,41 &> /dev/null
 
 #-----------------------------------------------------------------------------
-[[ -f $HOME/.zshrc.local ]] && . $HOME/.zshrc.local
+[ -f $HOME/.zshrc.local ] && . $HOME/.zshrc.local

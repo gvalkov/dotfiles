@@ -2,51 +2,50 @@
 
 #-----------------------------------------------------------------------------
 # preferred programs
+#-----------------------------------------------------------------------------
 export EDITOR="vim"
 export PAGER="less"
-export XDG_CURRENT_DESKTOP=X-Generic
 (( $+commands[google-chrome] )) && export BROWSER="google-chrome"
 #(( $+commands[firefox] )) && export BROWSER="firefox"
 
+
 #-----------------------------------------------------------------------------
 # pager config
-if [[ "$PAGER" = "less" ]]; then
+#-----------------------------------------------------------------------------
+if [ "$PAGER" = "less" ]; then
   export LESS="-giMXRF"
   export LESSCHARSET="utf-8"
 fi
 
+
 #-----------------------------------------------------------------------------
 # system program options
-#export GREP_OPTIONS="--color=auto"
-#export GREP_COLOR="1;32" #green
+#-----------------------------------------------------------------------------
 export TERM=xterm-256color
-export MANWIDTH=80
+export MANWIDTH=120
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+export QT_QPA_PLATFORMTHEME=kde
+
 
 #-----------------------------------------------------------------------------
 # user program options
 
 #-----------------------------------------------------------------------------
 # programming environment options
-# golang
+#-----------------------------------------------------------------------------
 export GOPATH="$HOME/go"
-
-# perl locallib
-export PERL_LOCAL_LIB_ROOT="/home/gv/.perl5"
-export PERL_MB_OPT="--install_base /home/gv/.perl5"
-export PERL_MM_OPT="INSTALL_BASE=/home/gv/.perl5"
-export PERL5LIB="/home/gv/.perl5/lib/perl5/x86_64-linux-thread-multi:/home/gv/.perl5/lib/perl5"
-export PATH="/home/gv/perl5/bin:$PATH"
-
 [ -f "$HOME/.config/pythonstartup" ] && export PYTHONSTARTUP=$HOME/.config/pythonstartup
 
-# gui workarounds
-export QT_QPA_PLATFORMTHEME="qt5ct"
-#export SAL_USE_VCLPLUGIN="gen"
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+# perl locallib
+export PERL_LOCAL_LIB_ROOT="$HOME/.perl5"
+export PERL_MB_OPT="--install_base $HOME/.perl5"
+export PERL_MM_OPT="INSTALL_BASE=$HOME/.perl5"
+export PERL5LIB="$HOME/.perl5/lib/perl5/x86_64-linux-thread-multi:$HOME/.perl5/lib/perl5"
+
 
 #-----------------------------------------------------------------------------
 # zsh load path
+#-----------------------------------------------------------------------------
 fpath=(\
   $HOME/.zfunc/
   $HOME/.zfunc/prompts/
@@ -54,8 +53,10 @@ fpath=(\
   $fpath)
 typeset -U fpath
 
+
 #-----------------------------------------------------------------------------
 # path
+#-----------------------------------------------------------------------------
 path=(\
   $HOME/bin \
   $HOME/.local/bin \
@@ -63,15 +64,16 @@ path=(\
   $HOME/.dotfiles/bin/3rdparty \
   $HOME/.luarocks/bin \
   $HOME/.perl5/bin \
-  $HOME/.cabal/bin \
-  $HOME/.cask/bin \
   $GOPATH/bin \
   $path )
 typeset -U path
 
+
 #-----------------------------------------------------------------------------
-umask 007
+umask 0027
+
 
 #-----------------------------------------------------------------------------
 # local config
-[[ -f $HOME/.zshenv.local ]] && . $HOME/.zshenv.local
+#-----------------------------------------------------------------------------
+[ -f $HOME/.zshenv.local ] && . $HOME/.zshenv.local
