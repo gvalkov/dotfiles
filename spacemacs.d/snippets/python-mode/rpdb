@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: rpdb
+# key: rpdb
+# --
+from remote_pdb import RemotePdb
+RemotePdb('${1:127.0.0.1}', ${2:4444}).set_trace()

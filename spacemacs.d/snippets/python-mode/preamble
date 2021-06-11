@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: preamble
+# key: !!
+# --
+#!/usr/bin/env ${1:$$(yas/choose-value '("python" "python2" "python3" "python2.7" "python3.3"))}
+# -*- coding: utf-8; -*-
+
+$0
