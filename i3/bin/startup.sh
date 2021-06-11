@@ -20,13 +20,14 @@ startup_shared() {
     emacs --daemon &
     xmodmap ~/.Xmodmap &
     #xautolock -time 60 -locker "i3lock --ignore-empty-password -c 2980b9" &
-    #setxkbmap -option 'grp:rctrl_rshift_toggle' -layout us,bg -variant ,phonetic
+    setxkbmap -option 'grp:rctrl_rshift_toggle' -layout us,bg -variant ,phonetic
+    xinput --set-prop 8 300 0.3 &
 
-    $HOME/.screenlayout/left-right.sh
+    $HOME/.screenlayout/left-mid-right.sh
 
-    for m in $(polybar --list-monitors | cut -d":" -f1); do
-       MONITOR=$m polybar --reload main &
-    done
+    # for m in $(polybar --list-monitors | cut -d":" -f1); do
+    #    MONITOR=$m polybar --reload main &
+    # done
 
     # xss-lock -- i3lock --ignore-empty-password -c 2980b9 &
     #~/.config/i3/event-listener.py
