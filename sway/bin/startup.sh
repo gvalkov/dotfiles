@@ -6,6 +6,7 @@ fi
 
 startup_shared() {
     /usr/libexec/geoclue-2.0/demos/agent &
+    mako &
     emacs --daemon &
 
     swayidle -w \
@@ -14,7 +15,6 @@ startup_shared() {
         resume 'swaymsg "output * dpms on"' \
         before-sleep 'swaylock -f -c 000000' &
 }
-
 
 startup_shared
 is_notebook && startup_notebook

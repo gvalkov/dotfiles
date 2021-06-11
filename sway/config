@@ -63,7 +63,7 @@ bindsym $mod+Shift+Tab    exec echo "cycle_workspace" | ncat --send-only -U "$XD
 # bindsym $mod+Shift+Tab    focus left
 bindsym $mod+grave        workspace back_and_forth
 bindsym $mod+Shift+grave  move container to workspace back_and_forth; workspace back_and_forth
-bindsym $mod+b            border toggle
+bindsym $mod+Shift+b      border toggle
 bindsym $mod+Shift+o      move scratchpad
 bindsym $mod+o            scratchpad show
 
@@ -141,9 +141,12 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 bindsym $mod+Shift+t split toggle
+bindsym $mod+b splith
+bindsym $mod+v splitv
 
 bindsym $mod+s fullscreen toggle
-bindsym $mod+m layout toggle
+bindsym $mod+n layout tabbed
+bindsym $mod+m layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -237,6 +240,7 @@ bar {
 # Window rules
 for_window [class="Pinentry"] sticky enable
 for_window [window_role="gnome-terminal-floating$"] floating toggle, move position mouse
+no_focus [title="Microsoft Teams Notification"]
 for_window [title="Microsoft Teams Notification"] floating enable
 for_window [title="org-protocol-capture"] floating enable; resize set 1000 600
 

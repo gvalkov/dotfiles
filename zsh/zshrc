@@ -59,6 +59,7 @@ alias ctags="ctags --fields=+l --c-kinds=+p --c++-kinds=+p"
 
 alias py-http-serve='python3 -m http.server'
 alias ssh-force-passwd='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
+alias ssh-cisco='ssh -oKexAlgorithms=+diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1,diffie-hellman-group14-sha1'
 
 if (( $+commands[realpath] )); then
   alias rl='realpath'
@@ -199,7 +200,7 @@ function mcd ()  { mkdir -p "$1" && cd "$1"; }
 function cdls () { builtin cd "$1" && ll; }
 function gcd ()  { cd (git rev-parse --show-toplevel); }
 function vw ()   { vim $(which $1); }
-function a ()    { awk "{ print \$$1 }"; }
+function a ()    { awk "{ print $@ }"; }
 
 function find-exec {
   find . -type f -iname "*${1:-}*" -exec "${2:-file}" '{}' \;

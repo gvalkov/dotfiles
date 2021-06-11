@@ -31,6 +31,9 @@ lns kitty          ~/.config/kitty
 mkdir -p ~/.config/dunst
 lns dunstrc        ~/.config/dunst/dunstrc
 
+mkdir -p ~/.config/mako
+lns mako.conf        ~/.config/mako/config
+
 lns Xmodmap        ~/.Xmodmap
 
 mkdir -p ~/.config/rofi
