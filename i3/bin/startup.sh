@@ -23,7 +23,7 @@ startup_shared() {
     setxkbmap -option 'grp:rctrl_rshift_toggle' -layout us,bg -variant ,phonetic
     xinput --set-prop 8 300 0.3 &
 
-    $HOME/.screenlayout/left-mid-right.sh
+    $HOME/.screenlayout/left-right.sh
 
     # for m in $(polybar --list-monitors | cut -d":" -f1); do
     #    MONITOR=$m polybar --reload main &

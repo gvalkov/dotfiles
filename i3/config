@@ -69,7 +69,8 @@ bindsym $mod+Shift+o exec $i3bin/scratchpad.py 1.0 0.5 "scratch-org" "name:org-p
 #-----------------------------------------------------------------------------
 # Programs
 bindsym $mod+a exec "$term"
-bindsym $mod+t exec "dolphin --platformtheme kde"
+#bindsym $mod+t exec "dolphin --platformtheme kde"
+bindsym $mod+t exec "nautilus"
 bindsym $mod+f exec "firefox"
 bindsym $mod+Shift+f exec "firefox --ProfileManager"
 bindsym $mod+e exec "emacsclient -c"
@@ -230,6 +231,7 @@ for_window [title="Microsoft Teams Notification"] floating enable
 for_window [window_role="gnome-terminal-floating$"] floating toggle, move position mouse
 for_window [title="Qalculate"] floating enable
 for_window [title="Microsoft Teams Notification"] floating enable
+for_window [instance="^copyq$" class="^copyq$"] border pixel 1, floating enable
 assign [class="Slack"] im
 
 #for_window [instance=pavucontrol] floating enable
