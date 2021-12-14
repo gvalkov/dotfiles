@@ -1,0 +1,55 @@
+# -*- mode: snippet -*-
+# name: file.managed 2
+# uuid: file.managed 2
+# expand-env: ((yas-indent-line 'fixed))
+# --
+file.managed:
+  - source: salt://prometheus/files/prometheus.yml.j2
+  - mode: 0640
+  - user: group
+  - group: group
+  - template: jinja
+  - context:
+  - contents: |
+
+  - name:
+  - source:
+  - source_hash:
+  - source_hash_name:
+  - keep_source: True
+
+  - user:
+  - group:
+  - mode:
+  - attrs:
+  - template:
+
+  - makedirs: False
+  - dir_mode:
+
+  - defaults:
+  - context:
+  - replace: True
+  - backup:
+  - show_changes: True,
+  - create: True,
+  - contents: None,
+  - tmp_dir: ''
+  - tmp_ext: ''
+  - contents_pillar: None
+  - contents_grains: None
+  - contents_newline: True
+  - contents_delimiter: ':'
+  - encoding: None,
+  - encoding_errors: 'strict'
+  - allow_empty: True
+  - follow_symlinks: True
+  - check_cmd: None
+  - skip_verify: False
+  - selinux: None
+  - win_owner: None
+  - win_perms: None
+  - win_deny_perms: None
+  - win_inheritance: True
+  - win_perms_reset: False
+  - verify_ssl: True

@@ -83,11 +83,25 @@ bindsym $mod+Shift+s exec speedcrunch
 # Programs
 bindsym $mod+a exec "$term"
 bindsym $mod+t exec "dolphin --platformtheme kde"
-bindsym $mod+f exec "firefox"
 bindsym $mod+e exec "emacsclient -c"
 bindsym $mod+r exec "rofi -show run"
 bindsym $mod+d exec emacsclient -c -F '(quote (name . "org-protocol-capture"))' -e '(org-capture)'
 bindcode 107 exec grim -g "$(slurp -d)" - | wl-copy -t image/png
+
+#-----------------------------------------------------------------------------
+# Browser profiles
+set $mode_browser Browser (w) work, (d) default, (p) private
+mode "$mode_browser" {
+    bindsym w exec firefox -P work, mode "default"
+    bindsym d exec firefox -P default, mode "default"
+    bindsym p exec firefox -P default --private-window "about:blank", mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+f mode "$mode_browser"
+bindsym $mod+f exec "firefox -P default"
+
 
 #-----------------------------------------------------------------------------
 # Power/Suspend

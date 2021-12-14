@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: file.managed
+# key: file.managed
+# condition: t
+# expand-env: ((yas-indent-line 'fixed))
+# --
+file.managed:
+  - source: salt://$1
+  - mode: 0640
+  - user: group
+  - group: group
+  - template: jinja

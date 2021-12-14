@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: user.present
+# key: user.present
+# condition: t
+# expand-env: ((yas-indent-line 'fixed))
+# --
+
+user.present:
+  - name: $1
+  - shell: /sbin/nologin
+  - usergroup: True
+  - home: $2
+  - system: True
