@@ -31,11 +31,35 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
 
+;(setq +format-with-lsp t)
+;(setq-hook! 'python-mode-hook +format-with-lsp t)
+
+(use-package! org
+  :config
+  (setq org-hide-emphasis-markers t
+    org-startup-with-inline-images t
+    org-cycle-separator-lines 1
+    truncate-lines nil)
+  (add-hook 'org-mode-hook 'visual-line-mode)
+  ;; (add-hook 'org-mode-hook 'org-variable-pitch-minor-mode)
+  (customize-set-variable 'org-blank-before-new-entry
+    '((heading . nil)
+       (plain-list-item . nil)))
+  ;; (custom-theme-set-faces
+  ;;   'user
+  ;;   '(variable-pitch ((t (:family "Spectral" :height 150)))))
+  (font-lock-add-keywords 'org-mode
+    '(("^ *\\([+]\\) "
+        (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+  )
+
+
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
 (remove-hook! 'text-mode-hook #'display-line-numbers-mode)
 
+(setq truncate-lines t)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -103,3 +127,6 @@
  :g "M-8"   #'winum-select-window-8
  :g "M-9"   #'winum-select-window-9
  :g "M-0"   #'winum-select-window-0-or-10)
+
+
+(load! "mydefuns.el")

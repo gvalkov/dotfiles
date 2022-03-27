@@ -63,6 +63,7 @@ path=(\
   $HOME/.dotfiles/bin \
   $HOME/.dotfiles/bin/3rdparty \
   $HOME/.luarocks/bin \
+  $HOME/.emacs.d/bin \
   $HOME/.perl5/bin \
   $GOPATH/bin \
   $path )

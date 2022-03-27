@@ -24,6 +24,7 @@ lns sway           ~/.config/sway
 lns i3             ~/.config/i3
 lns i3status       ~/.config/i3status
 lns kitty          ~/.config/kitty
+lns doom.d         ~/.doom.d
 
 mkdir -p ~/.config/dunst
 lns dunstrc        ~/.config/dunst/dunstrc
